@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>API Reference | EPS</title>
+    <title>API Reference | Eko Platform Services</title>
     <!-- needed for adaptive design -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="favicon.png">
-
-    <!--
-    ReDoc uses font options from the parent element
-    So override default browser styles
-    -->
     <style>
       body {
         margin: 0;
         padding: 0;
       }
     </style>
-    {{{redocHead}}}
+    <script src="https://cdn.jsdelivr.net/npm/redoc@latest/bundles/redoc.standalone.js"></script>
   </head>
   <body>
-    {{{redocHTML}}}
+	<div id="redoc"></div>
+	<script>
+		Redoc.init('../dist/openapi.yaml', {
+				<!-- scrollYOffset: 60, -->
+				<!-- hideDownloadButton: true, -->
+				"theme":{"colors":{"primary":{"main":"#32329f"}}}
+			}, document.getElementById('redoc'));
+	</script>
   </body>
 </html>
