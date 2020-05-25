@@ -1,33 +1,30 @@
 openapi: 3.0.2
 info:
-  version: 1.0.0
-  title: Example.com
+  version: 0.1.0
+  title: Eko Platform Services | API Documentation
   termsOfService: 'https://example.com/terms/'
   contact:
-    email: contact@example.com
-    url: 'http://example.com/contact'
+    email: info@eko.co.in
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  x-logo:
-    url: 'https://redocly.github.io/openapi-template/logo.png'
   description: >
     This is an **example** API to demonstrate features of OpenAPI specification
 
     # Introduction
 
     This API definition is intended to to be a good starting point for
-    describing your API in 
+    describing your API in
 
     [OpenAPI/Swagger
     format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md).
 
     It also demonstrates features of
     [create-openapi-repo](https://github.com/Redocly/create-openapi-repo) tool
-    and 
+    and
 
     [Redoc](https://github.com/Redocly/Redoc) documentation engine. So beyond
-    the standard OpenAPI syntax we use a few 
+    the standard OpenAPI syntax we use a few
 
     [vendor
     extensions](https://github.com/Redocly/Redoc/blob/master/docs/redoc-vendor-extensions.md).
@@ -42,7 +39,7 @@ info:
     of the service without access to source
 
     code, documentation, or through network traffic inspection. When properly
-    defined via OpenAPI, a consumer can 
+    defined via OpenAPI, a consumer can
 
     understand and interact with the remote service with a minimal amount of
     implementation logic. Similar to what
