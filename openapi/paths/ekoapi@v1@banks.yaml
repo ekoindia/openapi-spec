@@ -1,0 +1,27 @@
+get:
+      summary: EkoapiV1Banks_GET
+      description: Retrieve bank details via bank_code
+      operationId: EkoapiV1Banks_GET
+      parameters:
+        - name: bank_code
+          in: query
+          description: ''
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: IDFB
+        - $ref: "../components/parameters/initiator_id.yaml"
+        - $ref: "../components/parameters/developer_key.yaml"
+        - $ref: "../components/parameters/secret-key.yaml"
+        - $ref: "../components/parameters/secret-key-timestamp.yaml"
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+      servers:
+      - url: https://staging.eko.in:25004/
+        variables: {}

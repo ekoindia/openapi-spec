@@ -1,0 +1,18 @@
+get:
+    summary: EkoapiV1TransactionsBatchClientRefIdEKO351551516341814_GET
+    description: batch inquiry using client ref
+    operationId: EkoapiV1TransactionsBatchClientRefIdEKO351551516341814_GET
+    parameters:
+      - $ref: "../components/parameters/initiator_id.yaml"
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

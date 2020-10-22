@@ -1,0 +1,17 @@
+put:
+    summary: EkoapiV1CustomersProductIndonepalVerificationOtp203_PUT
+    description: Verify customer identity
+    operationId: EkoapiV1CustomersProductIndonepalVerificationOtp203_PUT
+    parameters:
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}
