@@ -1,0 +1,140 @@
+title: Request
+required:
+- ekoLoanHistory
+- isWeekendLoan
+- agent_code
+- loan_amount
+- city
+- street
+- state
+- pincode
+- firstName
+- lastName
+- panNo
+- aadhaarNo
+- dob
+- mobileNo
+- emailID
+- agent_type
+- onboardedDate
+- transactions
+type: object
+properties:
+    ekoLoanHistory:
+        type: array
+        items:
+            $ref: ./EkoLoanHistory.yaml
+        description: ''
+    isWeekendLoan:
+        type: integer
+        format: int32
+    agent_code:
+        type: string
+    loan_amount:
+        type: string
+        example: 80000
+    city:
+        type: string
+    street:
+        type: string
+    state:
+        type: string
+    pincode:
+        type: string
+    firstName:
+        type: string
+    lastName:
+        type: string
+    panNo:
+        type: string
+    aadhaarNo:
+        type: string
+    dob:
+        type: string
+    mobileNo:
+        type: string
+    emailID:
+        type: string
+    agent_type:
+        type: string
+    onboardedDate:
+        type: string
+    transactions:
+        type: array
+        items:
+            $ref: ./Transaction.yaml
+        description: ''
+# example:
+#     ekoLoanHistory:
+#     - loanProviderName: Rupaiya Exchange
+#         loanAmount: 30000.0
+#         status: Acceptance In Review
+#     - loanProviderName: Happy Loans
+#         loanAmount: 50000.0
+#         status: Loan Disbursed Partially
+#     - loanProviderName: Mintifi
+#         loanAmount: 50000.0
+#         status: Loan Rejected By Merchant
+#     - loanProviderName: Mintifi
+#         loanAmount: 50000.0
+#         status: Loan Rejected By Merchant
+#     - loanProviderName: Rupaiya Exchange
+#         loanAmount: 30000.0
+#         status: Loan Rejected By Merchant
+#     - loanProviderName: Mintifi
+#         loanAmount: 150000.0
+#         status: Loan Rejected By Merchant
+#     - loanProviderName: Mintifi
+#         loanAmount: 100000.0
+#         status: Loan Rejected By Merchant
+#     - loanProviderName: Rupaiya Exchange
+#         loanAmount: 120000.0
+#         status: Loan Rejected By Merchant
+#     - loanProviderName: Mintifi
+#         loanAmount: 120000.0
+#         status: Loan Rejected By Merchant
+#     - loanProviderName: Mintifi
+#         loanAmount: 100000.0
+#         status: Loan Rejected By Merchant
+#     - loanProviderName: Mintifi
+#         loanAmount: 80000.0
+#         status: Loan Rejected By Merchant
+#     - loanProviderName: Rupaiya Exchange
+#         loanAmount: 80000.0
+#         status: Initiated
+#     agent_code: 99040481
+#     loan_amount: 80000
+#     city: Pune City
+#     street: Smart Mobile 394 New Mangalwar Peth
+#     state: Maharashtra
+#     pincode: 411011
+#     firstName: Yogita
+#     lastName: Sudhir
+#     panNo: FLLPS1033N
+#     aadhaarNo: 484253598001
+#     dob: 1995-06-13
+#     mobileNo: 7066259607
+#     emailID: smartphone.xerox1@gmail.com
+#     agent_type: MERCHANT
+#     onboardedDate: 2017-05-25
+#     # transactions:
+#     # - transactionsType: Sales
+#     #     transactionsValue: 1316244.0
+#     #     transactionsMonthYear: 1/2018
+#     #     transactionsValueType: Volume
+#     #     primary: 0.0
+#     # - transactionsType: Sales
+#     #     transactionsValue: 2088795.0
+#     #     transactionsMonthYear: 12/2017
+#     #     transactionsValueType: Volume
+#     #     primary: 0.0
+#     # - transactionsType: Sales
+#     #     transactionsValue: 1418880.0
+#     #     transactionsMonthYear: 11/2017
+#     #     transactionsValueType: Volume
+#     #     primary: 0.0
+#     # - transactionsType: Sales
+#     #     transactionsValue: 1288967.0
+#     #     transactionsMonthYear: 10/2017
+#     #     transactionsValueType: Volume
+#     #     primary: 0.0

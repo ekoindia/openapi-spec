@@ -1,0 +1,18 @@
+put:
+    summary: Onboard_PUT
+    description: https://api.eko.in:25002/ekoicici/v1/user/onboard
+    operationId: Onboard_PUT
+    tags:
+      - Customers
+    parameters:
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+      - url: https://api.eko.in:25002/ekoicici/v1/user

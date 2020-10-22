@@ -1,11 +1,17 @@
 openapi: 3.0.2
 info:
   title: EPS API
-  contact: {}
   version: 0.1.1
+  termsOfService: 'https://example.com/terms/'
+  contact:
+    name: Contact Eko
+    email: info@eko.co.in
+    url: 'http://example.com/contact'
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  x-logo:
+    url: 'https://redocly.github.io/openapi-template/logo.png'
   description: >
     This is a **work-in-progress** OpenAPI specification for the EPS developer
     platform.
@@ -305,7 +311,7 @@ paths:
       description: 'https://api.eko.in:25002/ekoicici/v1/user/onboard'
       operationId: Onboard_PUT
       tags:
-        - '????'
+        - Customers
       parameters:
         - $ref: '#/components/parameters/developer_key'
         - $ref: '#/components/parameters/secret-key'

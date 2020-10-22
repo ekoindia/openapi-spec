@@ -1,0 +1,10 @@
+title: Data1
+required:
+- consent
+type: object
+properties:
+    consent:
+        $ref: ./Consent.yaml
+example:
+    consent:
+        customerAccept: true
