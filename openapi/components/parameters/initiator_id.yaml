@@ -1,8 +1,0 @@
-name: initiator_id
-in: query
-description: ''
-required: true
-schema:
-  type: integer
-  format: int64
-  example: 9962981729

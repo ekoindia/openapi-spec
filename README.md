@@ -1,6 +1,6 @@
 # Eko Platform Services OpenAPI Definition
 
-**Link to the OpenAPI Spec:** https://ekoindia.github.io/openapi-spec/docs/openapi.yaml
+**Link to the OpenAPI Spec:** https://ekoindia.github.io/openapi-spec/openapi.yaml
 
 
 ## Working on your OpenAPI Definition
