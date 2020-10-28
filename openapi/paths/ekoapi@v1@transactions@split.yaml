@@ -1,0 +1,58 @@
+get:
+    summary: EkoapiV1TransactionsSplit_GET
+    description: 'Split Transaction API '
+    operationId: EkoapiV1TransactionsSplit_GET
+    parameters:
+      - name: customer_id
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+          example: 8811990077
+      - name: recipient_id
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 10016175
+      - name: amount
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 20000
+      - name: channel
+        in: query
+        description: ''
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 1
+      - $ref: "../components/parameters/initiator_id.yaml"
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

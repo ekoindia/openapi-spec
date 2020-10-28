@@ -1,0 +1,19 @@
+post:
+    summary: EkoapiV1AgentUserCode20310003Settlement_POST
+    description: Initiate Settlement
+    operationId: EkoapiV1AgentUserCode20310003Settlement_POST
+    tags:
+      - AePS Fund Settlement
+    parameters:
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

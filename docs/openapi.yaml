@@ -1,49 +1,78 @@
 openapi: 3.0.2
 info:
   title: EPS API
-  contact: {}
   version: 0.1.1
+  termsOfService: 'https://example.com/terms/'
+  contact:
+    name: Contact Eko
+    email: info@eko.co.in
+    url: 'http://example.com/contact'
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  description: >
+  x-logo:
+    url: 'https://ekoin.netlify.app/images/logo.svg'
+  description: >-
     This is a **work-in-progress** OpenAPI specification for the EPS developer
     platform.
 
+
     # Introduction
 
+
     This API definition is intended to to be a good starting point for
+
     describing your API in
 
+
     [OpenAPI/Swagger
+
     format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md).
 
+
     It also demonstrates features of
+
     [create-openapi-repo](https://github.com/Redocly/create-openapi-repo) tool
+
     and
 
+
     [Redoc](https://github.com/Redocly/Redoc) documentation engine. So beyond
+
     the standard OpenAPI syntax we use a few
 
+
     [vendor
+
     extensions](https://github.com/Redocly/Redoc/blob/master/docs/redoc-vendor-extensions.md).
+
 
 
     # OpenAPI Specification
 
+
     The goal of The OpenAPI Specification is to define a standard,
+
     language-agnostic interface to REST APIs which
 
+
     allows both humans and computers to discover and understand the capabilities
+
     of the service without access to source
 
+
     code, documentation, or through network traffic inspection. When properly
+
     defined via OpenAPI, a consumer can
 
+
     understand and interact with the remote service with a minimal amount of
+
     implementation logic. Similar to what
 
+
     interfaces have done for lower-level programming, OpenAPI removes the
+
     guesswork in calling the service.
 externalDocs:
   description: Checkout the developer portal to read the detailed guides
@@ -71,7 +100,9 @@ tags:
   - name: Partner Account
     description: Settle your funds into your bank account.
   - name: Fund Settlement
+    description: sample description
   - name: AePS Fund Settlement
+    description: sample description
 servers:
   - url: 'https://staging.eko.in:25004/ekoicici/v1'
 paths:
@@ -87,10 +118,10 @@ paths:
         your users
 
         3. The services available are:
-           * AePS Cashout
-           * eKYC
-           * Cash Deposit into SBI/KVB branches
-           * CDM service at KVB
+            * AePS Cashout
+            * eKYC
+            * Cash Deposit into SBI/KVB branches
+            * CDM service at KVB
       operationId: getUserServices
       tags:
         - Agent Management
@@ -305,7 +336,7 @@ paths:
       description: 'https://api.eko.in:25002/ekoicici/v1/user/onboard'
       operationId: Onboard_PUT
       tags:
-        - '????'
+        - Customers
       parameters:
         - $ref: '#/components/parameters/developer_key'
         - $ref: '#/components/parameters/secret-key'
@@ -1405,6 +1436,50 @@ components:
         format: int64
         example: 1516705204593
   schemas:
+    EkoLoanHistory:
+      type: object
+      title: EkoLoanHistory
+      required:
+        - loanProviderName
+        - loanAmount
+        - status
+      properties:
+        loanProviderName:
+          type: string
+        loanAmount:
+          type: string
+        status:
+          type: string
+      example:
+        loanProviderName: Rupaiya Exchange
+        loanAmount: 30000
+        status: Acceptance In Review
+    Transaction:
+      type: object
+      title: Transaction
+      required:
+        - transactionsType
+        - transactionsValue
+        - transactionsMonthYear
+        - transactionsValueType
+        - primary
+      properties:
+        transactionsType:
+          type: string
+        transactionsValue:
+          type: string
+        transactionsMonthYear:
+          type: string
+        transactionsValueType:
+          type: string
+        primary:
+          type: string
+      example:
+        transactionsType: Sales
+        transactionsValue: 1316244
+        transactionsMonthYear: 1/2018
+        transactionsValueType: Volume
+        primary: 0
     Request:
       title: Request
       required:
@@ -1546,50 +1621,6 @@ components:
             transactionsMonthYear: 10/2017
             transactionsValueType: Volume
             primary: 0
-    EkoLoanHistory:
-      title: EkoLoanHistory
-      required:
-        - loanProviderName
-        - loanAmount
-        - status
-      type: object
-      properties:
-        loanProviderName:
-          type: string
-        loanAmount:
-          type: string
-        status:
-          type: string
-      example:
-        loanProviderName: Rupaiya Exchange
-        loanAmount: 30000
-        status: Acceptance In Review
-    Transaction:
-      title: Transaction
-      required:
-        - transactionsType
-        - transactionsValue
-        - transactionsMonthYear
-        - transactionsValueType
-        - primary
-      type: object
-      properties:
-        transactionsType:
-          type: string
-        transactionsValue:
-          type: string
-        transactionsMonthYear:
-          type: string
-        transactionsValueType:
-          type: string
-        primary:
-          type: string
-      example:
-        transactionsType: Sales
-        transactionsValue: 1316244
-        transactionsMonthYear: 1/2018
-        transactionsValueType: Volume
-        primary: 0
     Request1:
       title: Request1
       required:
@@ -1644,53 +1675,6 @@ components:
         bc: 1
         bank_code: HDFC
         loan_id: 429f2733-5b9f-40e6-9b22- fe642efb8aeb
-    Request2:
-      title: Request2
-      required:
-        - plan_id
-        - product_id
-        - step_num
-        - proceed
-        - consumerId
-        - claimed
-        - data
-      type: object
-      properties:
-        plan_id:
-          type: string
-          nullable: true
-        product_id:
-          type: string
-        step_num:
-          type: integer
-          format: int32
-        proceed:
-          type: boolean
-        consumerId:
-          type: string
-          nullable: true
-        claimed:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/Data'
-      example:
-        plan_id: null
-        product_id: 4e736c66-5032-7683-4b6d-697771584847
-        step_num: 1
-        proceed: true
-        consumerId: null
-        claimed: false
-        data:
-          loanAmount: 100
-          interestRate: 2
-          interestType: percent
-          repaymentDays: null
-          processingFees: 100
-          loanType: ''
-          tenure: 30
-          additionalData: ''
-          autoRepaymentStatus: 1
-          expiryDate: '15-11-2017 21:00:00'
     Data:
       title: Data
       required:
@@ -1739,6 +1723,74 @@ components:
         additionalData: ''
         autoRepaymentStatus: 1
         expiryDate: '15-11-2017 21:00:00'
+    Request2:
+      title: Request2
+      required:
+        - plan_id
+        - product_id
+        - step_num
+        - proceed
+        - consumerId
+        - claimed
+        - data
+      type: object
+      properties:
+        plan_id:
+          type: string
+          nullable: true
+        product_id:
+          type: string
+        step_num:
+          type: integer
+          format: int32
+        proceed:
+          type: boolean
+        consumerId:
+          type: string
+          nullable: true
+        claimed:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Data'
+      example:
+        plan_id: null
+        product_id: 4e736c66-5032-7683-4b6d-697771584847
+        step_num: 1
+        proceed: true
+        consumerId: null
+        claimed: false
+        data:
+          loanAmount: 100
+          interestRate: 2
+          interestType: percent
+          repaymentDays: null
+          processingFees: 100
+          loanType: ''
+          tenure: 30
+          additionalData: ''
+          autoRepaymentStatus: 1
+          expiryDate: '15-11-2017 21:00:00'
+    Consent:
+      title: Consent
+      required:
+        - customerAccept
+      type: object
+      properties:
+        customerAccept:
+          type: boolean
+      example:
+        customerAccept: true
+    Data1:
+      title: Data1
+      required:
+        - consent
+      type: object
+      properties:
+        consent:
+          $ref: '#/components/schemas/Consent'
+      example:
+        consent:
+          customerAccept: true
     Request3:
       title: Request3
       required:
@@ -1758,29 +1810,8 @@ components:
         product_id: a1ef2e46-c2ed-4b0a-93bb-46954cb4f9a0
         step_num: 2
         data:
-          consent:
-            customerAccept: true
-    Data1:
-      title: Data1
-      required:
-        - consent
-      type: object
-      properties:
-        consent:
-          $ref: '#/components/schemas/Consent'
-      example:
-        consent:
+          consent: null
           customerAccept: true
-    Consent:
-      title: Consent
-      required:
-        - customerAccept
-      type: object
-      properties:
-        customerAccept:
-          type: boolean
-      example:
-        customerAccept: true
     Request4:
       title: Request4
       required:

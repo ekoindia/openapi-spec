@@ -1,0 +1,17 @@
+post:
+    summary: EkoapiV1PanVerify_POST
+    description: Pan Verification
+    operationId: EkoapiV1PanVerify_POST
+    parameters:
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

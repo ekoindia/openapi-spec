@@ -1,0 +1,27 @@
+get:
+    summary: Get customer information
+    description: Get a customer's basic profile information
+    operationId: EkoapiV1CustomersMobileNumber9004073059_GET
+    tags:
+      - Customers
+    parameters:
+      - name: mobile_number
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 9004073059
+      - $ref: "../components/parameters/initiator_id.yaml"
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

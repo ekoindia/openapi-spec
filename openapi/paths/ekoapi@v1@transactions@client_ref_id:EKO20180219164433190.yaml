@@ -1,0 +1,17 @@
+get:
+    summary: EkoapiV1TransactionsClientRefIdEKO20180219164433190_GET
+    description: Transaction Inquiry API using Partner reference number
+    operationId: EkoapiV1TransactionsClientRefIdEKO20180219164433190_GET
+    parameters:
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

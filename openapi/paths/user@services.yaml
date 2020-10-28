@@ -1,0 +1,27 @@
+get:
+  summary: Get Services
+  description: |
+    Return a list of services available for your users
+    1. This API returns a unique service_code for each service
+    2. This service_code needs to be used while activating the service for your users
+    3. The services available are:
+        * AePS Cashout
+        * eKYC
+        * Cash Deposit into SBI/KVB branches
+        * CDM service at KVB
+  operationId: getUserServices
+  tags:
+    - Agent Management
+  parameters:
+    - $ref: ../components/parameters/initiator_id.yaml
+    - $ref: ../components/parameters/developer_key.yaml
+    - $ref: ../components/parameters/secret-key.yaml
+    - $ref: ../components/parameters/secret-key-timestamp.yaml
+  responses:
+    200:
+      description: ''
+      headers: {}
+  deprecated: false
+  security: []
+  servers:
+    - url: https://staging.eko.in:25004/ekoicici/v1

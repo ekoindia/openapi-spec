@@ -1,0 +1,39 @@
+post:
+    summary: Offerloan_POST
+    description: Loan callback
+    operationId: Offerloan_POST
+    parameters: []
+    requestBody:
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Request2.yaml'
+          example:
+            plan_id:
+            product_id: 4e736c66-5032-7683-4b6d-697771584847
+            step_num: 1
+            proceed: true
+            consumerId:
+            claimed: false
+            data:
+              loanAmount: 100.0
+              interestRate: 2.0
+              interestType: percent
+              repaymentDays:
+              processingFees: 100.0
+              loanType: ''
+              tenure: 30
+              additionalData: ''
+              autoRepaymentStatus: 1
+              expiryDate: 15-11-2017 21:00:00
+      required: true
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: http://test.webservices.eko.co.in:8080/ekoloanwebservice/webapi/<partner_code>/
+      variables: {}

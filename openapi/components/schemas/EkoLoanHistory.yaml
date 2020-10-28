@@ -1,0 +1,17 @@
+type: object
+title: EkoLoanHistory
+required:
+- loanProviderName
+- loanAmount
+- status
+properties:
+  loanProviderName:
+    type: string
+  loanAmount:
+    type: string
+  status:
+    type: string
+example:
+  loanProviderName: Rupaiya Exchange
+  loanAmount: 30000.0
+  status: Acceptance In Review

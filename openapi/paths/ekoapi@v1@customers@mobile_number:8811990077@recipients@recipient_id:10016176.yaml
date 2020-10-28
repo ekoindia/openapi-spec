@@ -1,0 +1,17 @@
+delete:
+    summary: EkoapiV1CustomersMobileNumber8811990077RecipientsRecipientId10016176_DELETE
+    description: Remove recipient
+    operationId: EkoapiV1CustomersMobileNumber8811990077RecipientsRecipientId10016176_DELETE
+    parameters:
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

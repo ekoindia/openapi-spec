@@ -1,0 +1,47 @@
+title: Data
+required:
+- loanAmount
+- interestRate
+- interestType
+- repaymentDays
+- processingFees
+- loanType
+- tenure
+- additionalData
+- autoRepaymentStatus
+- expiryDate
+type: object
+properties:
+    loanAmount:
+        type: string
+    interestRate:
+        type: string
+    interestType:
+        type: string
+    repaymentDays:
+        type: string
+        nullable: true
+    processingFees:
+        type: string
+    loanType:
+        type: string
+    tenure:
+        type: string
+    additionalData:
+        type: string
+    autoRepaymentStatus:
+        type: integer
+        format: int32
+    expiryDate:
+        type: string
+example:
+    loanAmount: 100.0
+    interestRate: 2.0
+    interestType: percent
+    repaymentDays:
+    processingFees: 100.0
+    loanType: ''
+    tenure: 30
+    additionalData: ''
+    autoRepaymentStatus: 1
+    expiryDate: 15-11-2017 21:00:00

@@ -1,0 +1,53 @@
+title: Request1
+required:
+- remarks
+- date
+- bank_ref_num
+- amount
+- agent_code
+- source
+- prefunder_bank
+- payment_mode
+- client_ref_id
+- bc
+- bank_code
+- loan_id
+type: object
+properties:
+    remarks:
+        type: string
+    date:
+        type: string
+    bank_ref_num:
+        type: string
+    amount:
+        type: string
+    agent_code:
+        type: string
+    source:
+        type: string
+    prefunder_bank:
+        type: string
+    payment_mode:
+        type: string
+    client_ref_id:
+        type: string
+    bc:
+        type: string
+    bank_code:
+        type: string
+    loan_id:
+        type: string
+example:
+    remarks: test
+    date: 22022017
+    bank_ref_num: 99872229222
+    amount: 150000
+    agent_code: 99021232
+    source: Service Provider Name
+    prefunder_bank: 1
+    payment_mode: 4
+    client_ref_id: 24774761487417892680
+    bc: 1
+    bank_code: HDFC
+    loan_id: 429f2733-5b9f-40e6-9b22- fe642efb8aeb

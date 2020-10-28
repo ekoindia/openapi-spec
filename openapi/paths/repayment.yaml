@@ -1,0 +1,32 @@
+post:
+    summary: Repayment_POST
+    description: Loan repayment
+    operationId: Repayment_POST
+    parameters: []
+    requestBody:
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas/Request4.yaml'
+          example:
+            loan_id: cbc27623-a0af-4838-9f8d-73a829183321
+            disbursement_amount: 100000
+            disbursement_date: 2017-02-24
+            due_date: 2017-02-28
+            repay_amount: 56565
+            account_no: 22324234324
+            reference_no: 2342423423
+            sanction_id: fsdfsdfsdfsdfsf
+            tranche_id: sdfsdfsdfsdferefsds
+            source: 1
+      required: true
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.co.in:25004/ekoicici/v1/loan/
+      variables: {}

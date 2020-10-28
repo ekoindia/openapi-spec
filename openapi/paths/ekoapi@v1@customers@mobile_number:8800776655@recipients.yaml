@@ -1,0 +1,17 @@
+get:
+    summary: EkoapiV1CustomersMobileNumber8800776655Recipients_GET
+    description: Retrieve all recipients
+    operationId: EkoapiV1CustomersMobileNumber8800776655Recipients_GET
+    parameters:
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

@@ -1,0 +1,17 @@
+put:
+    summary: EkoapiV1CustomersMobileNumber8811990077RecipientsAccIfsc10037431941IDFB0041382_PUT
+    description: Add recipient using account and ifsc
+    operationId: EkoapiV1CustomersMobileNumber8811990077RecipientsAccIfsc10037431941IDFB0041382_PUT
+    parameters:
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

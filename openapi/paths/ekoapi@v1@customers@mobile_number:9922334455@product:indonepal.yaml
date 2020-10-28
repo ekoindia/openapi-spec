@@ -1,0 +1,18 @@
+get:
+    summary: EkoapiV1CustomersMobileNumber9922334455ProductIndonepal_GET
+    description: Retrieve a customer
+    operationId: EkoapiV1CustomersMobileNumber9922334455ProductIndonepal_GET
+    parameters:
+      - $ref: "../components/parameters/initiator_id.yaml"
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

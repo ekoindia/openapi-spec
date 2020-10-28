@@ -1,0 +1,23 @@
+put:
+    summary: Onboard User
+    description: |
+      Onboard a new agent/user on the platform.
+
+      We verify the PAN number provided by you in this step and match the name returned in PAN verification and the name coming in API. So please do enter valid PAN number and it should be of the same merchant/user whose name you are providing.
+
+      The name matching is only for the production, on staging we won't be matching the name from PAN verification and in the request.
+    operationId: putUserOnboard
+    tags:
+      - Agent Management
+    parameters:
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+      - url: https://staging.eko.in:25004/ekoicici/v1

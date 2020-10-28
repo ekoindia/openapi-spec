@@ -1,0 +1,17 @@
+get:
+    summary: EkoapiV1Transactions12870517_GET
+    description: Transaction inquiry using Eko TID
+    operationId: EkoapiV1Transactions12870517_GET
+    parameters:
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

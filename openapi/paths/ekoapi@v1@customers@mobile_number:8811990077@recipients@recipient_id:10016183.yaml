@@ -1,0 +1,17 @@
+get:
+    summary: EkoapiV1CustomersMobileNumber8811990077RecipientsRecipientId10016183_GET
+    description: Get Recipient Detail
+    operationId: EkoapiV1CustomersMobileNumber8811990077RecipientsRecipientId10016183_GET
+    parameters:
+      - $ref: "../components/parameters/developer_key.yaml"
+      - $ref: "../components/parameters/secret-key.yaml"
+      - $ref: "../components/parameters/secret-key-timestamp.yaml"  
+    responses:
+      200:
+        description: ''
+        headers: {}
+    deprecated: false
+    security: []
+    servers:
+    - url: https://staging.eko.in:25004/
+      variables: {}

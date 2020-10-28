@@ -1,0 +1,20 @@
+title: Request3
+required:
+- product_id
+- step_num
+- data
+type: object
+properties:
+    product_id:
+        type: string
+    step_num:
+        type: integer
+        format: int32
+    data:
+        $ref: ./Data1.yaml
+example:
+    product_id: a1ef2e46-c2ed-4b0a-93bb-46954cb4f9a0
+    step_num: 2
+    data:
+        consent:
+        customerAccept: true
