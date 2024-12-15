@@ -1,12 +1,115 @@
-# See https://docs.redoc.ly/cli/configuration/ for more information.
-apiDefinitions:
-  main: openapi/openapi.yaml
-lint:
-  rules:
-    no-unused-schemas: warning
-referenceDocs:
-  htmlTemplate: ./docs/auto/index.html
-  theme:
-    colors:
-      primary:
-        main: "#32329f"
+# See https://redocly.com/docs/cli/configuration/ for more information.
+# See https://github.com/Redocly/redocly-cli-cookbook for examples.
+
+extends:
+  - recommended
+
+apis:
+  main:
+    root: openapi/openapi.yaml
+
+theme:
+  openapi:
+    htmlTemplate: ./docs/auto/index.html
+    theme:
+      colors:
+        primary:
+          main: "#32329f"
+    generateCodeSamples:
+      languages:  # Array of language config objects; indicates in which languages to generate code samples.
+        - lang: curl
+        - lang: Node.js
+        - lang: JavaScript
+        - lang: PHP
+        - lang: Python
+        - lang: Java
+        - lang: C#
+        - lang: Go
+
+rules:
+  spec-strict-refs: warn
+
+  rule/post-should-define-requestBody:
+    severity: error
+    message: '"POST" SHOULD define a "requestBody" schema unless using an "actions" pattern'
+    subject:
+      type: Operation
+    where:
+      - subject:
+          type: PathItem
+          # Here you can define your own URI pattern to ignore if providing a requestBody is not required.
+          # The negation happens in this portion of the regex `(?<!/actions)`.
+          # The regex takes the entire URI pattern string and then uses a "negative lookbehind" from the end of the string to find the pattern to be negated.
+          matchParentKeys: /^([\w-\{\}/.](?<!/actions))*$/
+        assertions:
+          defined: true
+      - subject:
+          type: Operation
+          filterInParentKeys:
+            - post
+        assertions:
+          disallowed:
+            - deprecated
+    assertions:
+      required:
+        - requestBody
+
+  rule/get-should-not-define-requestBody:
+    severity: error
+    message: '"GET" SHOULD NOT define a "requestBody" schema'
+    subject:
+      type: Operation
+      filterInParentKeys:
+        - get
+    assertions:
+      disallowed:
+        - requestBody
+
+  rule/info-description:
+    subject:
+      type: Info
+      property: description
+    assertions:
+      defined: true
+
+  rule/no-script-tags-in-markdown:
+    subject:
+      type: any
+      property: description
+    assertions:
+      notPattern: '<script'
+    severity: warn
+    message: Markdown descriptions should not contain script tags.
+
+  # rule/string-schemas-length-defined:
+  #   severity: warn
+  #   subject:
+  #     type: Schema
+  #   where:
+  #     - subject:
+  #         type: Schema
+  #         property: type
+  #       assertions:
+  #         const: string
+  #   assertions:
+  #     requireAny:
+  #       - minLength
+  #       - maxLength
+  #       - enum
+  #     mutuallyRequired:
+  #       - minLength
+  #       - maxLength
+
+  rule/json-schema-string-misconfiguration:
+    subject:
+      type: Schema
+    where:
+      - subject:
+          type: Schema
+          property: type
+        assertions:
+          const: string
+    assertions:
+      disallowed:
+        - minimum
+        - maximum
