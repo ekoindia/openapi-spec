@@ -23,5 +23,5 @@ get:
     deprecated: false
     security: []
     servers:
-    - url: https://staging.eko.in:25004/
+    - url: https://staging.eko.in:25004
       variables: {}

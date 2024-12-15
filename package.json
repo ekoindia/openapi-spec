@@ -1,14 +1,15 @@
 {
   "name": "eko-platform-services",
   "version": "1.0.0",
-  "dependencies": {
-    "@redocly/openapi-cli": "^0.12.11"
-  },
   "private": true,
   "scripts": {
-    "start": "openapi preview-docs",
-    "build": "openapi bundle -o docs",
-    "test": "openapi validate"
+    "start": "redocly preview-docs",
+    "build": "redocly bundle openapi/openapi.yaml -o docs/openapi.yaml",
+    "test": "redocly lint",
+    "test-config": "redocly check-config",
+    "check-updates": "echo 'TO UPDATE, RUN: npm install package-name' && npm outdated --depth=0"
   },
-  "devDependencies": {}
+  "dependencies": {
+    "@redocly/cli": "^1.26.0"
+  }
 }

@@ -1,4 +1,4 @@
-openapi: 3.0.2
+openapi: 3.1.0
 info:
   title: EPS API
   version: 0.1.1
@@ -12,7 +12,7 @@ info:
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   x-logo:
     url: 'https://ekoin.netlify.app/images/logo.svg'
-  description: 
+  description:
     $ref: description.md
 
 externalDocs:
@@ -30,7 +30,6 @@ tags:
     description: Manage recipients for your customers to transfer money to.
   - name: Transaction
     description: Money Transfer APIs.
-  - name: Verification APIs
   - name: Banks
     description: Get bank information.
   - name: Token
@@ -62,91 +61,3 @@ paths:
     $ref: ./paths/onboard.yaml
   /customers/mobile_number:{mobile_number}:
     $ref: ./paths/customers@mobile_number:{mobile_number}.yaml
-  /ekoapi/v1/customers/mobile_number:8811990077:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:8811990077.yaml
-  /ekoapi/v1/customers/product:changename/verification/otp:1633:
-    $ref: ./paths/ekoapi@v1@customers@product:changename@verification@otp:1633.yaml
-  /ekoapi/v1/customers/mobile_number:8811990077/product:changename/otp:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:8811990077@product:changename@otp.yaml
-  /ekoapi/v1/customers/mobile_number:9899796311:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:9899796311.yaml
-  /ekoapi/v1/customers/verification/otp:135:
-    $ref: ./paths/ekoapi@v1@customers@verification@otp:135.yaml
-  /ekoapi/v1/customers/mobile_number:7065155445/otp:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:7065155445@otp.yaml
-  /ekoapi/v1/banks:
-    $ref: ./paths/ekoapi@v1@banks.yaml
-  /ekoapi/v1/banks/bankcode:KKBK/accounts/1711650498:
-    $ref: ./paths/ekoapi@v1@banks@bankcode:KKBK@accounts@1711650498.yaml
-  /ekoapi/v1/customers/mobile_number:8811990077/recipients/acc_ifsc:10037431941_IDFB0041382:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:8811990077@recipients@acc_ifsc:10037431941_IDFB0041382.yaml
-  /ekoapi/v1/customers/mobile_number:8811990077/recipients/acc_bankcode:1711650498_KKBK:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:8811990077@recipients@acc_bankcode:1711650498_KKBK.yaml
-  /ekoapi/v1/customers/mobile_number:8800776655/recipients:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:8800776655@recipients.yaml
-  /ekoapi/v1/customers/mobile_number:8811990077/recipients/recipient_id:10016183:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:8811990077@recipients@recipient_id:10016183.yaml
-  /ekoapi/v1/customers/mobile_number:8811990077/recipients/recipient_id:10016176:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:8811990077@recipients@recipient_id:10016176.yaml
-  /ekoapi/v1/transactions/split:
-    $ref: ./paths/ekoapi@v1@transactions@split.yaml
-  /ekoapi/v1/transactions:
-    $ref: ./paths/ekoapi@v1@transactions.yaml
-  /ekoapi/v1/transactions/4093/verify:
-    $ref: ./paths/ekoapi@v1@transactions@4093@verify.yaml
-  /ekoapi/v1/transactions/4091/otp:
-    $ref: ./paths/ekoapi@v1@transactions@4091@otp.yaml
-  /ekoapi/v1/transactions/15162673:
-    $ref: ./paths/ekoapi@v1@transactions@15162673.yaml
-  /ekoapi/v1/transactions/client_ref_id:Settlement0000010:
-    $ref: ./paths/ekoapi@v1@transactions@client_ref_id:Settlement0000010.yaml
-  /ekoapi/v1/transactions/batch/client_ref_id:EKO351551516341814:
-    $ref: ./paths/ekoapi@v1@transactions@batch@client_ref_id:EKO351551516341814.yaml
-  /ekoapi/v1/transactions/15313195/refund:
-    $ref: ./paths/ekoapi@v1@transactions@15313195@refund.yaml
-  /ekoapi/v1/transactions/15346925/refund/otp:
-    $ref: ./paths/ekoapi@v1@transactions@15346925@refund@otp.yaml
-  /ekoapi/v1/pan/verify:
-    $ref: ./paths/ekoapi@v1@pan@verify.yaml
-  /ekoapi/v1/customers/mobile_number:9910028267/balance:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:9910028267@balance.yaml
-  /ekoapi/v1/customers/mobile_number:9922334455/product:indonepal:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:9922334455@product:indonepal.yaml
-  /ekoapi/v1/customers/mobile_number:9922334466/product:indonepal:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:9922334466@product:indonepal.yaml
-  /ekoapi/v1/customers/product:indonepal/verification/otp:203:
-    $ref: ./paths/ekoapi@v1@customers@product:indonepal@verification@otp:203.yaml
-  /ekoapi/v1/customers/mobile_number:9922334477/product:indonepal/otp:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:9922334477@product:indonepal@otp.yaml
-  /ekoapi/v1/customers/mobile_number:9922334466/product:indonepal/recipients:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:9922334466@product:indonepal@recipients.yaml
-  /ekoapi/v1/customers/mobile_number:9922334466/product:indonepal/recipients/acc_indonepalbranch:32147368490404004005_11:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:9922334466@product:indonepal@recipients@acc_indonepalbranch:32147368490404004005_11.yaml
-  /ekoapi/v1/customers/mobile_number:9922334455/product:indonepal/recipients:
-    $ref: ./paths/ekoapi@v1@customers@mobile_number:9922334455@product:indonepal@recipients.yaml
-  /ekoapi/v1/transactions/12870517:
-    $ref: ./paths/ekoapi@v1@transactions@12870517.yaml
-  /ekoapi/v1/transactions/client_ref_id:EKO20180219164433190:
-    $ref: ./paths/ekoapi@v1@transactions@client_ref_id:EKO20180219164433190.yaml
-  /ekoapi/v1/transactions/16165313/refund:
-    $ref: ./paths/ekoapi@v1@transactions@16165313@refund.yaml
-  /ekoapi/v1/transactions/15065953/refund/otp:
-    $ref: ./paths/ekoapi@v1@transactions@15065953@refund@otp.yaml
-  /ekoapi/v1/agent/user_code:20310003/settlementaccount:
-    $ref: ./paths/ekoapi@v1@agent@user_code:20310003@settlementaccount.yaml
-  /ekoapi/v1/agent/user_code:20310003/settlementaccounts:
-    $ref: ./paths/ekoapi@v1@agent@user_code:20310003@settlementaccounts.yaml
-  /ekoapi/v1/agent/user_code:20310003/settlement:
-    $ref: ./paths/ekoapi@v1@agent@user_code:20310003@settlement.yaml
-  /requestloan:
-    $ref: ./paths/requestloan.yaml
-  /create/evalue:
-    $ref: ./paths/create@evalue.yaml
-  /loanid:<product_id>:
-    $ref: ./paths/loanid:<product_id>.yaml
-  /offerloan:
-    $ref: ./paths/offerloan.yaml
-  /requestloan/accept:
-    $ref: ./paths/requestloan@accept.yaml
-  /repayment:
-    $ref: ./paths/repayment.yaml
