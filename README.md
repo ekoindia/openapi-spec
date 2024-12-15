@@ -1,6 +1,7 @@
 # Eko Platform Services OpenAPI Definition
 
-**Link to the OpenAPI Spec:** https://ekoindia.github.io/openapi-spec/docs/openapi.yaml
+**Link to OpenAPI Spec:** https://ekoindia.github.io/openapi-spec/openapi.yaml
+**Link to Generated Docs:** https://ekoindia.github.io/openapi-spec
 
 
 ## Working on your OpenAPI Definition
@@ -23,10 +24,10 @@ Validates the definition.
 
 ## Contribution Guide
 
-Below is a sample contribution guide. The tools 
-in the repository don't restrict you to any 
+Below is a sample contribution guide. The tools
+in the repository don't restrict you to any
 specific structure. Adjust the contribution guide
-to match your own structure. However, if you 
+to match your own structure. However, if you
 don't have a structure in mind, this is a
 good place to start.
 
@@ -35,7 +36,7 @@ adjust the file/folder organization.
 
 The `.redocly.yaml` controls settings for various
 tools including the lint tool and the reference
-docs engine.  Open it to find examples and 
+docs engine.  Open it to find examples and
 [read the docs](https://docs.redoc.ly/cli/configuration/)
 for more information.
 
