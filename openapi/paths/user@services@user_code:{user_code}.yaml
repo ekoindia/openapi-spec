@@ -1,8 +1,8 @@
 get:
     summary: User Services Enquiry
-    description: GetUserServices
-    operationId: |
+    description: |
       Returns the status of each service associated with your agent/user.
+    operationId: GetUserServices
     tags:
       - Agent Management
     parameters:
