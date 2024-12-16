@@ -1,0 +1,8 @@
+name: recipient_id
+in: query
+description: Unique ID generated while adding the recipient
+required: true
+schema:
+  type: integer
+  format: int32
+  example: 10019064

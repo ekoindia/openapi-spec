@@ -1,6 +1,6 @@
-name: initiator_id
+name: customer_id
 in: query
-description: Your registered mobile number
+description: Customer's mobile number
 required: true
 schema:
   type: integer

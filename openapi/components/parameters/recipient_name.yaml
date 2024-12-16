@@ -1,0 +1,9 @@
+name: recipient_name
+in: query
+description: The recipient/beneficiary's name
+required: true
+schema:
+  type: string
+  minLength: 3
+  maxLength: 50
+  example: 9115597890

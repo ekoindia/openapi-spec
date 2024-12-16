@@ -1,7 +1,9 @@
 name: developer_key
 in: header
-description: ''
+description: Your static API key ([See Guide](auth))
 required: true
 schema:
   type: string
+  minLength: 20
+  maxLength: 50
   example: becbbce45f79c6f5109f848acd540567
