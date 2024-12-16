@@ -32,5 +32,3 @@ put:
         headers: {}
     deprecated: false
     security: []
-    servers:
-      - url: https://api.eko.in:25002/ekoicici/v1
