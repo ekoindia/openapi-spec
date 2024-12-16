@@ -436,3 +436,355 @@ These are the values and corresponding descriptions for the parameter `verificat
 | 2                    | Rejected (Rejected by the Ops team, rejection reason can be seen in comments parameter)                                         |
 | 3                    | Pending (Action pending from ops team)                                                                                          |
 
+
+### 3. Get All Services
+
+#### Description
+This API returns a list of all services available on the platform, along with a unique `service_code` for each service. This code can be used to check which services are enabled for a specific user. Get a list of all available services. The list contains a unique service_code for each service. This can be used to identify the enabled services for a user.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** /tools/catalog/service-codes
+- **Request Structure:**
+  - Query Parameters:
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+
+### 4. Activate Service for User
+
+#### Description
+Activate a service for your user (agent/retailer/distributor) before they can start using it. It is mandatory to activate a service for your users before they can start using it in production. To know the service_code for any service to activate, call the Get All Services API.
+
+Some of the common service codes are:
+
+| Service                         | service_code |
+| -------------------------------- | ------------ |
+| Vendor Payments (Fund Transfer) | 45           |
+| BBPS Bill Payments              | 53           |
+| Credit card Bill Payment       | 63           |
+| PAN Verification                | 4            |
+| Airtel CMS (Cashdrop)           | 58           |
+| UPI Static QR                   | 59           |
+
+Note: Some services (like AePS Cash Withdrawal) require additional data or steps for activation. Their service-activation APIs are separately listed within those sections (e.g., Activate AePS Fingpay & Activate AePS Fino).
+
+#### Details
+- **Method:** PUT
+- **URL Endpoint:** /admin/network/agent/{user_code}/service/{service_code}/activate
+- **Request Structure:**
+  - Path Parameters:
+    - user_code (string / required) - User code value of the user from whom the service needs to be activated
+    - service_code (string / required) - Unique code of the service which needs to be activated
+  - Body Parameters:
+    - initiator_id (int32 / required) - Your registered mobile number (See Platform Credentials for UAT)
+
+### 5. Deactivate Service for User
+
+#### Description
+Deactivate a service for your user (agent/retailer/distributor).
+
+#### Details
+- **Method:** PUT
+- **URL Endpoint:** /admin/network/agent/{user_code}/service/{service_code}/deactivate
+- **Request Structure:**
+  - Path Parameters:
+    - user_code (string / required) - User code value of the agent from whom the service needs to be deactivated
+    - service_code (string / required) - Unique code of the service which needs to be deactivated
+  - Body Parameters:
+    - initiator_id (int32 / required) - Your registered mobile number (See Platform Credentials for UAT)
+
+
+
+### 6. Get Settlement Account Balance
+
+#### Description
+Get the current balance (E-value) of your or your user's wallet.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** /user/account/balance
+- **Request Structure:**
+  - Query Parameters:
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - customer_id_type (string / required) - Defaults to mobile_number
+    - customer_id (int32 / required) - Registered mobile number for the wallet (e.g., your registered mobile number)
+
+
+---
+
+# Customer Management 
+
+### 1. Get Customer Information
+
+#### Description
+This API returns a customer's basic profile information such as name, mobile number, eKYC status, wallet balance, monthly available limit for money transfer, etc. Use this API to check if the customer has been created on the platform. If not, create the customer before using Eko-related services (like Money Transfer).
+
+**DMT Limits for customer:**
+- KYC Customer: Rs 74,500 per month (Temporarily on hold)
+- Non-KYC Customer: Rs 25,000 per month
+
+#### Response Description for DMT Customer
+
+| Parameter Name           | Description                                                  | Use                                                               |
+| ------------------------ | ------------------------------------------------------------ | ----------------------------------------------------------------- |
+| available_limit          | Limit left in the month for the customer                     | You can show this on your UI as the Available Limit for the customer |
+| used_limit               | Limit consumed in the month by the customer                  | Show this as the Used Limit for the customer mobile number       |
+| state                    | State of the customer                                        | You can show the state of the customer on your portal            |
+|                          | **Values the parameter can have**                            |                                                                   |
+|                          | 1 - OTP Verification Pending                                |                                                                   |
+|                          | 2 - OTP Verified Customer, Non-KYC / Rejected               |                                                                   |
+|                          | 3 - KYC Verification Pending                                |                                                                   |
+|                          | 4 - Verified and Full KYC Customer                          |                                                                   |
+|                          | 5 - Name Change Verification Pending                        |                                                                   |
+|                          | 8 - Partial KYC                                             |                                                                   |
+| total_limit              | Total limit available for the customer                       | Show the total limit of the customer on your UI                   |
+| wallet_available_limit   | Limit available in the Wallet                                | To know whether the transaction will go through the wallet for KYC customer or through a BC pipe, and calculate the commission at your end |
+| bc_available_limit       | Total Limit available in the BC Pipes                        |                                                                   |
+| is_registered            | Whether the customer is registered on a particular pipe      | 0 means the customer is not registered, 1 means registered on the particular pipe |
+
+**Note:**  
+If you get the remarks as rejected, you must call the API to create the customer for KYC with the documents for the KYC.
+
+If you have initiated a name change of wallet but OTP has not been entered yet, this state means that we have only the Aadhaar card number right now, and the OVD documents have not been updated yet.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** /customer/profile/{customer_id}
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (int32 / required) - Customer's mobile number
+  - **Query Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+
+### 2. Onboard Customer
+
+#### Description
+This API is used to onboard a new customer and enable them for services like DMT (Domestic Money Transfer). The API triggers an OTP to be delivered to the customer. Once the OTP is verified using the Verify Customer OTP API, the customer will be successfully onboarded.
+
+**Important:**
+- The name passed in the API must exactly match the name on the ID; otherwise, the transaction will fail.
+- OTP will not be delivered to the customer's mobile on UAT systems.
+
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/account
+- **Request Structure:**
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **customer_id** (int32 / required) - Customer's mobile number
+    - **name** (string / required) - Name of the customer as per ID
+    - **dob** (date / required) - Date of birth of the customer in YYYY-MM-DD format
+    - **residence_address** (array of strings / required) - Address of the customer in JSON format
+
+### 3. Verify Customer OTP
+
+#### Description
+This API is used to verify a customer's mobile number via OTP. The OTP is received when the customer is created or when the OTP is resent using the Resend OTP API.
+
+#### Details
+- **Method:** PUT
+- **URL Endpoint:** /customer/account/otp/verify
+- **Request Structure:**
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **otp** (int32 / optional) - OTP which you received by calling Create Customer or Resend OTP API. Defaults to null.
+    - **customer_id** (int32 / required) - Mobile number of the customer
+
+### 4. Resend OTP to Customer
+
+#### Description
+This API is used to resend the OTP to the customer for verification.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/account/otp
+- **Request Structure:**
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **customer_id** (string / required) - Customer's mobile number
+
+---
+# Bill Payments
+
+### 1. Pay Credit Card Bill
+
+#### Description
+This API is used to pay the credit card bill for a customer. The process includes activating the service for your agent, utilizing DMT's APIs for customer actions, and completing the bill payment by providing necessary details.
+
+**Credit Card Bill Payment Flow:**
+- Activate the service for your agent by calling the Activate Service for Agent API with service_code = 63.
+- Utilize DMT's APIs to perform actions such as customer creation, customer verification, and recipient addition.
+- Complete the credit card bill payment process by providing the necessary details through the payment API.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/credit-card-bill
+- **Request Structure:**
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - **recipient_id** (string / required) - The ID that you get after adding a recipient
+    - **amount** (string / required) - The payment amount
+    - **client_ref_id** (string / required) - Unique reference number of your system, ensure it's as unique as possible to avoid duplication
+    - **customer_id** (string / required) - ID generated using the create customer API
+    - **channel** (string / required) - Defaults to 2
+
+### 2. Pay BBPS Bill
+
+#### Description
+Make payment for utility bills, mobile recharge, etc via BBPS (Bharat Bill Payment System).
+
+**What is BBPS?**
+
+Bharat Bill Payment System (BBPS) is an RBI mandated system which offers integrated and interoperable bill payment services to customers across geographies with certainty, reliability, and safety of transactions.
+
+**Workflow**
+- Activate BBPS Bill Payment service for your agent using the Activate Service for Agent API and passing service code = 53.
+- Fetch bill by calling the Get Operator Parameters API to get the required parameters for a particular biller/operator.
+  - Parameters name passed in the payment API should match exactly as param_name returned in the API.
+  - The parameter value entered by the user should be verified as per the param_type and regex returned.
+- Just before calling the payment API, generate the secret-key-timestamp, secret-key, and request-hash.
+- Make payment by calling this API with all the required parameters.
+
+**Note:**  
+High Commission (Offline)  
+This allows API partners to send fetch bill and pay bill transactions via the new high commission channel, parallel to the existing instant channels. This only works for billers that have the high_commission channel available. The hc_channel is an optional parameter; you can pass its value as 1 to choose the high commissions channel. If not passed, the transaction will be processed through the "instant" channel. High commission transactions may take up to 6 hours to complete on the biller's side.
+
+
+#### Details
+- **Method:** POST  
+- **URL Endpoint:** /customer/payment/bbps
+
+  - **Request Structure:**
+
+    - **Body Parameters:**
+      - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+      - **user_code** (string / required) - Unique code (mobile number) of your registered agent/retailer
+      - **client_ref_id** (string / required) - A unique ID for every API call generated at your end
+      - **utility_acc_no** (string / required) - Account number provided by operator for the bill to be paid
+      - **confirmation_mobile_no** (string / required) - Customer's mobile number
+      - **sender_name** (string / required) - Name of the customer
+      - **operator_id** (string / required) - See the Get Operators API for operator ID
+      - **amount** (string / required) - Amount value for the bill/recharge
+      - **source_ip** (string / required) - IP address of the agent/retailer making the payment (for security & fraud prevention)
+      - **latlong** (string / required) - Your agent's location in latitude,longitude format (for security & fraud prevention)
+      - **billfetchresponse** (string) - Needs to be passed only when the value of this parameter is 1 in the Get Operator List API (value from Fetch Bill API)
+      - **dob** (string / optional) - Date of birth of the policy holder (required for certain operators like LIC, in DD/MM/YYYY format)
+      - **postalcode** (int32 / optional) - Postal PIN code (6-digits, required for certain operators like MSEB)
+
+    - **Headers:**
+      - **developer_key** (string / required) - Your static API key (See Guide)
+      - **secret-key** (string / required) - Your dynamically generated security key for the request (See Guide)
+      - **secret-key-timestamp** (string / required) - The timestamp used to generate the secret-key
+      - **request_hash** (string / required) - Hash of the concatenated values: secret_key_timestamp + utility_acc_no + amount + user_code (See Guide)
+
+### 3. Fetch BBPS Bill
+#### Description
+Fetch a user's bill for any utility operator.
+
+**Note:**
+- Some operators may not support the bill fetch.
+- Ensure that the BBPS service is activated for your agent on production before using the APIs.
+
+**Precautions:**
+- Get the list of parameters required for each operator from the result of the Get Operator Parameters API.
+- The parameter names should be exactly the same as `param_name` specified in the operator info API.
+- The values passed in the request body should adhere to `param_type` and regex specifications.
+
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** /customer/payment/bbps/bill
+
+**Request Structure:**
+
+- **Query Parameters:**
+  - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+  - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+  - **client_ref_id** (string / required) - Unique transaction ID that you generate for every transaction
+  - **utility_acc_no** (string / required) - Account number provided by operator for the bill to be fetched/paid
+  - **confirmation_mobile_no** (string / required) - Customer's mobile number
+  - **sender_name** (string / required) - Valid name of the customer
+  - **operator_id** (string / required) - See the Get Operators API for the operator ID
+  - **source_ip** (string / required) - IP of the agent/retailer making the request (for security & fraud prevention)
+  - **latlong** (string / required) - Agent's location in latitude,longitude format (for security & fraud prevention)
+  - **hc_channel** (int32 / optional, defaults to 0) -
+    - 0 = Instant payment
+    - 1 = Delayed (offline) payment with higher commissions
+  - **dob** (string / optional, defaults to DD/MM/YYYY) - Date of birth of the policy holder (required for LIC)
+  - **cycle_number** (string / optional) - Cycle number of the electricity bill (required for MSEB)
+  - **authenticator** (string / optional) - Password provided by MSEB (required for MSEB)
+
+### 4. Get BBPS Categories
+#### Description
+Get a list of supported categories for utility bill payments, mobile recharge, etc.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** /customer/payment/bbps/categories
+- **Request Structure:**
+- **Query Parameters:**
+  - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+  - **user_code** (string / required) - Unique code (mobile number) of your registered agent/retailer
+
+### 5. Get BBPS Locations
+#### Description
+Get a list of supported location IDs for BBPS.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** /customer/payment/bbps/locations
+- **Request Structure:**
+  - **Query Parameters:**
+    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - **user_code** (string / required) - Unique code (mobile number) of your registered agent/retailer
+
+
+
+### 6. Get BBPS Operators
+#### Description
+Get a list of BBPS operators filtered by a category or a location.
+
+#### Response Description
+| Parameter Name          | Description                                                                                          | Use                              |
+|-------------------------|------------------------------------------------------------------------------------------------------|----------------------------------|
+| `high_commission_channel` | 0 = Instant bill payment; 1 = delayed (offline) bill payment with higher commissions                | Defines the payment channel type |
+| `billFetchResponse`      | If "1", use the Bill Fetch API first, and then pass the "billfetchresponse" parameter from its response to the Bill Pay API | Controls the flow of bill fetch and payment process |
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** /customer/payment/bbps/operators
+- **Request Structure:**
+  - **Query Parameters:**
+    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - **category** (int32) - To filter the operator list by a category, pass the "operator_category_id" (use Get Categories API for the available list)
+    - **location** (int32) - To filter the operator list by a state, pass the "operator_location_id" (use Get Locations API for the available list)
+
+
+
+### 7. Get BBPS Operator Parameters
+#### Description
+Get a list of parameters to be passed in the Bill Fetch or Bill Pay APIs for a given operator.
+
+#### Response Description
+| Parameter Name     | Description                                                | Use                                |
+|--------------------|------------------------------------------------------------|------------------------------------|
+| `param_name`       | Name of the parameter to be passed in the Pay Bill API     | Parameter to be included in request |
+| `param_label`      | Label to be shown to the user for entering the parameter   | Used for displaying to the user   |
+| `param_type`       | Type of the parameter: Numeric, Decimal, AlphaNumeric, or List | Defines the expected input type   |
+| `regex`            | Regular expression for a valid value                      | Used to validate the user input   |
+| `error_message`    | Error message to be shown if the user input does not match the regex | Provides feedback to the user   |
+| `fetchBill`        | 1 = Need to call Fetch Bill API before the Pay Bill API    | Controls the sequence of API calls |
+| `BBPS`             | 1 = The biller is provided by Bharat BillPay.              | Indicates BBPS biller for branding |
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** /customer/payment/bbps/operator/{operator_id}/parameters
+- **Request Structure:**
+  - **Path Params:**
+    - **operator_id** (int32 / required) - The id for the operator (use Get Operators API for the available list)
+  - **Query Parameters:**
+    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
