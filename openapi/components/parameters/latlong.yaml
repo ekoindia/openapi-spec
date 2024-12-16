@@ -1,0 +1,9 @@
+name: latlong
+in: query
+description: User's geolocation (latitude,longitude). This is crucial for security & fraud prevention.
+required: true
+schema:
+  type: string
+  minLength: 17
+  maxLength: 23
+  example: 26.8863786,75.7393589

@@ -14,5 +14,3 @@ put:
         headers: {}
     deprecated: false
     security: []
-    servers:
-      - url: https://staging.eko.in:25004/ekoapi/v1

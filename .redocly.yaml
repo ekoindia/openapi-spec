@@ -28,6 +28,7 @@ theme:
 
 rules:
   spec-strict-refs: warn
+  operation-4xx-response: off
 
   rule/post-should-define-requestBody:
     severity: error
