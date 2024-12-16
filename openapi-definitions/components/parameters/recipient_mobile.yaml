@@ -1,0 +1,8 @@
+name: recipient_mobile
+in: query
+description: Valid mobile number of the recipient/beneficiary
+required: true
+schema:
+  type: integer
+  format: int64
+  example: 9115597890

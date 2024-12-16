@@ -1,6 +1,6 @@
 name: initiator_id
 in: query
-description: ''
+description: Your registered mobile number
 required: true
 schema:
   type: integer

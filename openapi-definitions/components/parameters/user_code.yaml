@@ -1,0 +1,9 @@
+name: user_code
+in: query
+description: Unique code assigned to the user who is making the request
+required: true
+schema:
+  type: string
+  min_length: 8
+  max_length: 11
+  example: 20810200

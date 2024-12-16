@@ -1,9 +1,0 @@
-title: Consent
-required:
-- customerAccept
-type: object
-properties:
-    customerAccept:
-        type: boolean
-example:
-    customerAccept: true

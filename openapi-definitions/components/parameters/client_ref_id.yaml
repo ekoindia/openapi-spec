@@ -1,0 +1,9 @@
+name: client_ref_id
+in: query
+description: A unique ID generated at your end for every API call. It can be used to track the status of the transaction in case of any network failure.
+required: true
+schema:
+  type: string
+  minLength: 10
+  maxLength: 30
+  example: 1734328246462837

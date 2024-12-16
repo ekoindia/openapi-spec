@@ -23,5 +23,3 @@ get:
       headers: {}
   deprecated: false
   security: []
-  servers:
-    - url: https://staging.eko.in:25004/ekoicici/v1

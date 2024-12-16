@@ -1,12 +1,12 @@
 openapi: 3.1.0
 info:
-  title: EPS API
-  version: 0.1.1
-  termsOfService: 'https://example.com/terms/'
-  contact:
-    name: Contact Eko
-    email: info@eko.co.in
-    url: 'http://example.com/contact'
+  title: Eko Platform Services APIs
+  version: 3.0.0
+  # termsOfService: 'https://example.com/terms/'
+  # contact:
+  #   name: Contact Eko
+  #   email: info@eko.co.in
+  #   url: 'http://example.com/contact'
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
@@ -16,7 +16,7 @@ info:
     $ref: description.md
 
 externalDocs:
-  description: Checkout the developer portal to read the detailed guides
+  description: Read the detailed guides on Eko Developer Portal
   url: 'https://developers.eko.in'
 
 tags:
@@ -42,7 +42,24 @@ tags:
     description: sample description
 
 servers:
-- url: https://staging.eko.in:25004/ekoicici/v1
+- url: https://staging.eko.in/ekoapi/v{version}
+  description: Staging URL
+  variables:
+      version:
+        default: "3"
+        enum:
+          - "1"
+          - "3"
+        description: The API version
+- url: https://api.eko.in/ekoicici/v{version}
+  description: Production URL
+  variables:
+      version:
+        default: "3"
+        enum:
+          - "1"
+          - "3"
+        description: The API version
 
 paths:
   /user/services:

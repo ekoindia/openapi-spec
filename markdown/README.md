@@ -7,7 +7,7 @@ This section contains the general information about the API, including the base 
 ## 1. API Base URLs
 
 - **Production:** `https://api.eko.in/ekoicici/v3`
-- **Sandbox:** `https://staging.eko.in/ekoapi/v3`
+- **Sandbox/UAT:** `https://staging.eko.in/ekoapi/v3`
 
 ## 2. Developer Portal Links
 
@@ -127,7 +127,38 @@ function generateRequestHashForBillPay() {
 ?>
 ```
 
-## 4. Status & Error Codes
+## 4. Common Request/Response Parameters
+
+### Common Request Headers
+
+| Header | Data Type | Required? | Description |
+| --- | --- | --- | --- |
+| **developer_key** | string | Required | Your static API key shared by Eko |
+| **secret-key** | string | Required | Dynamic security key, to be generated before every request |
+| **secret-key-timestamp** | number | Required | The request timestamp, used to generate the secret-key |
+| **request_hash** | string | Optional | This is required only for financial transactions. If required, it will be mentioned in the individual API details. |
+
+### Common Request Parameters
+
+| Parameter | Data Type | Required? | Description |
+| --- | --- | --- | --- |
+| **initiator_id** | number | Required | Your registered mobile number (See Sandbox Credentials for Testing section) |
+| **user_code** | string | Required | Unique code of your registered user/agent |
+| **client_ref_id** | string | Optional | Your unique reference number for the transaction |
+
+### Common Response Parameters
+The response will always be of type JSON (application/json) unless otherwise specified in the API documentation. All responses will contain the following parameters:
+
+| Parameter | Data Type | Description |
+| --- | --- | --- |
+| **status** | number | Status of the response. 0 for success, non-zero for failure |
+| **message** | string | Description of the status |
+| **data** | object | The actual response data. Rest of the important response parameters will be passed inside this object and it will vary for each API |
+| **response_status_id** | number | An alternate status code for the response. -2 = Another transaction in progress for the user, -1 = Success for GET or non-transactional APIs, 0 = Success for POST or transactional APIs, 1 = Failure, 2 = Initiated, 3 = Refund Initiated, 4 = Refunded, 5 = On Hold |
+| **response_type_id** | number | A unique identifier for each response type for an API. Details can be found in the API documentation |
+
+
+## 5. Status & Error Codes
 
 ### Common HTTP Response Codes
 
@@ -145,7 +176,6 @@ Staging Base URL: [https://staging.eko.in/ekoapi/](https://staging.eko.in/ekoapi
 | 500 | Internal Server Error | It usually implies that the API is not able to connect to our servers. For staging, remove the port 25004 from the URL. And, in production re-check your URL and HTTP method. |
 
 
-
 ### Common Error Messages
 
 | message                                                                                | Resolution                                                                                                                                                         |
@@ -154,7 +184,6 @@ Staging Base URL: [https://staging.eko.in/ekoapi/](https://staging.eko.in/ekoapi
 | \- Agent not allowed - Agent not allowed to do this transaction - Customer not allowed | Check if the service is ACTIVATED for the user\_code. If not then, activate the service for the merchant.                                                          |
 | No Key for Response                                                                    | Please re-check the value of the request parameters. It is either missing or the format is incorrect.                                                              |
 | Kindly use your production key                                                         | Check if you're using the correct developer key (credentials for staging cannot be used in production).                                                            |
-
 
 
 ### Response Status Codes
@@ -218,7 +247,7 @@ Possible values of parameter **_tx\_status_**:
 
 
 
-## 5. Sandbox Credentials for Testing
+## 6. Sandbox Credentials for Testing
 
 For testing AePS Gateway, activation of services, DMT (including Bank verification), AePS API and BBPS, use the below credentials:
 1. developer\_key: becbbce45f79c6f5109f848acd540567
