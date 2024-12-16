@@ -45,7 +45,7 @@ for more information.
 
 #### Adding Schemas
 
-1. Navigate to the `openapi/components/schemas` folder.
+1. Navigate to the `openapi-definitions/components/schemas` folder.
 2. Add a file named as you wish to name the schema.
 3. Define the schema.
 4. Refer to the schema using the `$ref` (see example below).
@@ -148,7 +148,7 @@ You will use `$ref`s to reference schema from your path definitions.
 
 #### Editing Schemas
 
-1. Navigate to the `openapi/components/schemas` folder.
+1. Navigate to the `openapi-definitions/components/schemas` folder.
 2. Open the file you wish to edit.
 3. Edit.
 
@@ -156,7 +156,7 @@ You will use `$ref`s to reference schema from your path definitions.
 
 #### Adding a Path
 
-1. Navigate to the `openapi/paths` folder.
+1. Navigate to the `openapi-definitions/paths` folder.
 2. Add a new YAML file named like your URL endpoint except replacing `/` with `@` and putting path parameters into curly braces like `{example}`.
 3. Add the path and a ref to it inside of your `openapi.yaml` file inside of the `openapi` folder.
 
@@ -245,7 +245,7 @@ You'll also notice `$ref`s to code samples.
 
 ### Code samples
 
-1. Navigate to the `openapi/code_samples` folder.
+1. Navigate to the `openapi-definitions/code_samples` folder.
 2. Navigate to the `<language>` (e.g. PHP) sub-folder.
 3. Navigate to the `path` folder, and add ref to the code sample.
 
