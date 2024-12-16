@@ -639,13 +639,6 @@ This API is used to resend the OTP to the customer for verification.
 
 This API is used to pay the credit card bill for a customer. The process includes activating the service for your agent, utilizing DMT's APIs for customer actions, and completing the bill payment by providing necessary details.
 
-#### Description
-
->**Credit Card Bill Payment Flow:**
->- Activate the service for your agent by calling the Activate Service for Agent API with service_code = 63.
->- Utilize DMT's APIs to perform actions such as customer creation, customer verification, and recipient addition.
->- Complete the credit card bill payment process by providing the necessary details through the payment API.
-
 #### Details
 - **Method:** POST
 - **URL Endpoint:** /customer/payment/credit-card-bill
@@ -657,28 +650,18 @@ This API is used to pay the credit card bill for a customer. The process include
     - **client_ref_id** (string / required) - Unique reference number of your system, ensure it's as unique as possible to avoid duplication
     - **customer_id** (string / required) - ID generated using the create customer API
     - **channel** (string / required) - Defaults to 2
+    
+#### Description
+
+> **Credit Card Bill Payment Flow:**
+> - Activate the service for your agent by calling the Activate Service for Agent API with service_code = 63.
+> - Utilize DMT's APIs to perform actions such as customer creation, customer verification, and recipient addition.
+> - Complete the credit card bill payment process by providing the necessary details through the payment API.
+
 
 ### 2. Pay BBPS Bill API
 
 Make payment for utility bills, mobile recharge, etc via BBPS (Bharat Bill Payment System).
-#### Description
-
->**What is BBPS?**
-> 
->Bharat Bill Payment System (BBPS) is an RBI mandated system which offers integrated and interoperable bill payment services to customers across geographies with certainty, reliability, and safety of transactions.
-
->**Workflow**
->- Activate BBPS Bill Payment service for your agent using the Activate Service for Agent API and passing service code = 53.
->- Fetch bill by calling the Get Operator Parameters API to get the required parameters for a particular biller/operator.
-  >- Parameters name passed in the payment API should match exactly as param_name returned in the API.
-  >- The parameter value entered by the user should be verified as per the param_type and regex returned.
->- Just before calling the payment API, generate the secret-key-timestamp, secret-key, and request-hash.
->- Make payment by calling this API with all the required parameters.
-
->**Note:**  
->High Commission (Offline)  :
->This allows API partners to send fetch bill and pay bill transactions via the new high commission channel, parallel to the existing instant channels. This only works for billers that have the high_commission channel available. The hc_channel is an optional parameter; you can pass its value as 1 to choose the high commissions channel. If not passed, the transaction will be processed through the "instant" channel. High commission transactions may take up to 6 hours to complete on the biller's side.
-
 
 #### Details
 - **Method:** POST  
@@ -707,6 +690,24 @@ Make payment for utility bills, mobile recharge, etc via BBPS (Bharat Bill Payme
       - **secret-key-timestamp** (string / required) - The timestamp used to generate the secret-key
       - **request_hash** (string / required) - Hash of the concatenated values: secret_key_timestamp + utility_acc_no + amount + user_code (See Guide)
 
+#### Description
+
+> **What is BBPS?**
+> Bharat Bill Payment System (BBPS) is an RBI mandated system which offers integrated and interoperable bill payment services to customers across geographies with certainty, reliability, and safety of transactions.
+
+> **Workflow**
+> - Activate BBPS Bill Payment service for your agent using the Activate Service for Agent API and passing service code = 53.
+> - Fetch bill by calling the Get Operator Parameters API to get the required parameters for a particular biller/operator.
+> - Parameters name passed in the payment API should match exactly as param_name returned in the API.
+> - The parameter value entered by the user should be verified as per the param_type and regex returned.
+> - Just before calling the payment API, generate the secret-key-timestamp, secret-key, and request-hash.
+> - Make payment by calling this API with all the required parameters.
+
+> **Note:**  
+> High Commission (Offline)  :
+> This allows API partners to send fetch bill and pay bill transactions via the new high commission channel, parallel to the existing instant channels. This only works for billers that have the high_commission channel available. The hc_channel is an optional parameter; you can pass its value as 1 to choose the high commissions channel. If not passed, the transaction will be processed through the "instant" channel. High commission transactions may take up to 6 hours to complete on the biller's side.
+
+ 
 
 ### 3. Fetch BBPS Bill API
 
@@ -875,22 +876,21 @@ Initiate a fund transfer to any bank account.
 
 
 #### Sample Response (200 OK)
-```json
-Transaction initiated successfully response:
-{
+
+```{
   "response_type_id": 1329,
   "data": {
-    "account": 234243534",
-    "client_ref_id": "Settlemet7206123420"",
-    "ifsc": "SBIN0000001"",
-    "txstatus_desc": "Initiated"",
-    "tx_status": 2",
-    "amount": 1045.00",
-    "tid": 12971397",
-    "balance": 35322.2",
+    "account": "234243534",
+    "client_ref_id": "Settlemet7206123420",
+    "ifsc": "SBIN0000001",
+    "txstatus_desc": "Initiated",
+    "tx_status": 2,
+    "amount": 1045.00,
+    "tid": 12971397,
+    "balance": 35322.2,
     "totalfee": 5.00
   },
-  "message": Transaction initiated successfully",
+  "message": "Transaction initiated successfully",
   "status": 0,
   "response_status_id": 0
 }
@@ -2496,7 +2496,257 @@ When a transaction fails, we automatically send an OTP to the customer. Ask for 
   "status": 0
 }
 ```
- 
+
+### 2. Resend Refund OTP
+This API resends an OTP to the customer to initiate the refund process for a failed transaction.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** `/customer/payment/refund/{tid}/otp`
+- **Request Structure:**
+  - **Path Params:**
+    - **tid** (int32, required): TID of the transaction for which the OTP needs to be resent.
+  - **Body Params:**
+    - **initiator_id** (int32, required): Your registered mobile number (See Platform Credentials for UAT).
+
+
+#### Sample Response (200 OK)
+```json
+{
+  "message": "success! OTP has been sent",
+  "response_type_id": 169,
+  "response_status_id": -1,
+  "status": 0,
+  "data": {
+    "tid": "12212118",
+    "otp": "4878925010"
+  }
+}
+```
+
+### 3. Get Pending Refunds
+This API retrieves a list of all failed transactions for a customer that are in a refund-pending state.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** `/customer/payment/refunds`
+- **Request Structure:**
+  - **Query Params:**
+    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - **user_code** (string, required): User code value of the retailer from whom the request is coming.
+    - **customer_id** (string, required): Customer's mobile number.
+
+
+
+#### Sample Response (200 OK)
+```json
+{
+  "response_status_id": 0,
+  "data": {
+    "refund_tid": "2147591637",
+    "amount": "5000.00",
+    "tds": "7.1",
+    "balance": "2.22263731286E9",
+    "fee": "50.0",
+    "currency": "INR",
+    "commission_reverse": "28.38",
+    "tid": "13192443",
+    "timestamp": "2018-10-30T12:00:14.058Z",
+    "refunded_amount": "5050.00"
+  },
+  "response_type_id": 74,
+  "message": "Refund done",
+  "status": 0
+}
+```
+#### Description
+This API is used to safely refund cash to a customer in case their transaction fails.
+
+- When the transaction fails, we automatically send an OTP to the customer.
+- Ask for that OTP from the customer and call this API with the OTP.
+- This will act as a consent that you have actually refunded back the cash to the customer. After this API call, we will refund the eValue into your account.
+
+# Bank APIs
+
+## 1. Get Banks API
+
+Retrieve a list of banks.
+
+### Details
+- **Method:** GET
+- **URL Endpoint:** /tools/reference/banks
+- **Query Parameters:**
+  - **initiator_id** (string, required): Your registered mobile number.
+  - **user_code** (string, required): User code value of the retailer from whom the request is coming.
+
+### Sample Response (200 OK)
+```json
+{
+  "response_status_id": 0,
+  "data": {
+    "isverificationavailable": "0",
+    "code": "IDFB",
+    "ifsc_status": 4,
+    "user_code": "20810200",
+    "bank_id": 262,
+    "name": "IDFC Bank",
+    "available_channels": 0
+  },
+  "response_type_id": 466,
+  "message": "Bank Details Found",
+  "status": 0
+}
+```
+### 2. Get Bank Details
+This API retrieves the details of a bank, such as its name, bank code, available channels, whether IFSC is required, and if account verification is supported.
+
+This API fetches details of a bank based on the bank code.
+
+#### Parameter Details:
+- **available_channel**:
+  - `0`: All - Both channels IMPS and NEFT are available for the bank.
+  - `1`: NEFT - Only NEFT mode is available.
+  - `2`: IMPS - Only IMPS mode is available.
+
+- **ifsc_status**:
+  - `1`: Bank short-code (e.g., SBIN) works for both IMPS and NEFT.
+  - `2`: Bank short-code works for IMPS only.
+  - `3`: System can generate logical IFSC for both IMPS and NEFT.
+  - `4`: IFSC is required.
+
+- **isVerificationAvailable**:
+  - `0`: Bank is not available for account verification.
+  - `1`: Bank is available for account verification.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** `/tools/reference/bank/{bank_code}`
+- **Request Structure:**
+  - **Path Params:**
+    - **bank_code** (string, required): Refer to the bank list for respective bank codes.
+  - **Query Params:**
+    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - **user_code** (string, required): User code value of the retailer from whom the request is coming.
+    - **ifsc** (string, optional): IFSC code of the bank.
+
+
+#### Sample Response (200 OK)
+```json
+{
+  "response_status_id": 0,
+  "data": {
+    "isverificationavailable": "0",
+    "code": "IDFB",
+    "ifsc_status": 4,
+    "user_code": "20810200",
+    "bank_id": 262,
+    "name": "IDFC Bank",
+    "available_channels": 0
+  },
+  "response_type_id": 466,
+  "message": "Bank Details Found",
+  "status": 0
+}
+```
+
+### 3. Get IFSC Details
+This API retrieves the bank and branch details for a given IFSC code.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** `/tools/reference/banks/ifsc/{ifsc}`
+- **Request Structure:**
+  - **Path Params:**
+    - **ifsc** (string, required): IFSC code of the bank.
+  - **Query Params:**
+    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - **user_code** (string, required): User code value of the retailer from whom the request is coming.
+
+
+
+#### Sample Response (200 OK)
+```json
+{
+  "response_status_id": 0,
+  "data": {
+    "isverificationavailable": "0",
+    "code": "IDFB",
+    "ifsc_status": 4,
+    "user_code": "20810200",
+    "bank_id": 262,
+    "name": "IDFC Bank",
+    "available_channels": 0
+  },
+  "response_type_id": 466,
+  "message": "Bank Details Found",
+  "status": 0
+}
+```
+---
+
+# Saved Transactions
+
+### 1. Get Saved Transactions
+This API retrieves a list of all saved transactions for an agent.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** `/customer/payment/saved`
+- **Request Structure :**
+  - **Query Params:**
+      - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
+      - **user_code** (string, required): Unique code of your registered agent/retailer.
+
+### 2. Commit Saved Transactions
+This API commits one or more saved transactions.
+
+#### Details
+- **Method:** PUT
+- **URL Endpoint:** `/customer/payment/saved`
+- **Request Structure:**
+  - **Body Params:**
+    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - **user_code** (string, required): Unique code of your registered agent/retailer.
+
+
+### 3. Cancel Saved Transaction
+This API cancels a saved transaction.
+
+#### Details
+- **Method:** DELETE
+- **URL Endpoint:** `/customer/payment/saved/{tid}`
+- **Request Structure:**
+  - **Path Params:**
+    - **tid** (string, required): TID of the saved transaction to cancel.
+  - **Body Params:**
+    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - **user_code** (string, required): Unique code of your registered agent/retailer.
+
+### 4. Schedule Saved Transaction for Commit
+This API schedules a saved transaction to automatically commit at a later time, if sufficient funds are available.
+
+#### Details
+- **Method:** PUT
+- **URL Endpoint:** `/customer/payment/schedule/{tid}`
+- **Request Structure:**
+  - **Path Params:**
+    - **tid** (string, required): TID of the saved transaction to schedule.
+  - **Body Params:**
+    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - **user_code** (string, required): Unique code of your registered agent/retailer.
+
+### 5. Get Scheduled Transactions
+This API retrieves a list of scheduled transactions for an agent.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** `/customer/payment/scheduled`
+- **Request Structure:**
+  - **Query Params:**
+    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - **user_code** (string, required): Unique code of your registered agent/retailer.
+
+
 
 
 
