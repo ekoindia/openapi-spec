@@ -1194,7 +1194,7 @@ Use this API to verify bank account information in bulk.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/bank-account/bulk`
+- **URL Endpoint:** /tools/kyc/bank-account/bulk
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1206,7 +1206,7 @@ Use this API to get the details of the bulk bank account verification request. Y
 
 #### Details
 - **Method:** GET
-- **URL Endpoint:** `/tools/kyc/bank-account/bulk/status`
+- **URL Endpoint:** /tools/kyc/bank-account/bulk/status
 - **Request Structure:**
   - **Query Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1250,7 +1250,7 @@ Use this API to verify IFSC codes. You will receive the bank name, the branch th
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/ifsc`
+- **URL Endpoint:** /tools/kyc/ifsc
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1316,7 +1316,7 @@ Active PAN Verification service for your agents.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/verify-pan`
+- **URL Endpoint:** /tools/kyc/verify-pan
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1353,7 +1353,7 @@ An alternate API to validate PAN information of individuals. The API helps verif
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/pan-light`
+- **URL Endpoint:** /tools/kyc/pan-light
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1425,7 +1425,7 @@ Use this API to verify the PAN information of your customers. You can retrieve m
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/pan-360`
+- **URL Endpoint:** /tools/kyc/pan-360
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1502,7 +1502,7 @@ This is an asynchronous API, so you must call the Bulk PAN Verification Status A
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/pan/bulk`
+- **URL Endpoint:** /tools/kyc/pan/bulk
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1521,7 +1521,7 @@ Use this API to get the status of the Bulk PAN Verification API request.
 
 #### Details
 - **Method:** GET
-- **URL Endpoint:** `/tools/kyc/pan/bulk/status`
+- **URL Endpoint:** /tools/kyc/pan/bulk/status
 - **Request Structure:**
   - **Query Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1573,7 +1573,7 @@ Use this API to capture the user's consent for Aadhaar verification.
 
 #### Details
 - **Method:** GET
-- **URL Endpoint:** `/tools/kyc/aadhaar/consent`
+- **URL Endpoint:** /tools/kyc/aadhaar/consent
 - **Request Structure:**
   - **Query Parameters:**
     - **initiator_id** (string) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1613,7 +1613,7 @@ This API sends an OTP from UIDAI to the user's mobile number linked to their Aad
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/aadhaar/otp`
+- **URL Endpoint:** /tools/kyc/aadhaar/otp
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1654,7 +1654,7 @@ This API retrieves the Aadhaar details of a user in XML format.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/aadhaar/xml-download`
+- **URL Endpoint:** /tools/kyc/aadhaar/xml-download
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1686,7 +1686,7 @@ This API sends an OTP to any mobile number in India for verification or consent.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/mobile/otp`
+- **URL Endpoint:** /tools/kyc/mobile/otp
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1716,7 +1716,7 @@ This API is used to verify the OTP sent to your agent for AePS KYC.
 
 #### Details
 - **Method:** PUT
-- **URL Endpoint:** `/tools/kyc/mobile/otp/verify`
+- **URL Endpoint:** /tools/kyc/mobile/otp/verify
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1747,7 +1747,7 @@ This API is used to match two faces and get the similarity between them.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/face-match`
+- **URL Endpoint:** /tools/kyc/face-match
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1778,7 +1778,7 @@ This API is used to verify if a given GSTIN information exists or not.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/gstin`
+- **URL Endpoint:** /tools/kyc/gstin
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1847,7 +1847,7 @@ This API is used to fetch the list of GSTIN associated with the PAN information.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/gstin-with-pan`
+- **URL Endpoint:** /tools/kyc/gstin-with-pan
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1886,7 +1886,7 @@ This API is used to create a DigiLocker URL to retrieve and verify Aadhaar infor
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/digilocker`
+- **URL Endpoint:** /tools/kyc/digilocker
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1913,7 +1913,7 @@ This API is used to get the status of the DigiLocker verification.
 
 #### Details
 - **Method:** GET
-- **URL Endpoint:** `/tools/kyc/digilocker/status`
+- **URL Endpoint:** /tools/kyc/digilocker/status
 - **Request Structure:**
   - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
   - **client_ref_id** (string, optional): A unique ID for every API call generated at your end.
@@ -1944,7 +1944,7 @@ This API is used to get your customer's document details from DigiLocker.
 
 #### Details
 - **Method:** GET
-- **URL Endpoint:** `/tools/kyc/digilocker/document/{document_type}`
+- **URL Endpoint:** /tools/kyc/digilocker/document/{document_type}
 - **Request Structure:**
   - **document_type** (string, required): The type of document to be verified. Currently, only "AADHAAR" is supported. Defaults to AADHAAR.
   - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
@@ -1987,7 +1987,7 @@ This API is used to verify the authenticity of vehicle details. It provides comp
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/vehicle-rc`
+- **URL Endpoint:** /tools/kyc/vehicle-rc
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2084,7 +2084,7 @@ This API is used to verify the driving license of your customer. It retrieves de
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/driving-license`
+- **URL Endpoint:** /tools/kyc/driving-license
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2162,7 +2162,7 @@ This API is used to verify the authenticity of your customer's voter ID. You nee
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/voter-id`
+- **URL Endpoint:** /tools/kyc/voter-id
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2214,7 +2214,7 @@ This API is used to verify passport information (only Indian passports) and ensu
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/passport`
+- **URL Endpoint:** /tools/kyc/passport
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2245,7 +2245,7 @@ This API is used to retrieve information from the Corporate Identification Numbe
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/cin`
+- **URL Endpoint:** /tools/kyc/cin
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2292,7 +2292,7 @@ This API retrieves an individual's recent employment details such as member ID, 
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/advance-employment`
+- **URL Endpoint:** /tools/kyc/advance-employment
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2394,7 +2394,7 @@ This API verifies the location, proxy details, city risk score, and proxy type r
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/ip`
+- **URL Endpoint:** /tools/kyc/ip
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2426,7 +2426,7 @@ This API converts geolocation coordinates (latitude and longitude) into readable
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/reverse-geocoding`
+- **URL Endpoint:** /tools/kyc/reverse-geocoding
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2460,7 +2460,7 @@ This API verifies names that have enormous variations. Provide the names you wan
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/kyc/name-match`
+- **URL Endpoint:** /tools/kyc/name-match
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2499,7 +2499,7 @@ This API sends a promotional text message (SMS) to one or more mobile numbers in
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/tools/marketing/sms`
+- **URL Endpoint:** /tools/marketing/sms
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2523,7 +2523,7 @@ This API is used to safely refund cash to a customer in case their transaction f
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/customer/payment/refund/{tid}`
+- **URL Endpoint:** /customer/payment/refund/{tid}
 - **Request Structure:**
   - **Path Parameters:**
     - **tid** (string / required) - Eko's transaction ID
@@ -2563,7 +2563,7 @@ This API resends an OTP to the customer to initiate the refund process for a fai
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** `/customer/payment/refund/{tid}/otp`
+- **URL Endpoint:** /customer/payment/refund/{tid}/otp
 - **Request Structure:**
   - **Path Params:**
     - **tid** (int32, required): TID of the transaction for which the OTP needs to be resent.
@@ -2590,7 +2590,7 @@ This API retrieves a list of all failed transactions for a customer that are in 
 
 #### Details
 - **Method:** GET
-- **URL Endpoint:** `/customer/payment/refunds`
+- **URL Endpoint:** /customer/payment/refunds
 - **Request Structure:**
   - **Query Params:**
     - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
@@ -2667,7 +2667,7 @@ This API fetches details of a bank based on the bank code.
 
 #### Details
 - **Method:** GET
-- **URL Endpoint:** `/tools/reference/bank/{bank_code}`
+- **URL Endpoint:** /tools/reference/bank/{bank_code}
 - **Request Structure:**
   - **Path Params:**
     - **bank_code** (string, required): Refer to the bank list for respective bank codes.
@@ -2719,7 +2719,7 @@ This API retrieves the bank and branch details for a given IFSC code.
 
 #### Details
 - **Method:** GET
-- **URL Endpoint:** `/tools/reference/banks/ifsc/{ifsc}`
+- **URL Endpoint:** /tools/reference/banks/ifsc/{ifsc}
 - **Request Structure:**
   - **Path Params:**
     - **ifsc** (string, required): IFSC code of the bank.
@@ -2755,7 +2755,7 @@ This API retrieves a list of all saved transactions for an agent.
 
 #### Details
 - **Method:** GET
-- **URL Endpoint:** `/customer/payment/saved`
+- **URL Endpoint:** /customer/payment/saved
 - **Request Structure :**
   - **Query Params:**
       - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
@@ -2767,7 +2767,7 @@ This API commits one or more saved transactions.
 
 #### Details
 - **Method:** PUT
-- **URL Endpoint:** `/customer/payment/saved`
+- **URL Endpoint:** /customer/payment/saved
 - **Request Structure:**
   - **Body Params:**
     - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
@@ -2779,7 +2779,7 @@ This API cancels a saved transaction.
 
 #### Details
 - **Method:** DELETE
-- **URL Endpoint:** `/customer/payment/saved/{tid}`
+- **URL Endpoint:** /customer/payment/saved/{tid}
 - **Request Structure:**
   - **Path Params:**
     - **tid** (string, required): TID of the saved transaction to cancel.
@@ -2793,7 +2793,7 @@ This API schedules a saved transaction to automatically commit at a later time, 
 
 #### Details
 - **Method:** PUT
-- **URL Endpoint:** `/customer/payment/schedule/{tid}`
+- **URL Endpoint:** /customer/payment/schedule/{tid}
 - **Request Structure:**
   - **Path Params:**
     - **tid** (string, required): TID of the saved transaction to schedule.
@@ -2807,22 +2807,10 @@ This API retrieves a list of scheduled transactions for an agent.
 
 #### Details
 - **Method:** GET
-- **URL Endpoint:** `/customer/payment/scheduled`
+- **URL Endpoint:** /customer/payment/scheduled
 - **Request Structure:**
   - **Query Params:**
     - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
     - **user_code** (string, required): Unique code of your registered agent/retailer.
-
-
-
-
-
-
-
-
-
-
-
-
 
 
