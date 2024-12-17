@@ -820,7 +820,9 @@ You get the following key information for each parameter to be passed:
 
 ---
 
-# Initiate Fund Transfer API
+# Fund Transfer APIs
+
+### Initiate Fund Transfer API
 Initiate a fund transfer to any bank account.
 
 #### Details
