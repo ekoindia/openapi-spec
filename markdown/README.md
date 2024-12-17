@@ -1187,12 +1187,6 @@ Use this API to verify bank account information in bulk.
 
 **Note:** This is an asynchronous API, so you must use the Bulk Bank Account Verification Status API to get the status of each bank account. We do not currently support Deutsche Bank and Fincare Small Finance Bank because they are not live on IMPS.
 
-#### Response Values
-| response_status_id | response_type_id | message                                               |
-|--------------------|------------------|-------------------------------------------------------|
-| -1                 | 61               | Bulk verification started successfully               |
-| 1                  | 1796             | Recipient name not found and verification not available for this bank |
-
 #### Details
 - **Method:** POST
 - **URL Endpoint:** /tools/kyc/bank-account/bulk
@@ -1201,6 +1195,16 @@ Use this API to verify bank account information in bulk.
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
     - **client_ref_id** (string / required) - A unique ID for every API call generated at your end
     - **entries** (array of objects / required) - An array of bank account information, which needed to be verified
+
+#### Response Structure
+You get the following information in the response within `data` object:
+- bulk_reference_id: A unique ID for reference purpose. Use this ID in the Bulk Bank Account Verification Status API to get the status of each bank accounts.
+
+#### Response Values
+| response_status_id | response_type_id | message                                               |
+|--------------------|------------------|-------------------------------------------------------|
+| -1                 | 61               | Bulk verification started successfully               |
+| 1                  | 1796             | Recipient name not found and verification not available for this bank |
 
 
 ### 1.4. Bulk Bank Account Verification Status API
@@ -1214,6 +1218,20 @@ Use this API to get the details of the bulk bank account verification request. Y
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
     - **client_ref_id** (string) - A unique ID for every API call generated at your end
     - **bulk_reference_id** (int32 / required) - The unique ID you receive in the response of Bulk Bank Account Verification API.
+
+#### Response Structure
+You get an array of objects in the `entries` parameter inside `data` with the following information for each bank account:
+1.  **reference_id**: A unique ID created by us for reference purposes.
+2.  **name_at_bank**: The name of the account holder as per the bank records.
+3.  **bank_name**: The name of the bank.
+4.  **utr**: The unique transaction reference (UTR) number created by the bank to identify the transaction.
+5.  **city**: The name of the city where the bank is located.
+6.  **branch**: The name of the branch where the bank account is registered.
+7.  **micr**: It represents the code used to identify banks and branches participating in the Electronic Clearing System (ECS)
+8.  **name_match_score**: The score of the name match verification.
+9.  **name_match_result**: The result of the name match verification.
+10.  **account_status**: the status of the bank account.
+11.  **account_status_code**: the status code of the bank account.
 
 #### Response Values
 | response_status_id | response_type_id | message                                               |
@@ -1541,7 +1559,7 @@ You get the following key information in the `data` object of the response:
 | entries          | array     | List of all PAN informations for bulk verification                          |
 
 ##### Structure for `entries` array items:
-Each item in the entries array in the data contains the following information:
+Each item in the `entries` array in the `data` contains the following information:
 
 | Name                    | Data Type | Description                                                                 |
 |-------------------------|-----------|-----------------------------------------------------------------------------|
@@ -1684,10 +1702,10 @@ This API retrieves the Aadhaar details of a user in XML format.
 ```
 
 
-## 4. Mobile Verification APIs
+## 4. Mobile OTP
 
 ### 4.1. Send OTP API
-This API sends an OTP to any mobile number in India for verification or consent.
+Use this API to send an OTP to any mobile number in India for verification or consent.
 
 **Note:** OTP SMS will not be actually delivered in UAT. You must test it using the production credential to actually deliver an SMS to a mobile number. In UAT, the response will include an additional `otp` parameter upon success, which can be used to test the Verify OTP API.
 
@@ -1718,7 +1736,7 @@ This API sends an OTP to any mobile number in India for verification or consent.
 ```
 
 ### 4.2. Verify OTP API
-This API is used to verify the OTP sent to your agent for AePS KYC.
+Use this API to verify the OTP sent to your user/agent.
 
 #### Details
 - **Method:** PUT
@@ -1748,7 +1766,7 @@ This API is used to verify the OTP sent to your agent for AePS KYC.
 ```
 
 ### 5. Face Match API
-This API is used to match two faces and get the similarity between them.
+Use this API to match two faces and get the similarity between them.
 
 #### Details
 - **Method:** POST
@@ -1776,10 +1794,11 @@ This API is used to match two faces and get the similarity between them.
 }
 ```
 
+
 ## 6. GSTIN APIs
 
 ### 6.1 GSTIN Verification API
-This API is used to verify if a given GSTIN information exists or not.
+Use this API to verify if a given GSTIN information exists or not.
 
 #### Details
 - **Method:** POST
@@ -1847,8 +1866,44 @@ This API is used to verify if a given GSTIN information exists or not.
 }
 ```
 
+#### Response Structure
+You get the following key information in the `data` object of the response:
+-   GSTIN
+-   additional\_address\_array (array of objects)
+    -   address
+    -   split\_address (see the list below)
+-   cancellation\_date
+-   center\_jurisdiction
+-   constitution\_of\_business
+-   date\_of\_registration
+-   gst\_in\_status
+-   last\_update\_date
+-   legal\_name\_of\_business
+-   message
+-   nature\_of\_business\_activities
+-   principal\_place\_address
+-   principal\_place\_split\_address (see the list below)
+-   state\_jurisdiction
+-   status\_code
+-   taxpayer\_type
+-   valid (boolean)
+
+##### Split Address Details
+-   building\_name
+-   street
+-   location
+-   building\_name
+-   district
+-   state
+-   city
+-   flat\_number
+-   latitude
+-   longitude
+-   pincode
+
+
 ### 6.2. Fetch GSTIN with PAN API
-This API is used to fetch the list of GSTIN associated with the PAN information.
+Use this API to fetch the list of GSTIN associated with the PAN information.
 
 #### Details
 - **Method:** POST
@@ -1884,10 +1939,21 @@ This API is used to fetch the list of GSTIN associated with the PAN information.
 }
 ```
 
+#### Response Structure
+You get the following key information in the `data` object of the response:
+| Name | Data Type | Description |
+| --- | --- | --- |
+| **pan** | string | The entered PAN information in the request |
+| **gstin\_list** | Array of Objects | The list of GSTIN associated with the entered PAN |
+| gstin\_list.**gstin** | string | The GSTIN information |
+| gstin\_list.**status** | string | The status of the GSTIN associated with the entered PAN |
+| gstin\_list.**state** | string | The name of the state |
+
+
 ## 7. Digilocker APIs
 
 ### 7.1 Digilocker Consent API
-This API is used to create a DigiLocker URL to retrieve and verify Aadhaar information of your customer.
+Use this API to create a DigiLocker URL to retrieve and verify Aadhaar information of your customer.
 
 #### Details
 - **Method:** POST
@@ -1898,6 +1964,7 @@ This API is used to create a DigiLocker URL to retrieve and verify Aadhaar infor
     - **client_ref_id** (string / required) - A unique ID for every API call generated at your end
     - **document_requested** (array of strings / required) - Defaults to ["AADHAAR"]. A list of customer documents required for verification. Currently, only "AADHAAR" is supported.
     - **redirect_url** (string / required) - A URL to take the user to after completing the DigiLocker journey. It will contain the verification_id that can be used to get the status of the verification.
+
 #### Sample Response (200 OK)
 ```json
 {
@@ -1913,6 +1980,18 @@ This API is used to create a DigiLocker URL to retrieve and verify Aadhaar infor
   }
 }
 ```
+
+#### Response Structure
+You get the following key information in the `data` object of the response:
+
+| Name | Data Type | Description |
+| --- | --- | --- |
+| **reference\_id** | integer | The unique ID for reference purposes |
+| **url** | string | The URL received to retrieve and verify aadhaar information from DigiLocker |
+| **document\_requested** | Array of string | The list of documents requested for verification |
+| **redirect\_url** | string | The URL entered in the request that takes the user to after completing the DigiLocker journey |
+
+
 ### 7.2 DigiLocker Verification Status API
 This API is used to get the status of the DigiLocker verification.
 
@@ -1944,6 +2023,22 @@ This API is used to get the status of the DigiLocker verification.
   }
 }
 ```
+
+#### Response Structure
+You get the following key information in the `data` object of the response:
+
+| Name | Data Type | Description |
+| --- | --- | --- |
+| **user\_details** | Object | The details of the individual (user) |
+| user\_details.**name** | string | The name of the individual |
+| user\_details.**dob** | string | The date of birth of the individual |
+| user\_details.**gender** | string | The gender of the individual |
+| user\_details.**eaadhaar** | string | The e-Aadhaar availability of the individual |
+| user\_details.**mobile** | string | The mobile number of the individual |
+| **document\_requested** | Array of strings | The information of the requested document(s) for verification |
+| **document\_consent** | Array of strings | The consent of the individual(user) for document verification |
+
+
 ### 7.3 Get Document from DigiLocker API
 This API is used to get your customer's document details from DigiLocker.
 
@@ -1986,6 +2081,33 @@ This API is used to get your customer's document details from DigiLocker.
   }
 }
 ```
+
+#### Response Structure
+You get the following key information in the `data` object of the response:
+
+| Name | Data Type | Description |
+| --- | --- | --- |
+| **care\_of** | string | The name of the parent or guardian |
+| **dob** | string | The date of birth of the individual |
+| **gender** | string | The gender of the individual |
+| **name** | string | The name of the individual |
+| **photo\_link** | string | The link to the photo of the individual present in the document |
+| **split\_address** | Object | The address information in individual components. See the list below for details |
+| **uid** | string | The unique number assigned to the individual when applying for the Aadhaar card |
+| **reference\_id** | integer | A unique ID for reference purposes |
+
+##### `split_address` Details
+-   **country**: name of the country as present in the document.
+-   **dist**: name of the district as present in the document.
+-   **house**: name of the house as present in the document.
+-   **landmark**: name of the landmark as present in the document.
+-   **pincode**: name of the PIN code as present in the document.
+-   **po**: name of the post office as present in the document.
+-   **state**: name of the state as present in the document.
+-   **street**: name of the street as present in the document.
+-   **subdist**: name of the sub district as present in the document.
+-   **vtc**: name of the VTC (village, town, city) as present in the address.
+
 
 ### 8. Vehicle RC API
 This API is used to verify the authenticity of vehicle details. It provides complete information about the vehicle, including the owner, chassis number, registration date, registration number, and more.
@@ -2084,6 +2206,82 @@ This API is used to verify the authenticity of vehicle details. It provides comp
 }
 ```
 
+#### Response Structure
+You get the following key information in the `data` object of the response:
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **reference\_id** | integer | The unique ID created for reference purposes. |
+| **status** | string | The status of the vehicle RC information. |
+| **reg\_no** | string | The registration number of the vehicle. |
+| **class** | string | The category or type of the vehicle as recognised by the relevant transportation authorities. |
+| **chassis** | string | The chassis information of the vehicle. |
+| **engine** | string | The engine number of the vehicle. |
+| **vehicle\_manufacturer\_name** | string | The manufacturer of the vehicle. |
+| **model** | string | The model number of the vehicle. |
+| **vehicle\_color** | string | The colour of the vehicle. |
+| **type** | string | The type of the vehicle. |
+| **norms\_type** | string | The norms set by the Central Pollution Control Board (CPCB). |
+| **body\_type** | string | The body type of the vehicle. |
+| **owner\_count** | string | The number of owners of the vehicle. |
+| **owner** | string | The name of the current owner of the vehicle. |
+| **owner\_father\_name** | string | The father's name of the current owner of the vehicle. |
+| **mobile\_number** | string | The mobile number of the current owner of the vehicle. |
+| **rc\_status** | string | The status of the RC. |
+| **status\_as\_on** | string | The particular date of the status of the RC. |
+| **reg\_authority** | string | The name of the registration authority. |
+| **reg\_date** | string | The date of registration of the vehicle. |
+| **vehicle\_manufacturing\_month\_year** | string | The month and year of the manufacturing of the vehicle. |
+| **rc\_expiry\_date** | string | The date until which the registration of the vehicle is valid. |
+| **vehicle\_tax\_upto** | string | The date until which the tax paid by the owner for the vehicle is valid. |
+| **vehicle\_insurance\_company\_name** | string | The name of the insurance company associated with the vehicle. |
+| **vehicle\_insurance\_upto** | string | The date until which the insurance paid by the owner for the vehicle is valid. |
+| **vehicle\_insurance\_policy\_number** | string | The insurance policy number of the vehicle. |
+| **rc\_financer** | string | The name of the financial institution or lender that provided financing for the vehicle. |
+| **present\_address** | string | The current address of the owner of the vehicle. |
+| **split\_present\_address** | object | It contains the address information in individual components. |
+| **permanent\_address** | string | The permanent address of the owner of the vehicle. |
+| **split\_permanent\_address** | object | It contains the address information in individual components. |
+| **vehicle\_cubic\_capacity** | string | The cubic capacity of the vehicle's engine. |
+| **gross\_vehicle\_weight** | string | The gross weight of the vehicle in kilograms. |
+| **unladen\_weight** | string | The weight of the vehicle without carrying any load in kilograms. |
+| **vehicle\_category** | string | The category of the vehicle. |
+| **rc\_standard\_cap** | string |  |
+| **vehicle\_cylinders\_no** | string | The number of cylinders present in the vehicle. |
+| **vehicle\_seat\_capacity** | string | The number of seats in the vehicle. |
+| **vehicle\_sleeper\_capacity** | string | The number of beds available in the vehicle. |
+| **vehicle\_standing\_capacity** | string | The number of people that can stand in the vehicle. |
+| **wheelbase** | string | The distance between the front and rear axles of a vehicle in mm. |
+| **vehicle\_number** | string | The registration number of the vehicle. |
+| **pucc\_number** | string | The Pollution Under Control Certificate (PUCC) number associated with the vehicle. |
+| **pucc\_upto** | string | It displays till when the PUCC number is valid. |
+| **blacklist\_status** | string | It displays whether the vehicle is blacklisted. |
+| **blacklist\_details** | object | The reasons for blacklisting the vehicle. HAS ADDITIONAL FIELDS |
+| **challan\_details** | object | It displays traffic tickets or citations issued by traffic authorities for violations. HAS ADDITIONAL FIELDS |
+| **permit\_issue\_date** | string | It displays when the relevant authorities granted permission for a permit associated with the vehicle. |
+| **permit\_number** | string | The permit number of the vehicle. |
+| **permit\_type** | string | The type of permit issued to the vehicle. |
+| **permit\_valid\_from** | string | The beginning date of the issuance of permit. |
+| **permit\_valid\_upto** | string | The end date of the permit. |
+| **non\_use\_status** | string | It displays whether the vehicle owner or registrant declared that the vehicle is not in use for a period. |
+| **non\_use\_from** | string | The beginning date of the non-use period. |
+| **non\_use\_to** | string | The end date of the non-use period. |
+| **national\_permit\_number** | string | The permit issued to the vehicle to go outside the home state carrying goods. |
+| **national\_permit\_upto** | string | The end date of the permit issued to the vehicle to go outside the home state. |
+| **national\_permit\_issued\_by** | string | The national permit issuer's name. |
+| **is\_commercial** | boolean | It displays whether the vehicle is for commercial purposes. |
+| **noc\_details** | string | The details of the no objection certificate. |
+
+
+##### Split address object details:
+-   district (array of strings)
+-   state (array of arrays of strings)
+-   city (array of strings)
+-   pincode (string)
+-   country (array of strings)
+-   address\_line (string)
+
+
 ### 9. Driving Licence API
 This API is used to verify the driving license of your customer. It retrieves details such as the type of licence, issue date, expiry date, and more.
 
@@ -2162,6 +2360,54 @@ This API is used to verify the driving license of your customer. It retrieves de
 }
 ```
 
+#### Response Structure
+You get the following key information in the `data` object of the response:
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **dl\_number** | string | The unique number assigned to the driving licence. |
+| **dob** | string | The date of birth of the individual as present in the driving licence. |
+| **status** | string | Whether the driving licence is valid. |
+| **badge\_details** | Array of objects | It contains the details of badges associated with the driving licence. See the table below for details. |
+| **dl\_validity** | object | It contains the different information regarding the validity of the licence. See the table below for details. |
+| **details\_of\_driving\_licence** | object | It contains the details of the driving licence. See the table below for details. |
+
+
+##### `badge_details`
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **badge\_issue\_date** | string | The date of the badge issued. |
+| **badge\_no** | string | The number of the badge issued. |
+| **class\_of\_vehicle** | array of strings | The class of the vehicle. |
+
+
+##### `dl_validity`
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **non\_transport** | object | It contains the validity details. It contains `to` and `from` date values. |
+| **hazardous\_valid\_till** | date | It displays till when the individual can drive hazardous vehicles. |
+| **transport** | object | It contains the validity details. It contains `to` and `from` date values. |
+| **hill\_valid\_till** | date | It displays till when the individual can drive the vehicle in hill and mountain regions. |
+
+
+##### `details_of_driving_licence`
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **date\_of\_issue** | date | The date when the driving license was issued. |
+| **date\_of\_last\_transaction** | date | The date of the last transaction. |
+| **status** | string | The current status of the driving license. |
+| **last\_transacted\_at** | date | The date of the last transaction recorded. |
+| **name** | string | The name of the individual. |
+| **father\_or\_husband\_name** | string | The father's or husband's name of the individual. |
+| **address\_list** | array of objects | It contains the list of address information. Each address object contains `complete_address`, `type`, and `split_address`. |
+| **address** | string |  |
+| **photo** | string |  |
+| **cov\_details** | array of objects | The details of the class of vehicle (COV). |
+
+
 ### 10. Voter ID API
 This API is used to verify the authenticity of your customer's voter ID. You need to provide the Electoral Photo Identity Card (EPIC) number, and it retrieves complete details including assembly and parliamentary constituency information.
 
@@ -2214,6 +2460,47 @@ This API is used to verify the authenticity of your customer's voter ID. You nee
   }
 }
 ```
+
+#### Response Structure
+You get the following key information in the `data` object of the response:
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **name** | string | Name of the individual as present in the voter ID card. |
+| **name\_in\_regional\_lang** | string | Name of the individual in the individual’s regional language as present in the voter ID card. |
+| **age** | string | Age of the voter ID holder as present in the voter ID card. |
+| **relation\_type** | string | Type of the relationship with the parent/guardian as present in the voter ID card. |
+| **relation\_name** | string | Name of the parent/guardian as present in the voter ID card. |
+| **relation\_name\_in\_regional\_lang** | string | Name of the parent/guardian in the individual’s regional language as present in the voter ID card. |
+| **father\_name** | string | Father’s name of the individual as present in the voter ID card. |
+| **dob** | string | Date of birth of the individual as present in the voter ID card. |
+| **gender** | string | Gender of the individual as present in the voter ID card. |
+| **address** | string | Address of the individual as present in the voter ID card. |
+| **split\_address** | object | Address information of the individual as present in the voter ID card. See the table below for details. |
+| **epic\_number** | string | EPIC number of the individual as present in the voter ID card. |
+| **state** | string | Name of the state as present in the voter ID card. |
+| **assembly\_constituency\_number** | string | Number associated with the assembly constituency as present in the voter ID card. |
+| **assembly\_constituency** | string | Name of the assembly constituency as present in the voter ID card. |
+| **parliamentary\_constituency\_number** | string | Number associated with the parliamentary constituency as present in the voter ID card. |
+| **parliamentary\_constituency** | string | Name of the parliamentary constituency as present in the voter ID card. |
+| **part\_number** | string | Part number in the electoral roll. |
+| **part\_name** | string | Part name in the electoral roll. |
+| **serial\_number** | string | Serial number as present in the voter ID card. |
+| **polling\_station** | string | Place where the individual cast votes during elections. |
+
+
+##### `split_address`
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **district** | array of strings | Names of the districts in the address information. |
+| **state** | array of arrays of strings | Names of the states in the address information. |
+| **city** | array of strings | Names of the cities in the address information. |
+| **pincode** | string | PIN code as present in the voter ID card. |
+| **country** | array of strings | Names of the countries in the address information. |
+| **address\_line** | string | Address information as present in the voter ID card. |
+
+
 ### 11. Passport API
 This API is used to verify passport information (only Indian passports) and ensure the identity of your customer. Provide the passport file number in the request to fetch the details.
 
@@ -2244,6 +2531,18 @@ This API is used to verify passport information (only Indian passports) and ensu
   }
 }
 ```
+
+#### Response Structure
+You get the following key information in the `data` object of the response:
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **file\_number** | string | Unique alphanumeric code identifying the passport application. |
+| **name** | string | Name of the passport holder. |
+| **dob** | string | Date of birth of the passport holder. |
+| **application\_type** | string | Type of passport application. |
+| **application\_received\_date** | string | Date when the passport application was received. |
+
 
 ### 12. CIN API
 This API is used to retrieve information from the Corporate Identification Number (CIN) such as business incorporation date, director(s) details, CIN status, and more.
@@ -2291,6 +2590,32 @@ This API is used to retrieve information from the Corporate Identification Numbe
   }
 }
 ```
+
+#### Response Structure
+You get the following key information in the `data` object of the response:
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **cin** | string | Entered CIN information. |
+| **company\_name** | string | Name of the company registered under the Ministry of Corporate Affairs. |
+| **registration\_number** | number | Registration number of the company. |
+| **incorporation\_date** | string | Date of incorporation of the company. |
+| **cin\_status** | string | Granular level status of the CIN information. |
+| **email** | string | Email ID of the company registered under the Ministry of Corporate Affairs. |
+| **incorporation\_country** | string | Country where the company is located. |
+| **director\_details** | array of objects | Details of the directors associated with the company. See the table below for details of each director in the list. |
+
+
+##### `director_details`
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **dob** | string | Date of birth of the director. |
+| **designation** | string | Designation of the director. |
+| **address** | string | Address information of the director. |
+| **din** | string | Unique identification number assigned to the individual appointed as director. |
+| **name** | string | Name of the director. |
+
 
 ### 13. Employee Details API
 This API retrieves an individual's recent employment details such as member ID, joining date, and exit date of the company. Verifying the employment information mitigates risk and prevents fraud.
@@ -2394,6 +2719,83 @@ This API retrieves an individual's recent employment details such as member ID, 
 }
 ```
 
+#### Response Structure
+You get the following key information in the `data` object of the response:
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **input** | object | Contains information entered in the API request. |
+| **uan\_details** | array of objects | UAN (Universal Account Number) information. See the table below for details of each entry in the list. |
+| **recent\_employment\_details** | object | Employment details of the individual. |
+
+
+##### `uan_details`
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **uan** | string | Universal Account Number (UAN) information of the employee. |
+| **source** | string | Source of the information. |
+| **source\_score** | number | Confidence score of the source. |
+| **basic\_details** | object | Basic information of the employee:  
+  
+1\. **gender**  
+2\. **dob**  
+3\. **employee\_confidence\_score**  
+4\. **employee\_name**  
+5\. **phone**  
+6\. **aadhaar\_verified** (boolean) |
+| **employment\_details** | object | Employment details of the individual:  
+  
+1\. **member\_id**: Unique ID assigned to an individual.  
+2\. **establishment\_id**: unique ID assigned to a specific establishment or business entity.  
+3\. **exit\_date**: last working day of the employee in the organisation.  
+4\. **joining\_date**: first working day of the employee in the organisation.  
+5\. **leave\_reason**: reason for leaving the previous job.  
+6\. **establishment\_name**: name of the organisation.  
+7\. **employer\_confidence\_score** |
+| **additional\_details** | object | Additional information of the individual:  
+  
+1\. **aadhaar**  
+2\. **email**  
+3\. **PAN**  
+4\. **ifsc**  
+5\. **bank\_account**  
+6\. **bank\_address**  
+7\. **relative\_name**  
+8\. **relation**: realtionship of the individual with the relative. |
+| **recent\_employment\_details** | object | Employment details of the individual with two objects: `employee_details` and `employer_details`. See the tables below for details of each object. |
+
+
+##### `recent_employment_details`.`employee_details`
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **member\_id** | string | Unique ID assigned to an individual. |
+| **exit\_date** | string | Last working day of the employee in the organisation. |
+| **joining\_date** | string | First working day of the employee in the organisation. |
+| **uan** | string | Universal Account Number (UAN) information of the employee. |
+| **epfo** | object | Information found in Employees' Provident Fund Organisation (EPFO):  
+1\. **recent**: (boolean) whether the retrieved information is recent.  
+2\. **name\_unique**: (boolean) whether the retrieved name is unique.  
+3\. **pf\_filings\_details**: (boolean) whether the PF filing details are true. |
+| **employed** | boolean | Whether the individual is currently employed. |
+| **employee\_name\_match** | boolean | Whether the individual's name matches the name found in EPFO. |
+| **exit\_date\_marked** | boolean | Whether the last working day is marked. |
+
+
+##### `recent_employment_details`.`employer_details`
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **establishment\_id** | string | Unique ID of the establishment. |
+| **establishment\_name** | string | Name of the establishment. |
+| **setup\_date** | string | Date when the establishment was set up. |
+| **ownership\_type** | string | Type of ownership of the establishment. |
+| **employer\_confidence\_score** | number | Confidence score for the employer's data. |
+| **employer\_name\_match** | boolean | Whether the employer's name matches the provided data. |
+| **pf\_filing\_details** | array of objects | Details of the Provident Fund (PF) filings: total_amount, employees_count, and wage_month |
+
+
 ### 14. IP API
 This API verifies the location, proxy details, city risk score, and proxy type risk score of an IP address.
 
@@ -2425,6 +2827,22 @@ This API verifies the location, proxy details, city risk score, and proxy type r
   }
 }
 ```
+
+#### Response Structure
+You get the following key information in the `data` object of the response:
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **status** | string | Status of the IP address. |
+| **ip\_address** | string | Entered IP address. |
+| **proxy\_type** | string | Category or classification of a proxy server based on its functionality. |
+| **country\_code** | string | Country code associated with the geographical location of the IP address. |
+| **country\_name** | string | Name of the country associated with the geographical location of the IP address. |
+| **region\_name** | string | Name of the region associated with the geographical location of the IP address. |
+| **city\_name** | string | Name of the city associated with the geographical location of the IP address. |
+| **city\_risk\_score** | string | Risk score of a city based on factors like cybersecurity threats or crime rates. |
+| **proxy\_type\_risk\_score** | string | Risk score associated with the type of proxy server. |
+
 
 ### 15. Reverse Geocoding API
 This API converts geolocation coordinates (latitude and longitude) into readable location information for verification purposes.
@@ -2460,6 +2878,23 @@ This API converts geolocation coordinates (latitude and longitude) into readable
 }
 ```
 
+#### Response Structure
+You get the following key information in the `data` object of the response:
+
+| **Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| **latitude** | string | The latitude of the location coordinates as provided in the API call input. |
+| **longitude** | string | The longitude of the location coordinates as provided in the API call input. |
+| **address** | string | Physical address of the entered coordinates. |
+| **city** | string | Name of the city of the entered coordinates. |
+| **state** | string | Name of the state of the entered coordinates. |
+| **statecode** | string | State code of the entered coordinates. |
+| **countrycode** | string | Country code of the entered coordinates. |
+| **pincode** | string | PIN code information of the entered coordinates. |
+| **score** | number | Confidence score of the entered coordinates. |
+| **status** | string | Status of the entered coordinates. |
+
+
 ### 16. Name Match API
 This API verifies names that have enormous variations. Provide the names you want to verify, and we will tell you whether they match and provide the reason.
 
@@ -2473,13 +2908,13 @@ This API verifies names that have enormous variations. Provide the names you wan
     - **name_1** (string / required) - The name that you want to verify.
     - **name_2** (string / required) - The name that you want to verify with name_1.
 
-#### Response Description
+#### Response Structure
 The response will contain the following information in the `data` object:
 
 | Name          | Data Type | Description                                                      |
 |---------------|-----------|------------------------------------------------------------------|
 | name_1        | string    | Name that you entered for verification.                          |
-| name_2        | string    | Another name that you entered for verification with name_1.     |
+| name_2        | string    | Another name that you entered for verification with name_1.      |
 | score         | number    | Score of the name match verification.                            |
 | reason        | string    | Justification for the match score.                               |
 
@@ -2495,6 +2930,8 @@ The response will contain the following information in the `data` object:
   "status": "success"
 }
 ```
+
+
 ---
 
 # Marketing & Communication APIs
@@ -2512,12 +2949,17 @@ This API sends a promotional text message (SMS) to one or more mobile numbers in
     - **mobile** (string / required) - The mobile number to which the SMS has to be sent
     - **text** (string) - The body of the SMS
 
-#### Process
+#### Description
+
+**Note:** SMS will not be actually delivered in Sandbox/UAT envoirnment. You must test it using the production credential to actually deliver an SMS to a mobile number.
+
+**Process:**
 1. **DLT Registration by partner**: The partner needs to complete the DLT registration for the SMS service.
 2. **Unique SMS Sender ID registration**: Register a unique SMS Sender ID with a maximum of 5 characters.
 3. **DLT SMS registration for each SMS template**: The partner must register each SMS template with DLT.
 4. **DLT Registration ID mapping**: The partner’s SMS templates are mapped with the DLT Registration ID by Eko (Complete file must be uploaded at once).
 5. **Configure SMS signature with Eko**: The partner needs to configure the SMS signature with Eko, which will be appended at the end of each SMS.
+
 
 ---
 
@@ -2559,8 +3001,12 @@ This API is used to safely refund cash to a customer in case their transaction f
   "status": 0
 }
 ```
+
 #### Description
-When a transaction fails, we automatically send an OTP to the customer. Ask for that OTP from the customer and call this API with the OTP. This will act as consent that you have actually refunded the cash to the customer. After this API call, the eValue will be refunded into your account.
+- When a transaction fails, we automatically send an OTP to the customer.
+- Ask for that OTP from the customer and call this API with the OTP.
+- This will act as consent that you have actually refunded the cash to the customer.
+- After this API call, the value will be refunded into your account.
 
 
 ### 2. Resend Refund OTP API
@@ -2574,7 +3020,6 @@ This API resends an OTP to the customer to initiate the refund process for a fai
     - **tid** (int64, required): TID of the transaction for which the OTP needs to be resent.
   - **Body Params:**
     - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
-
 
 #### Sample Response (200 OK)
 ```json
@@ -2624,12 +3069,14 @@ This API retrieves a list of all failed transactions for a customer that are in 
   "status": 0
 }
 ```
+
 #### Description
 This API is used to safely refund cash to a customer in case their transaction fails.
 
 - When the transaction fails, we automatically send an OTP to the customer.
 - Ask for that OTP from the customer and call this API with the OTP.
 - This will act as a consent that you have actually refunded back the cash to the customer. After this API call, we will refund the eValue into your account.
+
 
 ---
 
@@ -2665,10 +3112,9 @@ Retrieve a list of banks.
 }
 ```
 
+
 ### 2. Get Bank Details API
 This API retrieves the details of a bank, such as its name, bank code, available channels, whether IFSC is required, and if account verification is supported.
-
-This API fetches details of a bank based on the bank code.
 
 #### Details
 - **Method:** GET
@@ -2682,23 +3128,21 @@ This API fetches details of a bank based on the bank code.
     - **ifsc** (string, optional): IFSC code of the bank.
 
 #### Description
-#### Parameter Details:
+This API fetches details of a bank based on the bank code.
+
+##### Parameter Details:
 - **available_channel**:
   - `0`: All - Both channels IMPS and NEFT are available for the bank.
   - `1`: NEFT - Only NEFT mode is available.
   - `2`: IMPS - Only IMPS mode is available.
-
 - **ifsc_status**:
   - `1`: Bank short-code (e.g., SBIN) works for both IMPS and NEFT.
   - `2`: Bank short-code works for IMPS only.
   - `3`: System can generate logical IFSC for both IMPS and NEFT.
   - `4`: IFSC is required.
-
 - **isVerificationAvailable**:
   - `0`: Bank is not available for account verification.
   - `1`: Bank is available for account verification.
-
-
 
 #### Sample Response (200 OK)
 ```json
@@ -2718,6 +3162,7 @@ This API fetches details of a bank based on the bank code.
   "status": 0
 }
 ```
+
 
 ### 3. Get IFSC Details API
 This API retrieves the bank and branch details for a given IFSC code.
@@ -2732,7 +3177,6 @@ This API retrieves the bank and branch details for a given IFSC code.
     - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
     - **user_code** (string, required): User code value of the retailer from whom the request is coming.
 
-  
 #### Sample Response (200 OK)
 ```json
 {
@@ -2751,6 +3195,8 @@ This API retrieves the bank and branch details for a given IFSC code.
   "status": 0
 }
 ```
+
+
 ---
 
 # Saved Transactions APIs
