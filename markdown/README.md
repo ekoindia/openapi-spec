@@ -519,10 +519,10 @@ Use this API to get a customer's basic profile information such as name, mobile 
 - **URL Endpoint:** /customer/profile/{customer_id}
 - **Request Structure:**
   - **Path Parameters:**
-    - **customer_id** (string / required) - Customer's mobile number
+    - customer_id (string / required) - Customer's mobile number
   - **Query Parameters:**
-    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
-    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - initiator_id (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - user_code (string / required) - User code value of the retailer from whom the request is coming
 
 
 #### Response Structure
@@ -565,12 +565,12 @@ Use this API to onboard a new customer and enable them for services like DMT (Do
 - **URL Endpoint:** /customer/account
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
-    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **customer_id** (string / required) - Customer's mobile number
-    - **name** (string / required) - Name of the customer as per ID
-    - **dob** (date / required) - Date of birth of the customer in YYYY-MM-DD format
-    - **residence_address** (array of strings / required) - Address of the customer in JSON format
+    - initiator_id (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - user_code (string / required) - User code value of the retailer from whom the request is coming
+    - customer_id (string / required) - Customer's mobile number
+    - name (string / required) - Name of the customer as per ID
+    - dob (date / required) - Date of birth of the customer in YYYY-MM-DD format
+    - residence_address (array of strings / required) - Address of the customer in JSON format
 
 #### Description
 The API triggers an OTP to be delivered to the customer. Once the OTP is verified using the Verify Customer OTP API, the customer will be successfully onboarded.
@@ -588,10 +588,10 @@ Use this API to verify a customer's mobile number via OTP. The OTP is received w
 - **URL Endpoint:** /customer/account/otp/verify
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
-    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **otp** (int32 / required) - OTP which you received by calling Create Customer or Resend OTP API.
-    - **customer_id** (string / required) - Mobile number of the customer
+    - initiator_id (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - user_code (string / required) - User code value of the retailer from whom the request is coming
+    - otp (int32 / required) - OTP which you received by calling Create Customer or Resend OTP API.
+    - customer_id (string / required) - Mobile number of the customer
 
 
 ### 4. Resend OTP to Customer API
@@ -602,9 +602,9 @@ Use this API to resend the OTP to the customer for verification.
 - **URL Endpoint:** /customer/account/otp
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **customer_id** (string / required) - Customer's mobile number
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / required) - User code value of the retailer from whom the request is coming
+    - customer_id (string / required) - Customer's mobile number
 
 
 ---
@@ -619,12 +619,12 @@ Use this API to pay the credit card bill for a customer. The process includes ac
 - **URL Endpoint:** /customer/payment/credit-card-bill
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **recipient_id** (string / required) - The ID that you get after adding a recipient
-    - **amount** (string / required) - The payment amount
-    - **client_ref_id** (string / required) - Unique reference number of your system, ensure it's as unique as possible to avoid duplication
-    - **customer_id** (string / required) - ID generated using the create customer API
-    - **channel** (string / required) - Defaults to 2
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - recipient_id (string / required) - The ID that you get after adding a recipient
+    - amount (string / required) - The payment amount
+    - client_ref_id (string / required) - Unique reference number of your system, ensure it's as unique as possible to avoid duplication
+    - customer_id (string / required) - ID generated using the create customer API
+    - channel (string / required) - Defaults to 2
 
 #### Description
 
@@ -689,21 +689,21 @@ Fetch a user's bill for any utility operator.
 - **URL Endpoint:** /customer/payment/bbps/bill
 - **Request Structure:**
   - **Query Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **client_ref_id** (string / required) - Unique transaction ID that you generate for every transaction
-    - **utility_acc_no** (string / required) - Account number provided by operator for the bill to be fetched/paid
-    - **confirmation_mobile_no** (string / required) - Customer's mobile number
-    - **sender_name** (string / required) - Valid name of the customer
-    - **operator_id** (string / required) - See the Get Operators API for the operator ID
-    - **source_ip** (string / required) - IP of the agent/retailer making the request (for security & fraud prevention)
-    - **latlong** (string / required) - Agent's location in latitude,longitude format (for security & fraud prevention)
-    - **hc_channel** (int32 / optional) - Defaults to 0
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / required) - User code value of the retailer from whom the request is coming
+    - client_ref_id (string / required) - Unique transaction ID that you generate for every transaction
+    - utility_acc_no (string / required) - Account number provided by operator for the bill to be fetched/paid
+    - confirmation_mobile_no (string / required) - Customer's mobile number
+    - sender_name (string / required) - Valid name of the customer
+    - operator_id (string / required) - See the Get Operators API for the operator ID
+    - source_ip (string / required) - IP of the agent/retailer making the request (for security & fraud prevention)
+    - latlong (string / required) - Agent's location in latitude,longitude format (for security & fraud prevention)
+    - hc_channel (int32 / optional) - Defaults to 0
       - 0 = Instant payment
       - 1 = Delayed (offline) payment with higher commissions
-    - **dob** (string / optional) - Date of birth of the policy holder in DD/MM/YYYY format (required for LIC)
-    - **cycle_number** (string / optional) - Cycle number of the electricity bill (required for MSEB)
-    - **authenticator** (string / optional) - Password provided by MSEB (required for MSEB)
+    - dob (string / optional) - Date of birth of the policy holder in DD/MM/YYYY format (required for LIC)
+    - cycle_number (string / optional) - Cycle number of the electricity bill (required for MSEB)
+    - authenticator (string / optional) - Password provided by MSEB (required for MSEB)
 
 #### Description
 
@@ -725,8 +725,8 @@ Get a list of supported categories for utility bill payments, mobile recharge, e
 - **URL Endpoint:** /customer/payment/bbps/categories
 - **Request Structure:**
   - **Query Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string / required) - Unique code (mobile number) of your registered agent/retailer
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / required) - Unique code (mobile number) of your registered agent/retailer
 
 
 ### 5. Get BBPS Locations API
@@ -737,8 +737,8 @@ Get a list of supported location IDs for BBPS.
 - **URL Endpoint:** /customer/payment/bbps/locations
 - **Request Structure:**
   - **Query Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string / required) - Unique code (mobile number) of your registered agent/retailer
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / required) - Unique code (mobile number) of your registered agent/retailer
 
 
 ### 6. Get BBPS Operators API
@@ -749,9 +749,9 @@ Get a list of BBPS operators filtered by a category or a location.
 - **URL Endpoint:** /customer/payment/bbps/operators
 - **Request Structure:**
   - **Query Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **category** (int32) - To filter the operator list by a category, pass the "operator_category_id" (use Get Categories API for the available list)
-    - **location** (int32) - To filter the operator list by a state, pass the "operator_location_id" (use Get Locations API for the available list)
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - category (int32) - To filter the operator list by a category, pass the "operator_category_id" (use Get Categories API for the available list)
+    - location (int32) - To filter the operator list by a state, pass the "operator_location_id" (use Get Locations API for the available list)
 
 #### Response Structure
 You get the following key information in the `data` object of the response:
@@ -769,9 +769,9 @@ Get a list of parameters to be passed in the Bill Fetch or Bill Pay APIs for a g
 - **URL Endpoint:** /customer/payment/bbps/operator/{operator_id}/parameters
 - **Request Structure:**
   - **Path Params:**
-    - **operator_id** (int32 / required) - The id for the operator (use Get Operators API for the available list)
+    - operator_id (int32 / required) - The id for the operator (use Get Operators API for the available list)
   - **Query Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
 
 #### Response Structure
 You get the following key information for each parameter to be passed:
@@ -798,19 +798,19 @@ Initiate a fund transfer to any bank account.
 - **URL Endpoint:** /user/payment/fund-transfer
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string / optional) - Unique code (registered mobile number) of your agent/retailer
-    - **client_ref_id** (string / required) - Unique transaction ID which you will generate from your end for every transaction. Must be less than 20 characters.
-    - **service_code** (int32 / required) - Pass "45" as a fixed value
-    - **payment_mode** (int32 / required) - The payment mode you want to use to transfer money (NEFT, IMPS, or RTGS)
-    - **recipient_name** (string / required) - Beneficiary name (as in bank records)
-    - **account** (string / required) - Beneficiary bank account number
-    - **ifsc** (string / required) - IFSC Code of receiver’s bank
-    - **amount** (int32 / required) - Amount to transfer
-    - **sender_name** (string / required) - Sender’s name
-    - **tag** (string / optional) - Payment purpose; eg- Grocery
-    - **latlong** (string / optional) - Sender’s location information; eg- 28.78123,72.808912
-    - **beneficiary_account_type** (int32 / optional) - Beneficiary's bank account type (1 = Savings Account, 2 = Current Account)
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / optional) - Unique code (registered mobile number) of your agent/retailer
+    - client_ref_id (string / required) - Unique transaction ID which you will generate from your end for every transaction. Must be less than 20 characters.
+    - service_code (int32 / required) - Pass "45" as a fixed value
+    - payment_mode (int32 / required) - The payment mode you want to use to transfer money (NEFT, IMPS, or RTGS)
+    - recipient_name (string / required) - Beneficiary name (as in bank records)
+    - account (string / required) - Beneficiary bank account number
+    - ifsc (string / required) - IFSC Code of receiver’s bank
+    - amount (int32 / required) - Amount to transfer
+    - sender_name (string / required) - Sender’s name
+    - tag (string / optional) - Payment purpose; eg- Grocery
+    - latlong (string / optional) - Sender’s location information; eg- 28.78123,72.808912
+    - beneficiary_account_type (int32 / optional) - Beneficiary's bank account type (1 = Savings Account, 2 = Current Account)
 
 
 #### Sample Response (200 OK)
@@ -878,10 +878,10 @@ Validate the VPA (Virtual Payment Address) for a UPI Recipient.
 - **URL Endpoint:** /customer/payment/upi/validate-vpa
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **customer_vpa** (string / required) - VPA which you want to validate
-    - **client_ref_id** (string / required) - Unique transaction ID which you will generate from your end for every transaction, it will help you identify your specific transaction
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / required) - User code value of the retailer from whom the request is coming
+    - customer_vpa (string / required) - VPA which you want to validate
+    - client_ref_id (string / required) - Unique transaction ID which you will generate from your end for every transaction, it will help you identify your specific transaction
 
 #### Sample Response (200 OK)
 ```json
@@ -915,12 +915,12 @@ Pay money from your Eko wallet to a VPA ID.
 - **URL Endpoint:** /customer/payment/upi
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **customer_id** (string / required) - Mobile number of retailer
-    - **customer_vpa** (string / required) - Vpa in which you want the amount to be settled
-    - **recipient_name** (string / required) - Name of the receiver who is associated with the vpa
-    - **amount** (string / required) - Amount that you want to settle
-    - **client_ref_id** (string / required) - Unique transaction ID which you will generate from your end for every transaction
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - customer_id (string / required) - Mobile number of retailer
+    - customer_vpa (string / required) - Vpa in which you want the amount to be settled
+    - recipient_name (string / required) - Name of the receiver who is associated with the vpa
+    - amount (string / required) - Amount that you want to settle
+    - client_ref_id (string / required) - Unique transaction ID which you will generate from your end for every transaction
 
 #### Sample Response (200 OK)
 ```json
@@ -958,10 +958,10 @@ Generate a static QR code for any agent to receive payments via UPI into their E
 - **URL Endpoint:** /user/collection/upi/generate-static-qr
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **sender_id** (string / required) - Registered mobile number of the agent for which the QR code is generated
-    - **name** (string / required) - Name of the agent for which QR code is generated
-    - **email** (string) - Email address of the agent whose QR code is being generated
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - sender_id (string / required) - Registered mobile number of the agent for which the QR code is generated
+    - name (string / required) - Name of the agent for which QR code is generated
+    - email (string) - Email address of the agent whose QR code is being generated
 
 #### Response Values
 | Values | Status         |
@@ -1012,11 +1012,11 @@ Generate a Dynamic QR code for any agent to receive payments via UPI into their 
 - **URL Endpoint:** /user/collection/upi/generate-static-qr
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **sender_id** (string / required) - Registered mobile number of the agent for which the QR code is generated
-    - **amount** (int32 / required) - The payment amount to accept via UPI
-    - **name** (string / required) - Name of the agent for which QR code is generated
-    - **email** (string) - Email address of the agent whose QR code is being generated
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - sender_id (string / required) - Registered mobile number of the agent for which the QR code is generated
+    - amount (int32 / required) - The payment amount to accept via UPI
+    - name (string / required) - Name of the agent for which QR code is generated
+    - email (string) - Email address of the agent whose QR code is being generated
 
 #### Sample Response (200 OK)
 ```json
@@ -1059,12 +1059,12 @@ Verify a bank account number by transferring ₹1 to retrieve the name of the ac
 - **URL Endpoint:** /tools/kyc/bank-account/penny-drop
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **customer_id** (string / required) - Registered mobile number of the customer
-    - **id_type** (string / required) - It can have 2 values: ifsc or bank_code. For bank_code refer to the bank list attached below
-    - **id** (string / required) - need to pass the complete value of IFSC code if ifsc is selected as id_type and bank code if bank_code is selected as id_type
-    - **acc_num** (string / required) - pass complete account number which needs to be verified
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / required) - User code value of the retailer from whom the request is coming
+    - customer_id (string / required) - Registered mobile number of the customer
+    - id_type (string / required) - It can have 2 values: ifsc or bank_code. For bank_code refer to the bank list attached below
+    - id (string / required) - need to pass the complete value of IFSC code if ifsc is selected as id_type and bank code if bank_code is selected as id_type
+    - acc_num (string / required) - pass complete account number which needs to be verified
 
 #### Response Values
 | response_status_id | response_type_id | message                                               |
@@ -1108,12 +1108,12 @@ Verify a bank account number without transferring ₹1 to retrieve the name of t
 - **URL Endpoint:** /tools/kyc/bank-account/penniless
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **customer_id** (string / required) - Registered mobile number of the customer
-    - **id_type** (string / required) - It can have 2 values: ifsc or bank_code. For bank_code refer to the bank list attached below
-    - **id** (string / required) - need to pass the complete value of IFSC code if ifsc is selected as id_type and bank code if bank_code is selected as id_type
-    - **acc_num** (string) - pass complete account number which needs to be verified
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / required) - User code value of the retailer from whom the request is coming
+    - customer_id (string / required) - Registered mobile number of the customer
+    - id_type (string / required) - It can have 2 values: ifsc or bank_code. For bank_code refer to the bank list attached below
+    - id (string / required) - need to pass the complete value of IFSC code if ifsc is selected as id_type and bank code if bank_code is selected as id_type
+    - acc_num (string) - pass complete account number which needs to be verified
 
 #### Response Values
 | response_status_id | response_type_id | message                                               |
@@ -1157,9 +1157,9 @@ Use this API to verify bank account information in bulk.
 - **URL Endpoint:** /tools/kyc/bank-account/bulk
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string / required) - A unique ID for every API call generated at your end
-    - **entries** (array of objects / required) - An array of bank account information, which needed to be verified
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string / required) - A unique ID for every API call generated at your end
+    - entries (array of objects / required) - An array of bank account information, which needed to be verified
 
 #### Response Structure
 You get the following information in the response within `data` object:
@@ -1180,9 +1180,9 @@ Use this API to get the details of the bulk bank account verification request. Y
 - **URL Endpoint:** /tools/kyc/bank-account/bulk/status
 - **Request Structure:**
   - **Query Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **bulk_reference_id** (int32 / required) - The unique ID you receive in the response of Bulk Bank Account Verification API.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - bulk_reference_id (int32 / required) - The unique ID you receive in the response of Bulk Bank Account Verification API.
 
 #### Response Structure
 You get an array of objects in the `entries` parameter inside `data` with the following information for each bank account:
@@ -1240,9 +1240,9 @@ Use this API to verify IFSC codes. You will receive the bank name, the branch th
 - **URL Endpoint:** /tools/kyc/ifsc
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string / required) - A unique ID for every API call generated at your end
-    - **ifsc** (string / required) - The IFSC information of the bank account to be validated. It should be an alphanumeric value of 11 characters. The first 4 characters should be alphabets, the 5th character should be a 0, and the remaining 6 characters should be numerals.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string / required) - A unique ID for every API call generated at your end
+    - ifsc (string / required) - The IFSC information of the bank account to be validated. It should be an alphanumeric value of 11 characters. The first 4 characters should be alphabets, the 5th character should be a 0, and the remaining 6 characters should be numerals.
 
 #### Response Structure
 You get the following key information in the `data` object of the response:
@@ -1296,23 +1296,23 @@ You get the following key information in the `data` object of the response:
 ```
 
 
-## 2. PAN APIs
+## 2. PAN Verification APIs
 
-### 2.1. PAN Verification API
-Active PAN Verification service for your agents.
+### 2.1. PAN Basic API
+Use this API to verify PAN details of your users/customers.
 
-**Note:** You need to call the Activate Service for Agent API for your agents with `service_code = 4` before they can use this API on production. Refer to the FAQs for any issues: [PAN Verification FAQs](https://developers.eko.in/docs/pan-verifiication-queries).
+**Note:** You need to call the Activate Service for Agent API for your users with `service_code = 4` before they can use this API on production. Refer to the FAQs for any issues: [PAN Verification FAQs](https://developers.eko.in/docs/pan-verifiication-queries).
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /tools/kyc/verify-pan
+- **URL Endpoint:** /tools/kyc/pan-basic
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **pan_number** (string / required) - This is the pan number that needs to be verified
-    - **purpose** (int32 / required) - By Default, pass value as 1
-    - **purpose_desc** (string / required) - Purpose of the PAN verification service
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - pan_number (string / required) - This is the pan number that needs to be verified
+    - purpose (int32 / required) - By Default, pass value as 1
+    - purpose_desc (string / required) - Purpose of the PAN verification service
+    - client_ref_id (string) - A unique ID for every API call generated at your end
 
 #### Sample Response (200 OK)
 ```json
@@ -1336,21 +1336,21 @@ Active PAN Verification service for your agents.
 ```
 
 
-### 2.2. PAN Light API
+### 2.2. PAN Lite API
 An alternate API to validate PAN information of individuals. The API helps verify the unique identifier, name of the individual, date of birth, and other information that helps in customer onboarding, KYC verification, and other fraud prevention security measures.
 
 **Note:** The name displayed in the response is the name entered in the API request, not the registered name.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /tools/kyc/pan-light
+- **URL Endpoint:** /tools/kyc/pan-lite
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **pan** (string / required) - Unique 10-character alphanumeric identifier of the individual issued by the Income Tax Department. The first 5 should be alphabets followed by 4 numbers and the 10th character should again be an alphabet.
-    - **name** (string / required) - Name of the individual as per the PAN information
-    - **dob** (string / required) - Date of birth of the individual as per the PAN information. The format is YYYY-MM-DD
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - pan (string / required) - Unique 10-character alphanumeric identifier of the individual issued by the Income Tax Department. The first 5 should be alphabets followed by 4 numbers and the 10th character should again be an alphabet.
+    - name (string / required) - Name of the individual as per the PAN information
+    - dob (string / required) - Date of birth of the individual as per the PAN information. The format is YYYY-MM-DD
+    - client_ref_id (string) - A unique ID for every API call generated at your end
 
 #### Sample Response (200 OK)
 ```json
@@ -1407,19 +1407,19 @@ You get the following key information in the `data` object of the response:
 | EU         | The entered PAN information is valid but marked as Under Liquidation.      |
 
 
-### 2.3. PAN 360 API
+### 2.3. PAN Advanced API
 Use this API to verify the PAN information of your customers. You can retrieve more information such as first name, last name, masked Aadhaar number, contact information, and more. Mobile number, email, and address fields will have low fill rate around 5-10% based on the recent changes to the source of the information.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /tools/kyc/pan-360
+- **URL Endpoint:** /tools/kyc/pan-advanced
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **pan** (string / required) - Unique 10-character alphanumeric identifier of the individual issued by the Income Tax Department. The first 5 should be alphabets followed by 4 numbers and the 10th character should again be an alphabet.
-    - **name** (string / required) - Name of the individual as per the PAN information
-    - **dob** (string / required) - Date of birth of the individual as per the PAN information. The format is YYYY-MM-DD
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - pan (string / required) - Unique 10-character alphanumeric identifier of the individual issued by the Income Tax Department. The first 5 should be alphabets followed by 4 numbers and the 10th character should again be an alphabet.
+    - name (string / required) - Name of the individual as per the PAN information
+    - dob (string / required) - Date of birth of the individual as per the PAN information. The format is YYYY-MM-DD
+    - client_ref_id (string) - A unique ID for every API call generated at your end
 
 
 #### Response Structure
@@ -1492,9 +1492,9 @@ Use this API to verify your customers' PAN information individually or in batche
 - **URL Endpoint:** /tools/kyc/pan/bulk
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **entries** (array of objects / required) - An array of PAN details for verification. PAN and name should be included. The name parameter is optional.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - entries (array of objects / required) - An array of PAN details for verification. PAN and name should be included. The name parameter is optional.
 
 #### Response Structure
 You get the following key information in the `data` object of the response:
@@ -1512,9 +1512,9 @@ Use this API to get the status of the Bulk PAN Verification API request.
 - **URL Endpoint:** /tools/kyc/pan/bulk/status
 - **Request Structure:**
   - **Query Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **reference_id** (string / required) - The unique ID that you receive in the response of Bulk PAN Verification API.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - reference_id (string / required) - The unique ID that you receive in the response of Bulk PAN Verification API.
 
 #### Response Structure
 You get the following key information in the `data` object of the response:
@@ -1564,11 +1564,11 @@ Use this API to capture the user's consent for Aadhaar verification.
 - **URL Endpoint:** /tools/kyc/aadhaar/consent
 - **Request Structure:**
   - **Query Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string) - User code value of the user/agent from whom the request is coming
-    - **is_consent** (string / required) - Y = Yes, N = No
-    - **consent_text** (string / required) - The Aadhaar number that you want to verify
-    - **realsourceip** (string / required) - IP of the merchant who is making the request.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string) - User code value of the user/agent from whom the request is coming
+    - is_consent (string / required) - Y = Yes, N = No
+    - consent_text (string / required) - The Aadhaar number that you want to verify
+    - realsourceip (string / required) - IP of the merchant who is making the request.
 
 #### Response Structure
 You get the following key information in the `data` object of the response:
@@ -1606,13 +1606,13 @@ This API sends an OTP from UIDAI to the user's mobile number linked to their Aad
 - **URL Endpoint:** /tools/kyc/aadhaar/otp
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string) - User code value of the user/agent from whom the request is coming
-    - **aadhar** (string / required) - Aadhaar number to be verified
-    - **is_consent** (string / required) - Y - Yes , N - No
-    - **access_key** (string / required) - Received in response of GET Aadhaar Consent api
-    - **caseId** (string / required) - Aadhaar number
-    - **realsourceip** (string / required) - IP of the merchant who is making the request.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string) - User code value of the user/agent from whom the request is coming
+    - aadhar (string / required) - Aadhaar number to be verified
+    - is_consent (string / required) - Y - Yes , N - No
+    - access_key (string / required) - Received in response of GET Aadhaar Consent api
+    - caseId (string / required) - Aadhaar number
+    - realsourceip (string / required) - IP of the merchant who is making the request.
 
 #### Response Values
 | Name                  | Data Type | Description                                           |
@@ -1646,14 +1646,14 @@ This API retrieves the Aadhaar details of a user in XML format.
 - **URL Endpoint:** /tools/kyc/aadhaar/xml-download
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string) - User code value of the retailer from whom the request is coming
-    - **aadhar** (string / required) - Aadhar number you are verifiying
-    - **is_consent** (string / required) - Y = Yes, N = No
-    - **otp** (string / required) - OTP received on the mobile number linked with aadhaar
-    - **share_code** (string) - Random 4 digit code generated on partner's end
-    - **access_key** (string / required) - Received in response of GET Aadhaar OTP API
-    - **realsourceip** (string) - IP of the merchant who is making the request.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string) - User code value of the retailer from whom the request is coming
+    - aadhar (string / required) - Aadhar number you are verifiying
+    - is_consent (string / required) - Y = Yes, N = No
+    - otp (string / required) - OTP received on the mobile number linked with aadhaar
+    - share_code (string) - Random 4 digit code generated on partner's end
+    - access_key (string / required) - Received in response of GET Aadhaar OTP API
+    - realsourceip (string) - IP of the merchant who is making the request.
 
 #### Sample Response (200 OK)
 ```json
@@ -1678,11 +1678,11 @@ Use this API to send an OTP to any mobile number in India for verification or co
 - **URL Endpoint:** /tools/kyc/mobile/otp
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string) - Unique code of your registered agent/user
-    - **mobile** (string / required) - The mobile number where the OTP has to be sent
-    - **intent_id** (string) - A numeric ID representing the intent for sending the OTP. See the table above. Default value is 1 for mobile verification.
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string) - Unique code of your registered agent/user
+    - mobile (string / required) - The mobile number where the OTP has to be sent
+    - intent_id (string) - A numeric ID representing the intent for sending the OTP. See the table above. Default value is 1 for mobile verification.
+    - client_ref_id (string) - A unique ID for every API call generated at your end
 
 #### Sample Response (200 OK)
 ```json
@@ -1707,11 +1707,11 @@ Use this API to verify the OTP sent to your user/agent.
 - **URL Endpoint:** /tools/kyc/mobile/otp/verify
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string) - Unique code of your registered agent/user
-    - **mobile** (string / required) - The mobile number to which the OTP was delivered
-    - **otp** (string / required) - OTP received on merchant's registered mobile number
-    - **otp_ref_id** (string / required) - Received in response of e-KYC OTP Request API
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string) - Unique code of your registered agent/user
+    - mobile (string / required) - The mobile number to which the OTP was delivered
+    - otp (string / required) - OTP received on merchant's registered mobile number
+    - otp_ref_id (string / required) - Received in response of e-KYC OTP Request API
 
 #### Sample Response (200 OK)
 ```json
@@ -1737,11 +1737,11 @@ Use this API to match two faces and get the similarity between them.
 - **URL Endpoint:** /tools/kyc/face-match
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string) - Unique code of your registered agent/user
-    - **mobile** (string / required) - The mobile number to which the OTP was delivered
-    - **otp** (string / required) - OTP received on merchant's registered mobile number
-    - **otp_ref_id** (string / required) - Received in response of e-KYC OTP Request API
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string) - Unique code of your registered agent/user
+    - mobile (string / required) - The mobile number to which the OTP was delivered
+    - otp (string / required) - OTP received on merchant's registered mobile number
+    - otp_ref_id (string / required) - Received in response of e-KYC OTP Request API
 
 #### Sample Response (200 OK)
 ```json
@@ -1769,10 +1769,10 @@ Use this API to verify if a given GSTIN information exists or not.
 - **URL Endpoint:** /tools/kyc/gstin
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string / required) - A unique ID for every API call generated at your end
-    - **GSTIN** (string / required) - The unique number assigned to businesses registered under the Goods and Services Tax (GST) system in India.
-    - **business_name** (string / required) - Name of the business to which the GSTIN is issued. The maximum character limit is 100
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string / required) - A unique ID for every API call generated at your end
+    - GSTIN (string / required) - The unique number assigned to businesses registered under the Goods and Services Tax (GST) system in India.
+    - business_name (string / required) - Name of the business to which the GSTIN is issued. The maximum character limit is 100
 
 #### Sample Response (200 OK)
 ```json
@@ -1874,9 +1874,9 @@ Use this API to fetch the list of GSTIN associated with the PAN information.
 - **URL Endpoint:** /tools/kyc/gstin-with-pan
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **pan** (string / required) - Unique 10-character alphanumeric identifier of the individual issued by the Income Tax Department. The first 5 should be alphabets followed by 4 numbers and the 10th character should again be an alphabet.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - pan (string / required) - Unique 10-character alphanumeric identifier of the individual issued by the Income Tax Department. The first 5 should be alphabets followed by 4 numbers and the 10th character should again be an alphabet.
 
 #### Sample Response (200 OK)
 ```json
@@ -1924,10 +1924,10 @@ Use this API to create a DigiLocker URL to retrieve and verify Aadhaar informati
 - **URL Endpoint:** /tools/kyc/digilocker
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string / required) - A unique ID for every API call generated at your end
-    - **document_requested** (array of strings / required) - Defaults to "AADHAAR". A list of customer documents required for verification. Currently, only "AADHAAR" is supported.
-    - **redirect_url** (string / required) - A URL to take the user to after completing the DigiLocker journey. It will contain the verification_id that can be used to get the status of the verification.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string / required) - A unique ID for every API call generated at your end
+    - document_requested (array of strings / required) - Defaults to "AADHAAR". A list of customer documents required for verification. Currently, only "AADHAAR" is supported.
+    - redirect_url (string / required) - A URL to take the user to after completing the DigiLocker journey. It will contain the verification_id that can be used to get the status of the verification.
 
 #### Sample Response (200 OK)
 ```json
@@ -2081,9 +2081,9 @@ Use this API to verify the authenticity of vehicle details. It provides complete
 - **URL Endpoint:** /tools/kyc/vehicle-rc
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **vehicle_number** (string / required) - The registration number of the vehicle
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - vehicle_number (string / required) - The registration number of the vehicle
 
 #### Sample Response (200 OK)
 ```json
@@ -2254,10 +2254,10 @@ Use this API to verify the driving license of your customer. It retrieves detail
 - **URL Endpoint:** /tools/kyc/driving-license
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **dl_number** (string / required) - The driving licence number of the individual for verification.
-    - **dob** (string / required) - The date of birth of the individual as present in the driving licence. The accepted format is YYYY-MM-DD.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - dl_number (string / required) - The driving licence number of the individual for verification.
+    - dob (string / required) - The date of birth of the individual as present in the driving licence. The accepted format is YYYY-MM-DD.
 
 #### Sample Response (200 OK)
 ```json
@@ -2380,10 +2380,10 @@ Use this API to verify the authenticity of your customer's voter ID. You need to
 - **URL Endpoint:** /tools/kyc/voter-id
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **epic_number** (string / required) - The unique identification number assigned to each voter ID
-    - **name** (string) - The name of the voter ID card holder.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - epic_number (string / required) - The unique identification number assigned to each voter ID
+    - name (string) - The name of the voter ID card holder.
 
 #### Sample Response (200 OK)
 ```json
@@ -2473,11 +2473,11 @@ Use this API to verify passport information (only Indian passports) and ensure t
 - **URL Endpoint:** /tools/kyc/passport
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **file_number** (string / required) - The unique alphanumeric code that identifies an individual's passport application.
-    - **dob** (string / required) - The date of birth of the passport holder. The format is YYYY-MM-DD.
-    - **name** (string) - The name of the passport holder.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - file_number (string / required) - The unique alphanumeric code that identifies an individual's passport application.
+    - dob (string / required) - The date of birth of the passport holder. The format is YYYY-MM-DD.
+    - name (string) - The name of the passport holder.
 
 #### Sample Response (200 OK)
 ```json
@@ -2516,9 +2516,9 @@ Use this API to retrieve information from the Corporate Identification Number (C
 - **URL Endpoint:** /tools/kyc/cin
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **cin** (string / required) - The unique alphanumeric identifier assigned to companies registered under the Ministry of Corporate Affairs, India.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - cin (string / required) - The unique alphanumeric identifier assigned to companies registered under the Ministry of Corporate Affairs, India.
 
 #### Sample Response (200 OK)
 ```json
@@ -2589,14 +2589,14 @@ This API retrieves an individual's recent employment details such as member ID, 
 - **URL Endpoint:** /tools/kyc/advance-employment
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **phone** (string / required) - The phone number of the employee. (conditional mandatory)
-    - **pan** (string) - The PAN information of the employee. (conditional mandatory)
-    - **uan** (string) - The unique number assigned to every employee contributing to the Employees' Provident Fund (EPF). (conditional mandatory)
-    - **dob** (string) - The date of birth information of the employee. The format is YYYY-MM-DD. Employee date of birth (conditional mandatory)
-    - **employee_name** (string) - The name of the employee. (conditional mandatory)
-    - **employer_name** (string) - The name of the employer. (conditional mandatory)
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - phone (string / required) - The phone number of the employee. (conditional mandatory)
+    - pan (string) - The PAN information of the employee. (conditional mandatory)
+    - uan (string) - The unique number assigned to every employee contributing to the Employees' Provident Fund (EPF). (conditional mandatory)
+    - dob (string) - The date of birth information of the employee. The format is YYYY-MM-DD. Employee date of birth (conditional mandatory)
+    - employee_name (string) - The name of the employee. (conditional mandatory)
+    - employer_name (string) - The name of the employer. (conditional mandatory)
 
 #### Sample Response (200 OK)
 ```json
@@ -2760,7 +2760,7 @@ You get the following key information in the `data` object of the response:
 | **pf\_filing\_details** | array of objects | Details of the Provident Fund (PF) filings: total_amount, employees_count, and wage_month |
 
 
-### 14. IP API
+### 14. IP Verification API
 This API verifies the location, proxy details, city risk score, and proxy type risk score of an IP address.
 
 #### Details
@@ -2768,9 +2768,9 @@ This API verifies the location, proxy details, city risk score, and proxy type r
 - **URL Endpoint:** /tools/kyc/ip
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **ip_address** (string / required) - The IP address that you need to verify.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - ip_address (string / required) - The IP address that you need to verify.
 
 #### Sample Response (200 OK)
 ```json
@@ -2816,10 +2816,10 @@ This API converts geolocation coordinates (latitude and longitude) into readable
 - **URL Endpoint:** /tools/kyc/reverse-geocoding
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **latitude** (string / required) - The latitude of the geolocation (eg: 28.527554)
-    - **longitude** (string) - The longitude of the geolocation (eg: 77.043832)
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - latitude (string / required) - The latitude of the geolocation (eg: 28.527554)
+    - longitude (string) - The longitude of the geolocation (eg: 77.043832)
 
 #### Sample Response (200 OK)
 ```json
@@ -2867,10 +2867,10 @@ This API verifies names that have enormous variations. Provide the names you wan
 - **URL Endpoint:** /tools/kyc/name-match
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **client_ref_id** (string) - A unique ID for every API call generated at your end
-    - **name_1** (string / required) - The name that you want to verify.
-    - **name_2** (string / required) - The name that you want to verify with name_1.
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - client_ref_id (string) - A unique ID for every API call generated at your end
+    - name_1 (string / required) - The name that you want to verify.
+    - name_2 (string / required) - The name that you want to verify with name_1.
 
 #### Response Structure
 The response will contain the following information in the `data` object:
@@ -2908,10 +2908,10 @@ This API sends a promotional text message (SMS) to one or more mobile numbers in
 - **URL Endpoint:** /tools/marketing/sms
 - **Request Structure:**
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string) - Unique code of your registered agent/user
-    - **mobile** (string / required) - The mobile number to which the SMS has to be sent
-    - **text** (string) - The body of the SMS
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string) - Unique code of your registered agent/user
+    - mobile (string / required) - The mobile number to which the SMS has to be sent
+    - text (string) - The body of the SMS
 
 #### Description
 
@@ -2937,11 +2937,11 @@ Use this API to safely refund cash to a customer in case their transaction fails
 - **URL Endpoint:** /customer/payment/refund/{tid}
 - **Request Structure:**
   - **Path Parameters:**
-    - **tid** (int64 / required) - Eko's transaction ID
+    - tid (int64 / required) - Eko's transaction ID
   - **Body Parameters:**
-    - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **otp** (int32 / required) - OTP shared with customer on the registered mobile number
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / required) - User code value of the retailer from whom the request is coming
+    - otp (int32 / required) - OTP shared with customer on the registered mobile number
 
 
 #### Sample Response (200 OK)
@@ -2981,9 +2981,9 @@ This API resends an OTP to the customer to initiate the refund process for a fai
 - **URL Endpoint:** /customer/payment/refund/{tid}/otp
 - **Request Structure:**
   - **Path Params:**
-    - **tid** (int64, required): TID of the transaction for which the OTP needs to be resent.
+    - tid (int64, required): TID of the transaction for which the OTP needs to be resent.
   - **Body Params:**
-    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - initiator_id (string, required): Your registered mobile number (See Platform Credentials for UAT).
 
 #### Sample Response (200 OK)
 ```json
@@ -3007,9 +3007,9 @@ This API retrieves a list of all failed transactions for a customer that are in 
 - **URL Endpoint:** /customer/payment/refunds
 - **Request Structure:**
   - **Query Params:**
-    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
-    - **user_code** (string, required): User code value of the retailer from whom the request is coming.
-    - **customer_id** (string, required): Customer's mobile number.
+    - initiator_id (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - user_code (string, required): User code value of the retailer from whom the request is coming.
+    - customer_id (string, required): Customer's mobile number.
 
 
 #### Sample Response (200 OK)
@@ -3085,11 +3085,11 @@ This API retrieves the details of a bank, such as its name, bank code, available
 - **URL Endpoint:** /tools/reference/bank/{bank_code}
 - **Request Structure:**
   - **Path Params:**
-    - **bank_code** (string, required): Refer to the bank list for respective bank codes.
+    - bank_code (string, required): Refer to the bank list for respective bank codes.
   - **Query Params:**
-    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
-    - **user_code** (string, required): User code value of the retailer from whom the request is coming.
-    - **ifsc** (string, optional): IFSC code of the bank.
+    - initiator_id (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - user_code (string, required): User code value of the retailer from whom the request is coming.
+    - ifsc (string, optional): IFSC code of the bank.
 
 #### Description
 This API fetches details of a bank based on the bank code.
@@ -3136,10 +3136,10 @@ This API retrieves the bank and branch details for a given IFSC code.
 - **URL Endpoint:** /tools/reference/banks/ifsc/{ifsc}
 - **Request Structure:**
   - **Path Params:**
-    - **ifsc** (string, required): IFSC code of the bank.
+    - ifsc (string, required): IFSC code of the bank.
   - **Query Params:**
-    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
-    - **user_code** (string, required): User code value of the retailer from whom the request is coming.
+    - initiator_id (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - user_code (string, required): User code value of the retailer from whom the request is coming.
 
 #### Sample Response (200 OK)
 ```json
@@ -3185,8 +3185,8 @@ This API commits one or more saved transactions.
 - **URL Endpoint:** /customer/payment/saved
 - **Request Structure:**
   - **Body Params:**
-    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
-    - **user_code** (string, required): Unique code of your registered agent/retailer.
+    - initiator_id (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - user_code (string, required): Unique code of your registered agent/retailer.
 
 
 ### 3. Cancel Saved Transaction API
@@ -3197,10 +3197,10 @@ This API cancels a saved transaction.
 - **URL Endpoint:** /customer/payment/saved/{tid}
 - **Request Structure:**
   - **Path Params:**
-    - **tid** (int64, required): TID of the saved transaction to cancel.
+    - tid (int64, required): TID of the saved transaction to cancel.
   - **Body Params:**
-    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
-    - **user_code** (string, required): Unique code of your registered agent/retailer.
+    - initiator_id (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - user_code (string, required): Unique code of your registered agent/retailer.
 
 
 ### 4. Schedule Saved Transaction for Commit API
@@ -3211,10 +3211,10 @@ This API schedules a saved transaction to automatically commit at a later time, 
 - **URL Endpoint:** /customer/payment/schedule/{tid}
 - **Request Structure:**
   - **Path Params:**
-    - **tid** (int64, required): TID of the saved transaction to schedule.
+    - tid (int64, required): TID of the saved transaction to schedule.
   - **Body Params:**
-    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
-    - **user_code** (string, required): Unique code of your registered agent/retailer.
+    - initiator_id (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - user_code (string, required): Unique code of your registered agent/retailer.
 
 
 ### 5. Get Scheduled Transactions API
@@ -3225,7 +3225,7 @@ This API retrieves a list of scheduled transactions for an agent.
 - **URL Endpoint:** /customer/payment/scheduled
 - **Request Structure:**
   - **Query Params:**
-    - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
-    - **user_code** (string, required): Unique code of your registered agent/retailer.
+    - initiator_id (string, required): Your registered mobile number (See Platform Credentials for UAT).
+    - user_code (string, required): Unique code of your registered agent/retailer.
 
 
