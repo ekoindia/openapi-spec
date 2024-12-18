@@ -6,40 +6,48 @@ This section contains the general information about the API, including the base 
 
 ## 1. API Base URLs
 
-- **Production:** `https://api.eko.in/ekoicici/v3`
-- **Sandbox/UAT:** `https://staging.eko.in/ekoapi/v3`
+- **Sandbox/UAT Base URL:** https://staging.eko.in/ekoapi/v3
+- **Production Base URL:** https://api.eko.in:25002/ekoicici/v3
 
-## 2. Developer Portal Links
+## 2. Eko Developer Portal Links
 
 - **Guides:** [https://developers.eko.in/docs](https://developers.eko.in/docs)
 - **API References:** [https://developers.eko.in/reference](https://developers.eko.in/reference)
 
 ## 3. Authentication
 
-To ensure the security & integrity of your data, you must authenticate each API call by passing the following headers:
+To ensure the security & integrity of your data, you must authenticate each API call by passing the credentials in the header for each API call.
 
+You will receive the following credentials from Eko:
+1. `developer_key`: This value is passed in the header for each API call.
+   1. For production environment, Eko will provide this value to you.
+   2. For UAT/Sandbox/Testing environment, use this value for `developer_key`: becbbce45f79c6f5109f848acd540567
+2. `access_key`: This value is required to generate the `secret-key` which needs to be passed in the header for each API call.
+   1. For production environment, Eko will provide this value to you.
+   2. For UAT/Sandbox/Testing environment, use this value for `access-key`: d2fe1d99-6298-4af2-8cc5-d97dcf46df30
+
+Pass the following credentials in the header for each API call:
 | Header | Data Type | Description |
 | --- | --- | --- |
-| **developer_key** | string | Your static API key shared by Eko |
-| **secret-key** | string | Dynamic security key, to be generated before every request |
-| **secret-key-timestamp** | string | The request timestamp, used to generate the secret-key |
-| **request_hash** | string | This is required only for financial transactions. See the guide below. |
+| `developer_key` | string | Your static API key shared by Eko |
+| `secret-key` | string | Dynamic security key, to be generated before every request |
+| `secret-key-timestamp` | string | The request timestamp, used to generate the secret-key |
+| `request_hash` | string | This is required only for financial transactions where your wallet needs to be debited |
 
-### How to get the _developer_key_?
 
-Production developer_key will be shared after the following is done:
-1.  Organisation's KYC is completed on Eko's platform (visit [https://connect.eko.in](https://connect.eko.in)).
-2.  The UAT **developer\_key** can be obtained from the [platform credentials](https://developers.eko.in/v3/docs/platform-credentials) section.
+### How to get the authentication credentials for production?
 
-### How to generate the _secret-key_ & _secret-key-timestamp_?
+1. Fill the form at [https://developers.eko.in](https://developers.eko.in).
+2. Eko's support team will get in touch with you to complete your KYC and provide the production credentials: `developer_key` and `access_key`.
 
-1. Eko will provide an _access\_key_. It must be kept a secret on your backend. If compromised, it can be regenerated.
-   1.  The access\_key will be shared to you over email, after completing your organisation's KYC at [https://connect.eko.in](https://connect.eko.in)
-   2.  For UAT, use the following access\_key: d2fe1d99-6298-4af2-8cc5-d97dcf46df30
-2. Encode the _access\_key_ using base64 encoding.
-3. Get the current timestamp (in milliseconds since UNIX epoch). It will be used as the **secret-key-timestamp**. (Check [currentmillis.com](https://currentmillis.com/) to understand the timestamp format)
+
+### How to generate the `secret-key` & `secret-key-timestamp`?
+
+1. Eko will provide an `access_key` for production. It must be kept a secret on your backend. If compromised, it can be regenerated.
+2. Encode the `access_key` using base64 encoding.
+3. Get the current timestamp (in milliseconds since UNIX epoch). It will be used as the `secret-key-timestamp` and passed in the header. (Check [currentmillis.com](https://currentmillis.com/) to understand the timestamp format).
 4. Compute the signature by hashing salt and base64 encoded key using Hash-based message authentication code HMAC and SHA256
-5. Encode the signature using base64 encoding technique. This encoded value is your **secret-key**.
+5. Encode the signature using base64 encoding technique. This encoded value is your `secret-key`.
 
 #### Example Code (PHP)
 
@@ -66,35 +74,35 @@ Production developer_key will be shared after the following is done:
 ?>
 ```
 
-> **Note:**
-> 1.  The secret-key-timestamp must match with the current time.
-> 2.  **If you are using .NET**, you should not send overly specific time stamps, due to differing interpretations of how extra time precision should be dropped. To avoid overly specific time stamps, manually construct dateTime objects with no more than millisecond precision.
+**Note:**
+1.  The `secret-key-timestamp` must match with the current time.
+2.  **If you are using .NET**, you should not send overly specific time stamps, due to differing interpretations of how extra time precision should be dropped. To avoid overly specific time stamps, manually construct dateTime objects with no more than millisecond precision.
 
 
-### How to generate the _request\_hash_?
+### How to generate the `request_hash`?
 
-The _request\_hash_ header is only required for financial transactions for a certain amount which needs to be debited from your Eko wallet or your agent's Eko wallet (E-value).
+The `request_hash` header is only required for financial transactions where money needs to be debited from your Eko wallet or your agent's Eko wallet (E-value).
 
 It is used to encode critical parameters of your financial transaction such as amount, agent, recipient, etc. It ensures that the values have been validated on your server and they have not been tampered with.
 
 Before generating the request hash you need to generate a string by concatenating some parameters in a particular order. You cannot change the sequence.
 
-For example, sequence of concatenated string for Bill Payments = `secret_key_timestamp + utility_acc_no + amount + user_code`
+For example, sequence of concatenated string for Bill Payments = `secret_key_timestamp` + `utility_acc_no` + `amount` + `user_code`
 
-After generating the concatenated string please follow the following procedure :
+This information is provided in the documentation for each API where the `request_hash` is required.
 
-1. Encode your authenticator password using base64. Authenticator password will be the _access\_key_ which you have used for the secret-key generation.
-   1. For UAT, the access\_key is "d2fe1d99-6298-4af2-8cc5-d97dcf46df30".
-2. After encoding the key, you need to hmac the concatenated string and encoded\_key using hmac256.
-3. After hmac , you need to again encode the result using the base64.
+After generating the concatenated string, do the following to generate the `request_hash`:
 
-Final result after encoding will be the request\_hash.
+1. Encode your authenticator password using base64. Authenticator password will be the `access_key` which you have used for the secret-key generation.
+2. After encoding the key, you need to hmac the concatenated string and encoded_key using HMAC256.
+3. After HMAC, you need to again encode the result using base64.
+
+Final result after encoding will be the `request_hash`.
 
 
+#### Sample Code to Generate `request_hash` (PHP):
 
-#### Sample Code to Generate _request\_hash_ (PHP):
-
-**Note:** The following example generates the request\_hash for the Bill Payment API by concatenating secret\_key\_timestamp, utility\_acc\_no, amount, and user\_code (in the same order). For APIs, a different set of parameters may be required. See the corresponding API docs for details.
+**Note:** The following example generates the `request_hash` for the Bill Payment API by concatenating `secret_key_timestamp`, `utility_acc_no`, `amount`, and `user_code` (in the same order). For other APIs, a different set of parameters may be required. See the corresponding API docs for details.
 
 ```php
 <?php
@@ -140,11 +148,11 @@ function generateRequestHashForBillPay() {
 
 ### Common Request Parameters
 
-| Parameter | Data Type | Required? | Description |
-| --- | --- | --- | --- |
-| **initiator_id** | number | Required | Your registered mobile number (See Sandbox Credentials for Testing section) |
-| **user_code** | string | Required | Unique code of your registered user/agent |
-| **client_ref_id** | string | Optional | Your unique reference number for the transaction |
+| Parameter | Data Type | Required? | Description | Example Value for Testing |
+| --- | --- | --- | --- | --- |
+| **initiator_id** | number | Required | Your registered mobile number (See Sandbox Credentials for Testing section) | 9962981729 |
+| **user_code** | string | Optional | Unique code of your registered user/agent | 20810200 |
+| **client_ref_id** | string | Optional | Your unique random reference number. This is required for POST/PUT/DELETE requests only | 123456789012345 |
 
 ### Common Response Parameters
 The response will always be of type JSON (application/json) unless otherwise specified in the API documentation. All responses will contain the following parameters:
@@ -162,17 +170,13 @@ The response will always be of type JSON (application/json) unless otherwise spe
 
 ### Common HTTP Response Codes
 
-| HTTP Response Code                                                                   | Type      | Description                                                                                                                                                                      |
-| ------------------------------------------------------------------------------------ | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 200                                                                                  | OK        | Response returned by our system. See _status_, _tx\_status_, and _message_ parameters in the response to understand the correct status.                                          |
-| 403                                                                                  | Forbidden | It is usually due to sending an incorrect secret-key or timestamp. Please check the generation code in the [Authentication](https://developers.eko.in/v3/docs/authauth) section. |
-| Also make sure to use your auth\_key in the generation code (not the developer key). |
-| 404                                                                                  | Not Found | This error occurs when you are passing the wrong request URL, please make sure to check the request                                                                              |
-URL before hitting the request.
-Production Base URL: [https://api.eko.in:25002/ekoicici/](https://api.eko.in:25002/ekoicici/)
-Staging Base URL: [https://staging.eko.in/ekoapi/](https://staging.eko.in/ekoapi/) |
-| 405 | Method Not Allowed | Check the correct HTTP request method of the APIs from [API Reference](https://developers.eko.in/v3/reference/agent-management-overview), for example, GET, POST, PUT or DELETE. |
-| 415 | Unsupported Media Type | Check the _Content-Type_ of the API from its respective [API Reference](https://developers.eko.in/v3/reference/agent-management-overview) page and check if you are using the same content-type or not. Example: Content-Type = `application/x-www-form-urlencoded` |
+| HTTP Response Code | Type | Description |
+| --- | --- | --- |
+| 200 | OK | Response returned by our system. See `status`, `response_type_id` and `message` parameters in the response to understand the correct status. |
+| 403 | Forbidden | It is usually due to sending an incorrect secret-key or timestamp. Please check the generation code in the [Authentication](https://developers.eko.in/v3/docs/authauth) section. Also make sure to use your `access_key` in the generation code (not the developer_key). |
+| 404 | Not Found | This error occurs when you are passing the wrong request URL, please make sure to check the request URL before hitting the request. |
+| 405 | Method Not Allowed | Check the correct HTTP request method of the APIs from the reference, for example, GET, POST, PUT or DELETE. |
+| 415 | Unsupported Media Type | Check the _Content-Type_ of the API from its respective API Reference page and check if you are using the same content-type or not. Example: Content-Type = `application/x-www-form-urlencoded` |
 | 500 | Internal Server Error | It usually implies that the API is not able to connect to our servers. For staging, remove the port 25004 from the URL. And, in production re-check your URL and HTTP method. |
 
 
@@ -181,16 +185,16 @@ Staging Base URL: [https://staging.eko.in/ekoapi/](https://staging.eko.in/ekoapi
 | message                                                                                | Resolution                                                                                                                                                         |
 | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | No mapping rule matched                                                                | In the URL swap v1 with v2 or vice-versa. If it still does not work then send the request and URL at [sales.engineer@eko.co.in.](mailto:sales.engineer@eko.co.in.) |
-| \- Agent not allowed - Agent not allowed to do this transaction - Customer not allowed | Check if the service is ACTIVATED for the user\_code. If not then, activate the service for the merchant.                                                          |
+| Agent not allowed / Agent not allowed to do this transaction / Customer not allowed | Check if the service is ACTIVATED for the `user_code`. If not, then activate the service for the user.                                                          |
 | No Key for Response                                                                    | Please re-check the value of the request parameters. It is either missing or the format is incorrect.                                                              |
 | Kindly use your production key                                                         | Check if you're using the correct developer key (credentials for staging cannot be used in production).                                                            |
 
 
+
 ### Response Status Codes
+For all APIs, **`status = 0`** should be treated as **successful**, else failed.
 
-For all financial transactions, **_status = 0_** should be treated as successful else fail and the current state of the transaction can be retrieved from **_tx\_status_** and **_txstatus\_desc_** parameter.
-
-For all non-financial requests, you may need to consider both status and response\_type\_id parameters.
+For all non-financial requests, you may need to consider both `status` and `response_type_id` parameters.
 
 | status | Description                                                 |
 | ------ | ----------------------------------------------------------- |
@@ -214,7 +218,7 @@ For all non-financial requests, you may need to consider both status and respons
 | 44/45  | Incomplete IFSC Code                                        |
 | 48     | Recipient bank not found                                    |
 | 102    | Invalid Account number length                               |
-| 136    | Please provide valid ifsc format                            |
+| 136    | Please provide valid IFSC format                            |
 | 508    | Invalid IFSC for the selected bank                          |
 | 521    | IFSC not found out in the system                            |
 | 313    | Recipient registration not done                             |
@@ -223,7 +227,7 @@ For all non-financial requests, you may need to consider both status and respons
 | 55     | Error from NPCI                                             |
 | 460    | Invalid channel                                             |
 | 319    | Invalid Sender/Initiator                                    |
-| 314    | Failed! Monthly limit exceeds                               |
+| 314    | Failed! Monthly limit exceeded                              |
 | 350    | Verification failed. Recipient name not found.              |
 | 344    | IMPS is not available in this bank                          |
 | 46     | Invalid account details                                     |
@@ -231,59 +235,25 @@ For all non-financial requests, you may need to consider both status and respons
 | 1237   | ID proof number already exists in the system                |
 | 585    | Customer already KYC Approved                               |
 | 347    | Insufficient balance                                        |
-| 945    | Sender /Beneficiary limit has been exhausted for this month |
-| 544    | Transaction not processed.Bank is not available now.        |
-
-Possible values of parameter **_tx\_status_**:
-
-| tx\_status | txstatus\_desc                               |
-| ---------- | -------------------------------------------- |
-| 0          | Success                                      |
-| 1          | Fail                                         |
-| 2          | Response Awaited/Initiated (in case of NEFT) |
-| 3          | Refund Pending                               |
-| 4          | Refunded                                     |
-| 5          | On Hold ( Transaction Inquiry Required)      |
-
+| 945    | Sender/Beneficiary limit has been exhausted for this month  |
+| 544    | Transaction not processed. Bank is not available now.       |
 
 
 ## 6. Sandbox Credentials for Testing
 
-For testing AePS Gateway, activation of services, DMT (including Bank verification), AePS API and BBPS, use the below credentials:
-1. developer\_key: becbbce45f79c6f5109f848acd540567
-2. Key: d2fe1d99-6298-4af2-8cc5-d97dcf46df30 (will be used to generate secret-key and secret-key-timestamp). The secret-key and secret-key-timestamp have to be generated dynamically. Refer to the link [https://developers.eko.in/docs/authentication](https://developers.eko.in/v3/docs/authentication) for the dynamic secret-key and secret-key-timestamp generation
-3. initiator\_id: 9962981729
-4. user\_code: 20810200
-
-For testing Indo-Nepal APIs, use the following credentials:
-1. developer\_key: becbbce45f79c6f5109f848acd540567
-2. Key: d2fe1d99-6298-4af2-8cc5-d97dcf46df30 (will be used to generate secret-key and secret-key-timestamp).The secret-key and secret-key-timestamp have to be generated dynamically. Refer to the link [https://developers.eko.in/docs/authentication](https://developers.eko.in/v3/docs/authentication) for the dynamic secret-key and secret-key-timestamp generation
-3. initiator\_id: 9910028267
-
-For testing PAN Verification, use the following credentials:
-1. developer\_key: becbbce45f79c6f5109f848acd540567
-2. Key: d2fe1d99-6298-4af2-8cc5-d97dcf46df30 (will be used to generate secret-key and secret-key-timestamp).The secret-key and secret-key-timestamp have to be generated dynamically. Refer to the link [https://developers.eko.in/docs/authentication](https://developers.eko.in/v3/docs/authentication) for the dynamic secret-key and secret-key-timestamp generation
-3. initiator\_id: 9962981729
-
-For testing Bank Account Verification, use the following credentials:
-1. developer\_key: becbbce45f79c6f5109f848acd540567
-2. Key: d2fe1d99-6298-4af2-8cc5-d97dcf46df30 (will be used to generate secret-key and secret-key-timestamp).The secret-key and secret-key-timestamp have to be generated dynamically. Refer to the link [https://developers.eko.in/docs/authentication](https://developers.eko.in/v3/docs/authentication) for the dynamic secret-key and secret-key-timestamp generation
-3. initiator\_id: 9962981729
-4. customer\_id: 6111111111
-
-For testing AePS Fund Settlement, use the following credentials:
-1. developer\_key: becbbce45f79c6f5109f848acd540567
-2. Key: d2fe1d99-6298-4af2-8cc5-d97dcf46df30 (will be used to generate secret-key and secret-key-timestamp).The secret-key and secret-key-timestamp have to be generated dynamically. Refer to the link [https://developers.eko.in/docs/authentication](https://developers.eko.in/v3/docs/authentication) for the dynamic secret-key and secret-key-timestamp generation
-3. initiator\_id: 7411111111
-4. user\_code : 20310006
+Use the following credentials for testing in the UAT/Sandbox environment:
+1. `developer_key`: becbbce45f79c6f5109f848acd540567
+2. `access_key`: d2fe1d99-6298-4af2-8cc5-d97dcf46df30
+3. `initiator_id`: 9962981729
+4. `user_code`: 20810200
+5. `customer_id`: 6111111111
 
 
-> Important Note:
->
-> Only IP which is in India will be whitelisted while going on the production mode. IP which is present outside India will not be whitelisted as per compliance
->
-> Port 25002 and Port 25004 must be opened on your server in order to reach the requests from your server to our production and staging environment respectively and a connection must be made from your server. You can check if connection is being made from your server or not using the telnet command.
-
+**Notes:**
+- For testing AePS Fund Settlement, use the following credentials:
+  - initiator\_id: 7411111111
+  - user\_code : 20310006
+- Only the IPs from India will be whitelisted for production (as per compliance).
 
 ---
 
@@ -316,7 +286,7 @@ A transaction can timeout due to multiple reasons where partner bank responses c
 In such cases transactions should not be treated as declined or failed. Ideally, it should be inquired using the Transaction Inquiry API by passing your own unique reference number i.e. client_ref_id.
 
 Possible values of parameter *tx_status*:
-| tx\_status | Description                                  |
+| tx_status | Description                                  |
 | ---------- | -------------------------------------------- |
 | 0          | Success                                      |
 | 1          | Fail                                         |
@@ -356,8 +326,6 @@ We will send the following payload when we hit your URL:
     "tid": 12971412,
     "beneficiary_account_type": null,
     "client_ref_id": "Settlemet7206124423",
-    "old_tx_status": 2,
-    "old_tx_status_desc": "Initiated",
     "bank_ref_num": "87694239",
     "ifsc": "SBIN0000001",
     "recipient_name": "Virender Singh",
@@ -524,7 +492,7 @@ Use this API to deactivate a service for your user (agent/retailer/distributor).
   - Body Parameters:
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
 
-  
+
 ### 6. Get Settlement Account Balance API
 
 Get the current balance (E-value) of your or your user's wallet.
@@ -535,7 +503,7 @@ Get the current balance (E-value) of your or your user's wallet.
 - **Request Structure:**
   - Query Parameters:
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - customer_id_type (string / required) - Defaults to mobile_number
+    - customer_id_type (string / required) - Defaults to "mobile_number"
     - customer_id (string / required) - Registered mobile number for the wallet (e.g., your registered mobile number)
 
 
@@ -580,7 +548,7 @@ You get the following key information in the `data` object of response:
 
 #### Description
 
-> **Note:**  
+> **Note:**
 > - If you get the remarks as rejected, you must call the API to create the customer for KYC with the documents for the KYC.
 > - If you have initiated a name change of wallet but OTP has not been entered yet, this state means that we have only the Aadhaar card number right now, and the OVD documents have not been updated yet.
 
@@ -657,7 +625,7 @@ Use this API to pay the credit card bill for a customer. The process includes ac
     - **client_ref_id** (string / required) - Unique reference number of your system, ensure it's as unique as possible to avoid duplication
     - **customer_id** (string / required) - ID generated using the create customer API
     - **channel** (string / required) - Defaults to 2
-    
+
 #### Description
 
 > **Credit Card Bill Payment Flow:**
@@ -671,7 +639,7 @@ Use this API to pay the credit card bill for a customer. The process includes ac
 Make payment for utility bills, mobile recharge, etc via BBPS (Bharat Bill Payment System).
 
 #### Details
-- **Method:** POST  
+- **Method:** POST
 - **URL Endpoint:** /customer/payment/bbps
  - **Request Structure:**
     - **Body Parameters:**
@@ -707,11 +675,11 @@ Make payment for utility bills, mobile recharge, etc via BBPS (Bharat Bill Payme
 - Just before calling the payment API, generate the secret-key-timestamp, secret-key, and request-hash.
 - Make payment by calling this API with all the required parameters.
 
-> **Note:**  
-> High Commission (Offline): 
+> **Note:**
+> High Commission (Offline):
 > This allows API partners to send fetch bill and pay bill transactions via the new high commission channel, parallel to the existing instant channels. This only works for billers that have the high_commission channel available. The hc_channel is an optional parameter; you can pass its value as 1 to choose the high commissions channel. If not passed, the transaction will be processed through the "instant" channel. High commission transactions may take up to 6 hours to complete on the biller's side.
 
- 
+
 
 ### 3. Fetch BBPS Bill API
 Fetch a user's bill for any utility operator.
@@ -730,10 +698,10 @@ Fetch a user's bill for any utility operator.
     - **operator_id** (string / required) - See the Get Operators API for the operator ID
     - **source_ip** (string / required) - IP of the agent/retailer making the request (for security & fraud prevention)
     - **latlong** (string / required) - Agent's location in latitude,longitude format (for security & fraud prevention)
-    - **hc_channel** (int32 / optional, defaults to 0) -
+    - **hc_channel** (int32 / optional) - Defaults to 0
       - 0 = Instant payment
       - 1 = Delayed (offline) payment with higher commissions
-    - **dob** (string / optional, defaults to DD/MM/YYYY) - Date of birth of the policy holder (required for LIC)
+    - **dob** (string / optional) - Date of birth of the policy holder in DD/MM/YYYY format (required for LIC)
     - **cycle_number** (string / optional) - Cycle number of the electricity bill (required for MSEB)
     - **authenticator** (string / optional) - Password provided by MSEB (required for MSEB)
 
@@ -785,7 +753,7 @@ Get a list of BBPS operators filtered by a category or a location.
     - **category** (int32) - To filter the operator list by a category, pass the "operator_category_id" (use Get Categories API for the available list)
     - **location** (int32) - To filter the operator list by a state, pass the "operator_location_id" (use Get Locations API for the available list)
 
-#### Response Description
+#### Response Structure
 You get the following key information in the `data` object of the response:
 | Parameter Name            | Description                                                                                          | Use                              |
 |---------------------------|------------------------------------------------------------------------------------------------------|----------------------------------|
@@ -805,7 +773,7 @@ Get a list of parameters to be passed in the Bill Fetch or Bill Pay APIs for a g
   - **Query Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
 
-#### Response Description
+#### Response Structure
 You get the following key information for each parameter to be passed:
 | Parameter Name     | Description                                                | Use                                |
 |--------------------|------------------------------------------------------------|------------------------------------|
@@ -843,7 +811,6 @@ Initiate a fund transfer to any bank account.
     - **tag** (string / optional) - Payment purpose; eg- Grocery
     - **latlong** (string / optional) - Sender’s location information; eg- 28.78123,72.808912
     - **beneficiary_account_type** (int32 / optional) - Beneficiary's bank account type (1 = Savings Account, 2 = Current Account)
-    - **source** (string / required) - Pass "API" as a fixed value
 
 
 #### Sample Response (200 OK)
@@ -854,8 +821,6 @@ Initiate a fund transfer to any bank account.
     "account": "234243534",
     "client_ref_id": "Settlemet7206123420",
     "ifsc": "SBIN0000001",
-    "txstatus_desc": "Initiated",
-    "tx_status": 2,
     "amount": 1045.00,
     "tid": 12971397,
     "balance": 35322.2,
@@ -924,7 +889,6 @@ Validate the VPA (Virtual Payment Address) for a UPI Recipient.
   "response_status_id": 0,
   "data": {
     "client_ref_id": "62421321704479941883",
-    "tx_status": "0",
     "user_code": "1000834",
     "bank_id": 687,
     "fee": "0.0",
@@ -964,7 +928,6 @@ Pay money from your Eko wallet to a VPA ID.
   "response_status_id": 2,
   "data": {
     "client_ref_id": "RIM10011909045679290",
-    "tx_status": "2",
     "amount": "205.0",
     "tds": "",
     "balance": "46547.99",
@@ -985,9 +948,9 @@ Pay money from your Eko wallet to a VPA ID.
 
 ---
 
-# UPI Collection APIs 
+# UPI Collection APIs
 
-### 1. Generate Static QR (UPI) API 
+### 1. Generate Static QR (UPI) API
 Generate a static QR code for any agent to receive payments via UPI into their E-value wallet.
 
 #### Details
@@ -1280,7 +1243,7 @@ Use this API to verify IFSC codes. You will receive the bank name, the branch th
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
     - **client_ref_id** (string / required) - A unique ID for every API call generated at your end
     - **ifsc** (string / required) - The IFSC information of the bank account to be validated. It should be an alphanumeric value of 11 characters. The first 4 characters should be alphabets, the 5th character should be a 0, and the remaining 6 characters should be numerals.
-    
+
 #### Response Structure
 You get the following key information in the `data` object of the response:
 | Name           | Data Type   | Description                                          |
@@ -1582,7 +1545,7 @@ Each item in the `entries` array in the `data` contains the following informatio
 | aadhaar_seeding_status_desc | string | Additional information of the linking of Aadhaar and PAN card              |
 
 
-## 3. Aadhaar APIs 
+## 3. Aadhaar APIs
 Aadhaar card provides a unique identification number to individuals in India. This number is used as a primary identifier for various purposes, including tax compliance.
 
 Aadhaar verification involves verifying the details present on the Aadhaar card with the UIDAI's database to ensure the accuracy and validity of the information provided.
@@ -1645,7 +1608,6 @@ This API sends an OTP from UIDAI to the user's mobile number linked to their Aad
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
     - **user_code** (string) - User code value of the user/agent from whom the request is coming
-    - **source** (string) - Defaults to NEWCONNECT
     - **aadhar** (string / required) - Aadhaar number to be verified
     - **is_consent** (string / required) - Y - Yes , N - No
     - **access_key** (string / required) - Received in response of GET Aadhaar Consent api
@@ -1719,7 +1681,7 @@ Use this API to send an OTP to any mobile number in India for verification or co
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
     - **user_code** (string) - Unique code of your registered agent/user
     - **mobile** (string / required) - The mobile number where the OTP has to be sent
-    - **intent_id** (string) - Defaults to 1. A numeric ID representing the intent for sending the OTP. See the table above. Default value is 1 for mobile verification.
+    - **intent_id** (string) - A numeric ID representing the intent for sending the OTP. See the table above. Default value is 1 for mobile verification.
     - **client_ref_id** (string) - A unique ID for every API call generated at your end
 
 #### Sample Response (200 OK)
@@ -1964,7 +1926,7 @@ Use this API to create a DigiLocker URL to retrieve and verify Aadhaar informati
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
     - **client_ref_id** (string / required) - A unique ID for every API call generated at your end
-    - **document_requested** (array of strings / required) - Defaults to ["AADHAAR"]. A list of customer documents required for verification. Currently, only "AADHAAR" is supported.
+    - **document_requested** (array of strings / required) - Defaults to "AADHAAR". A list of customer documents required for verification. Currently, only "AADHAAR" is supported.
     - **redirect_url** (string / required) - A URL to take the user to after completing the DigiLocker journey. It will contain the verification_id that can be used to get the status of the verification.
 
 #### Sample Response (200 OK)
@@ -1995,7 +1957,7 @@ You get the following key information in the `data` object of the response:
 
 
 ### 7.2 DigiLocker Verification Status API
-This API is used to get the status of the DigiLocker verification.
+Use this API to get the status of the DigiLocker verification.
 
 #### Details
 - **Method:** GET
@@ -2042,13 +2004,13 @@ You get the following key information in the `data` object of the response:
 
 
 ### 7.3 Get Document from DigiLocker API
-This API is used to get your customer's document details from DigiLocker.
+Use this API to get your customer's document details from DigiLocker.
 
 #### Details
 - **Method:** GET
 - **URL Endpoint:** /tools/kyc/digilocker/document/{document_type}
 - **Request Structure:**
-  - **document_type** (string, required): The type of document to be verified. Currently, only "AADHAAR" is supported. Defaults to AADHAAR.
+  - **document_type** (string, required): The type of document to be verified. Currently, only "AADHAAR" is supported. Defaults to "AADHAAR".
   - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
   - **client_ref_id** (string, required): A unique ID for every API call generated at your end.
   - **reference_id** (string, required): A unique ID that you receive in the response of Create DigiLocker URL API.
@@ -2112,7 +2074,7 @@ You get the following key information in the `data` object of the response:
 
 
 ### 8. Vehicle RC API
-This API is used to verify the authenticity of vehicle details. It provides complete information about the vehicle, including the owner, chassis number, registration date, registration number, and more.
+Use this API to verify the authenticity of vehicle details. It provides complete information about the vehicle, including the owner, chassis number, registration date, registration number, and more.
 
 #### Details
 - **Method:** POST
@@ -2285,7 +2247,7 @@ You get the following key information in the `data` object of the response:
 
 
 ### 9. Driving Licence API
-This API is used to verify the driving license of your customer. It retrieves details such as the type of licence, issue date, expiry date, and more.
+Use this API to verify the driving license of your customer. It retrieves details such as the type of licence, issue date, expiry date, and more.
 
 #### Details
 - **Method:** POST
@@ -2375,7 +2337,7 @@ You get the following key information in the `data` object of the response:
 | **details\_of\_driving\_licence** | object | It contains the details of the driving licence. See the table below for details. |
 
 
-##### `badge_details`
+##### Structure for `badge_details` object:
 
 | **Name** | **Data Type** | **Description** |
 | --- | --- | --- |
@@ -2384,7 +2346,7 @@ You get the following key information in the `data` object of the response:
 | **class\_of\_vehicle** | array of strings | The class of the vehicle. |
 
 
-##### `dl_validity`
+##### Structure for `dl_validity` object:
 
 | **Name** | **Data Type** | **Description** |
 | --- | --- | --- |
@@ -2394,7 +2356,7 @@ You get the following key information in the `data` object of the response:
 | **hill\_valid\_till** | date | It displays till when the individual can drive the vehicle in hill and mountain regions. |
 
 
-##### `details_of_driving_licence`
+##### Structure for `details_of_driving_licence` object:
 
 | **Name** | **Data Type** | **Description** |
 | --- | --- | --- |
@@ -2411,7 +2373,7 @@ You get the following key information in the `data` object of the response:
 
 
 ### 10. Voter ID API
-This API is used to verify the authenticity of your customer's voter ID. You need to provide the Electoral Photo Identity Card (EPIC) number, and it retrieves complete details including assembly and parliamentary constituency information.
+Use this API to verify the authenticity of your customer's voter ID. You need to provide the Electoral Photo Identity Card (EPIC) number, and it retrieves complete details including assembly and parliamentary constituency information.
 
 #### Details
 - **Method:** POST
@@ -2491,7 +2453,7 @@ You get the following key information in the `data` object of the response:
 | **polling\_station** | string | Place where the individual cast votes during elections. |
 
 
-##### `split_address`
+##### Structure for `split_address` object:
 
 | **Name** | **Data Type** | **Description** |
 | --- | --- | --- |
@@ -2504,7 +2466,7 @@ You get the following key information in the `data` object of the response:
 
 
 ### 11. Passport API
-This API is used to verify passport information (only Indian passports) and ensure the identity of your customer. Provide the passport file number in the request to fetch the details.
+Use this API to verify passport information (only Indian passports) and ensure the identity of your customer. Provide the passport file number in the request to fetch the details.
 
 #### Details
 - **Method:** POST
@@ -2547,7 +2509,7 @@ You get the following key information in the `data` object of the response:
 
 
 ### 12. CIN API
-This API is used to retrieve information from the Corporate Identification Number (CIN) such as business incorporation date, director(s) details, CIN status, and more.
+Use this API to retrieve information from the Corporate Identification Number (CIN) such as business incorporation date, director(s) details, CIN status, and more.
 
 #### Details
 - **Method:** POST
@@ -2608,7 +2570,7 @@ You get the following key information in the `data` object of the response:
 | **director\_details** | array of objects | Details of the directors associated with the company. See the table below for details of each director in the list. |
 
 
-##### `director_details`
+##### Structure for `director_details` object:
 
 | **Name** | **Data Type** | **Description** |
 | --- | --- | --- |
@@ -2731,44 +2693,44 @@ You get the following key information in the `data` object of the response:
 | **recent\_employment\_details** | object | Employment details of the individual. |
 
 
-##### `uan_details`
+##### Structure for `uan_details` object:
 
 | **Name** | **Data Type** | **Description** |
 | --- | --- | --- |
 | **uan** | string | Universal Account Number (UAN) information of the employee. |
 | **source** | string | Source of the information. |
 | **source\_score** | number | Confidence score of the source. |
-| **basic\_details** | object | Basic information of the employee:  
-  
-1\. **gender**  
-2\. **dob**  
-3\. **employee\_confidence\_score**  
-4\. **employee\_name**  
-5\. **phone**  
+| **basic\_details** | object | Basic information of the employee:
+
+1\. **gender**
+2\. **dob**
+3\. **employee\_confidence\_score**
+4\. **employee\_name**
+5\. **phone**
 6\. **aadhaar\_verified** (boolean) |
-| **employment\_details** | object | Employment details of the individual:  
-  
-1\. **member\_id**: Unique ID assigned to an individual.  
-2\. **establishment\_id**: unique ID assigned to a specific establishment or business entity.  
-3\. **exit\_date**: last working day of the employee in the organisation.  
-4\. **joining\_date**: first working day of the employee in the organisation.  
-5\. **leave\_reason**: reason for leaving the previous job.  
-6\. **establishment\_name**: name of the organisation.  
+| **employment\_details** | object | Employment details of the individual:
+
+1\. **member\_id**: Unique ID assigned to an individual.
+2\. **establishment\_id**: unique ID assigned to a specific establishment or business entity.
+3\. **exit\_date**: last working day of the employee in the organisation.
+4\. **joining\_date**: first working day of the employee in the organisation.
+5\. **leave\_reason**: reason for leaving the previous job.
+6\. **establishment\_name**: name of the organisation.
 7\. **employer\_confidence\_score** |
-| **additional\_details** | object | Additional information of the individual:  
-  
-1\. **aadhaar**  
-2\. **email**  
-3\. **PAN**  
-4\. **ifsc**  
-5\. **bank\_account**  
-6\. **bank\_address**  
-7\. **relative\_name**  
+| **additional\_details** | object | Additional information of the individual:
+
+1\. **aadhaar**
+2\. **email**
+3\. **PAN**
+4\. **ifsc**
+5\. **bank\_account**
+6\. **bank\_address**
+7\. **relative\_name**
 8\. **relation**: realtionship of the individual with the relative. |
 | **recent\_employment\_details** | object | Employment details of the individual with two objects: `employee_details` and `employer_details`. See the tables below for details of each object. |
 
 
-##### `recent_employment_details`.`employee_details`
+##### Structure for `recent_employment_details`.`employee_details` object:
 
 | **Name** | **Data Type** | **Description** |
 | --- | --- | --- |
@@ -2776,16 +2738,16 @@ You get the following key information in the `data` object of the response:
 | **exit\_date** | string | Last working day of the employee in the organisation. |
 | **joining\_date** | string | First working day of the employee in the organisation. |
 | **uan** | string | Universal Account Number (UAN) information of the employee. |
-| **epfo** | object | Information found in Employees' Provident Fund Organisation (EPFO):  
-1\. **recent**: (boolean) whether the retrieved information is recent.  
-2\. **name\_unique**: (boolean) whether the retrieved name is unique.  
+| **epfo** | object | Information found in Employees' Provident Fund Organisation (EPFO):
+1\. **recent**: (boolean) whether the retrieved information is recent.
+2\. **name\_unique**: (boolean) whether the retrieved name is unique.
 3\. **pf\_filings\_details**: (boolean) whether the PF filing details are true. |
 | **employed** | boolean | Whether the individual is currently employed. |
 | **employee\_name\_match** | boolean | Whether the individual's name matches the name found in EPFO. |
 | **exit\_date\_marked** | boolean | Whether the last working day is marked. |
 
 
-##### `recent_employment_details`.`employer_details`
+##### Structure for `recent_employment_details`.`employer_details` object:
 
 | **Name** | **Data Type** | **Description** |
 | --- | --- | --- |
@@ -2968,14 +2930,14 @@ This API sends a promotional text message (SMS) to one or more mobile numbers in
 # Refunds APIs
 
 ## 1. Initiate Refund API
-This API is used to safely refund cash to a customer in case their transaction fails.
+Use this API to safely refund cash to a customer in case their transaction fails.
 
 #### Details
 - **Method:** POST
 - **URL Endpoint:** /customer/payment/refund/{tid}
 - **Request Structure:**
   - **Path Parameters:**
-    - **tid** (string / required) - Eko's transaction ID
+    - **tid** (int64 / required) - Eko's transaction ID
   - **Body Parameters:**
     - **initiator_id** (string / required) - Your registered mobile number (See Platform Credentials for UAT)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming
@@ -3073,7 +3035,7 @@ This API retrieves a list of all failed transactions for a customer that are in 
 ```
 
 #### Description
-This API is used to safely refund cash to a customer in case their transaction fails.
+Use this API to safely refund cash to a customer in case their transaction fails.
 
 - When the transaction fails, we automatically send an OTP to the customer.
 - Ask for that OTP from the customer and call this API with the OTP.
@@ -3132,7 +3094,7 @@ This API retrieves the details of a bank, such as its name, bank code, available
 #### Description
 This API fetches details of a bank based on the bank code.
 
-##### Parameter Details:
+##### Response Parameter Details:
 - **available_channel**:
   - `0`: All - Both channels IMPS and NEFT are available for the bank.
   - `1`: NEFT - Only NEFT mode is available.
@@ -3235,7 +3197,7 @@ This API cancels a saved transaction.
 - **URL Endpoint:** /customer/payment/saved/{tid}
 - **Request Structure:**
   - **Path Params:**
-    - **tid** (string, required): TID of the saved transaction to cancel.
+    - **tid** (int64, required): TID of the saved transaction to cancel.
   - **Body Params:**
     - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
     - **user_code** (string, required): Unique code of your registered agent/retailer.
@@ -3249,7 +3211,7 @@ This API schedules a saved transaction to automatically commit at a later time, 
 - **URL Endpoint:** /customer/payment/schedule/{tid}
 - **Request Structure:**
   - **Path Params:**
-    - **tid** (string, required): TID of the saved transaction to schedule.
+    - **tid** (int64, required): TID of the saved transaction to schedule.
   - **Body Params:**
     - **initiator_id** (string, required): Your registered mobile number (See Platform Credentials for UAT).
     - **user_code** (string, required): Unique code of your registered agent/retailer.

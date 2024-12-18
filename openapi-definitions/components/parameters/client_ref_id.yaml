@@ -5,5 +5,5 @@ required: true
 schema:
   type: string
   minLength: 10
-  maxLength: 30
+  maxLength: 20
   example: 1734328246462837
