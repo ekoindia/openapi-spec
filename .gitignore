@@ -10,6 +10,9 @@ node_modules
 !.vscode/extensions.json
 .vscode/settings.json
 
+### Idea IntelliJ ###
+.idea/*
+
 ### System Files ###
 *.DS_Store
 
