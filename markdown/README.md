@@ -1296,16 +1296,16 @@ You get the following key information in the `data` object of the response:
 ```
 
 
-## 2. PAN APIs
+## 2. PAN Verification APIs
 
-### 2.1. PAN Verification API
-Active PAN Verification service for your agents.
+### 2.1. PAN Basic API
+Use this API to verify PAN details of your users/customers.
 
-**Note:** You need to call the Activate Service for Agent API for your agents with `service_code = 4` before they can use this API on production. Refer to the FAQs for any issues: [PAN Verification FAQs](https://developers.eko.in/docs/pan-verifiication-queries).
+**Note:** You need to call the Activate Service for Agent API for your users with `service_code = 4` before they can use this API on production. Refer to the FAQs for any issues: [PAN Verification FAQs](https://developers.eko.in/docs/pan-verifiication-queries).
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /tools/kyc/verify-pan
+- **URL Endpoint:** /tools/kyc/pan-basic
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1336,14 +1336,14 @@ Active PAN Verification service for your agents.
 ```
 
 
-### 2.2. PAN Light API
+### 2.2. PAN Lite API
 An alternate API to validate PAN information of individuals. The API helps verify the unique identifier, name of the individual, date of birth, and other information that helps in customer onboarding, KYC verification, and other fraud prevention security measures.
 
 **Note:** The name displayed in the response is the name entered in the API request, not the registered name.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /tools/kyc/pan-light
+- **URL Endpoint:** /tools/kyc/pan-lite
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1407,12 +1407,12 @@ You get the following key information in the `data` object of the response:
 | EU         | The entered PAN information is valid but marked as Under Liquidation.      |
 
 
-### 2.3. PAN 360 API
+### 2.3. PAN Advanced API
 Use this API to verify the PAN information of your customers. You can retrieve more information such as first name, last name, masked Aadhaar number, contact information, and more. Mobile number, email, and address fields will have low fill rate around 5-10% based on the recent changes to the source of the information.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /tools/kyc/pan-360
+- **URL Endpoint:** /tools/kyc/pan-advanced
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2760,7 +2760,7 @@ You get the following key information in the `data` object of the response:
 | **pf\_filing\_details** | array of objects | Details of the Provident Fund (PF) filings: total_amount, employees_count, and wage_month |
 
 
-### 14. IP API
+### 14. IP Verification API
 This API verifies the location, proxy details, city risk score, and proxy type risk score of an IP address.
 
 #### Details
