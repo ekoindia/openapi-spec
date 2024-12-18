@@ -35,13 +35,13 @@ Pass the following credentials in the header for each API call:
 | `request_hash` | string | This is required only for financial transactions where your wallet needs to be debited |
 
 
-### How to get the authentication credentials for production?
+#### How to get the authentication credentials for production?
 
 1. Fill the form at [https://developers.eko.in](https://developers.eko.in).
 2. Eko's support team will get in touch with you to complete your KYC and provide the production credentials: `developer_key` and `access_key`.
 
 
-### How to generate the `secret-key` & `secret-key-timestamp`?
+#### How to generate the `secret-key` & `secret-key-timestamp`?
 
 1. Eko will provide an `access_key` for production. It must be kept a secret on your backend. If compromised, it can be regenerated.
 2. Encode the `access_key` using base64 encoding.
@@ -49,7 +49,7 @@ Pass the following credentials in the header for each API call:
 4. Compute the signature by hashing salt and base64 encoded key using Hash-based message authentication code HMAC and SHA256
 5. Encode the signature using base64 encoding technique. This encoded value is your `secret-key`.
 
-#### Example Code (PHP)
+##### Example Code (PHP)
 
 ```php
 <?php
@@ -79,7 +79,7 @@ Pass the following credentials in the header for each API call:
 2.  **If you are using .NET**, you should not send overly specific time stamps, due to differing interpretations of how extra time precision should be dropped. To avoid overly specific time stamps, manually construct dateTime objects with no more than millisecond precision.
 
 
-### How to generate the `request_hash`?
+#### How to generate the `request_hash`?
 
 The `request_hash` header is only required for financial transactions where money needs to be debited from your Eko wallet or your agent's Eko wallet (E-value).
 
@@ -100,7 +100,7 @@ After generating the concatenated string, do the following to generate the `requ
 Final result after encoding will be the `request_hash`.
 
 
-#### Sample Code to Generate `request_hash` (PHP):
+##### Sample Code to Generate `request_hash` (PHP):
 
 **Note:** The following example generates the `request_hash` for the Bill Payment API by concatenating `secret_key_timestamp`, `utility_acc_no`, `amount`, and `user_code` (in the same order). For other APIs, a different set of parameters may be required. See the corresponding API docs for details.
 
@@ -137,7 +137,7 @@ function generateRequestHashForBillPay() {
 
 ## 4. Common Request/Response Parameters
 
-### Common Request Headers
+#### Common Request Headers
 
 | Header | Data Type | Required? | Description |
 | --- | --- | --- | --- |
@@ -146,7 +146,7 @@ function generateRequestHashForBillPay() {
 | **secret-key-timestamp** | number | Required | The request timestamp, used to generate the secret-key |
 | **request_hash** | string | Optional | This is required only for financial transactions. If required, it will be mentioned in the individual API details. |
 
-### Common Request Parameters
+#### Common Request Parameters
 
 | Parameter | Data Type | Required? | Description | Example Value for Testing |
 | --- | --- | --- | --- | --- |
@@ -154,7 +154,7 @@ function generateRequestHashForBillPay() {
 | **user_code** | string | Optional | Unique code of your registered user/agent | 20810200 |
 | **client_ref_id** | string | Optional | Your unique random reference number. This is required for POST/PUT/DELETE requests only | 123456789012345 |
 
-### Common Response Parameters
+#### Common Response Parameters
 The response will always be of type JSON (application/json) unless otherwise specified in the API documentation. All responses will contain the following parameters:
 
 | Parameter | Data Type | Description |
@@ -168,7 +168,7 @@ The response will always be of type JSON (application/json) unless otherwise spe
 
 ## 5. Status & Error Codes
 
-### Common HTTP Response Codes
+#### Common HTTP Response Codes
 
 | HTTP Response Code | Type | Description |
 | --- | --- | --- |
@@ -180,7 +180,7 @@ The response will always be of type JSON (application/json) unless otherwise spe
 | 500 | Internal Server Error | It usually implies that the API is not able to connect to our servers. For staging, remove the port 25004 from the URL. And, in production re-check your URL and HTTP method. |
 
 
-### Common Error Messages
+#### Common Error Messages
 
 | message                                                                                | Resolution                                                                                                                                                         |
 | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -190,8 +190,7 @@ The response will always be of type JSON (application/json) unless otherwise spe
 | Kindly use your production key                                                         | Check if you're using the correct developer key (credentials for staging cannot be used in production).                                                            |
 
 
-
-### Response Status Codes
+#### Response Status Codes
 For all APIs, **`status = 0`** should be treated as **successful**, else failed.
 
 For all non-financial requests, you may need to consider both `status` and `response_type_id` parameters.
@@ -228,7 +227,7 @@ For all non-financial requests, you may need to consider both `status` and `resp
 | 460    | Invalid channel                                             |
 | 319    | Invalid Sender/Initiator                                    |
 | 314    | Failed! Monthly limit exceeded                              |
-| 350    | Verification failed. Recipient name not found.              |
+| 350    | Verification failed. Recipient name not found               |
 | 344    | IMPS is not available in this bank                          |
 | 46     | Invalid account details                                     |
 | 168    | TID does not exist                                          |
@@ -236,7 +235,7 @@ For all non-financial requests, you may need to consider both `status` and `resp
 | 585    | Customer already KYC Approved                               |
 | 347    | Insufficient balance                                        |
 | 945    | Sender/Beneficiary limit has been exhausted for this month  |
-| 544    | Transaction not processed. Bank is not available now.       |
+| 544    | Transaction not processed. Bank is not available now        |
 
 
 ## 6. Sandbox Credentials for Testing
@@ -1666,7 +1665,7 @@ This API retrieves the Aadhaar details of a user in XML format.
 ```
 
 
-## 4. Mobile OTP
+## 4. Mobile+OTP Verification APIs
 
 ### 4.1. Send OTP API
 Use this API to send an OTP to any mobile number in India for verification or consent.
@@ -2929,7 +2928,7 @@ This API sends a promotional text message (SMS) to one or more mobile numbers in
 
 # Refunds APIs
 
-## 1. Initiate Refund API
+### 1. Initiate Refund API
 Use this API to safely refund cash to a customer in case their transaction fails.
 
 #### Details
@@ -3050,14 +3049,14 @@ Use this API to safely refund cash to a customer in case their transaction fails
 
 Retrieve a list of banks.
 
-### Details
+#### Details
 - **Method:** GET
 - **URL Endpoint:** /tools/reference/banks
 - **Query Parameters:**
   - **initiator_id** (string, required): Your registered mobile number.
   - **user_code** (string, required): User code value of the retailer from whom the request is coming.
 
-### Sample Response (200 OK)
+#### Sample Response (200 OK)
 ```json
 {
   "response_status_id": 0,
