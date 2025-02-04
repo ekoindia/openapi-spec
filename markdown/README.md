@@ -3228,3 +3228,634 @@ This API retrieves a list of scheduled transactions for an agent.
     - user_code (string, required): Unique code of your registered agent/retailer.
 
 
+----
+
+# DMT-PayPoint APIs
+
+## 1. Sender APIs
+
+### 1.1 Get Sender Information API
+Use this API to check if the sender has been created on the platform. If yes,Use the Get Sender Infomation and Verify OTP API to get the sender monthly limit,used and remaining balance etc. If not, create the sender before using other services (like Money Transfer) for the sender.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** /customer/profile/{customer_id}
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Query Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming.
+    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+
+#### Description
+The API triggers an OTP to be delivered to the existing sender.
+
+#### Sample Response (200 OK For Existing Sender)
+```json
+{
+  "response_status_id": 1,
+  "data": {
+    "intent_id": 19,
+    "kyc_request_id": "",
+    "otp_ref_id": "IXrygqm0vTNbN35Lp5AfcbP69ifPhQ1Ee3u74AHY5fA9aMp2d94Yii3g+9fOBmbMsVTuaEQpDOEateP4tSTkQw=="
+  },
+  "response_type_id": 2129,
+  "message": "Validate the OTP",
+  "status": 2129
+}
+```
+
+#### Sample Response (200 OK For New Sender)
+```json
+{
+  "response_status_id": 1,
+  "data": {
+    "sender_name": "",
+    "ekyc_enabled": ""
+  },
+  "response_type_id": 308,
+  "message": "Failure!Customer Not Enrolled",
+  "status": 308
+}
+```
+
+### 1.2 Onboard Sender API
+Use this API to onboard a new sender and enable them for services like DMT-PayPoint.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/account
+- **Request Structure:**
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **customer_id** (string / required) - Sender's mobile number
+    - **name** (string / required) - Name of the sender as per ID
+    - **dob** (date / required) - Date of birth of the sender in YYYY-MM-DD format
+    - **residence_address** (array of strings / required) - Address of the sender in JSON format
+    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+
+#### Description
+The API triggers an OTP to be delivered to the sender.
+
+
+#### Sample Response (200 OK For New Sender)
+```json
+{
+  "response_status_id": 1,
+  "data": {
+    "intent_id": 19,
+    "kyc_request_id": "",
+    "otp_ref_id": "IXrygqm0vTNbN35Lp5AfcbP69ifPhQ1Ee3u74AHY5fA9aMp2d94YigSXr5Qr+aS8OTg/e0YrVEoPAbap746K5g=="
+  },
+  "response_type_id": 2129,
+  "message": "Validate the OTP",
+  "status": 2129
+}
+```
+
+### 1.3 Verify Sender OTP API
+Use this API to verify a sender's mobile number via OTP.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/account/{customer_id}/dmt/otp/verify
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **otp** (int32 / required) - OTP Which you received by calling Create Sender or Get Sender Info (For Existing sender) or Validate Aadhar.
+    - **otp_ref_id** (int32 / required) - OTP Which you received by calling Create Sender or Get Sender Info (For Existing sender) or Validate Aadhar.
+    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+    - **intent_id** (string / required) - For sender onboarding put intent_id=19 , For Aadhar validation put intent_id=20.
+    
+
+#### Sample Response (200 OK For Existing Sender)
+```json
+{
+   "response_status_id": -1,
+   "data": {
+       "customer_profile": {
+           "total_monthly_limit": "50000.0",
+           "mobile": "9444444444",
+           "kyc_id": "",
+           "ekyc_enabled": 0,
+           "kyc_validity": "",
+           "kyc_remark": "",
+           "kyc_type": "",
+           "balance": "0.00",
+           "next_allowed_limit": "5287.0",
+           "name": "Karan Garg",
+           "digital_ekyc": 0,
+           "chart": [
+               {
+                   "data_type_id": 10,
+                   "data": {
+                       "unavailable": 0,
+                       "used": 44713,
+                       "remaining": 5287
+                   },
+                   "label": ""
+               }
+           ],
+           "email": "",
+           "kyc_state": 0
+       },
+       "id_proof_type_id": "",
+       "is_registered": 0,
+       "id_proof": "",
+       "otpOptionalSum": "",
+       "sender_name": "Karan Garg",
+       "otpNotRequiredSum": "",
+       "ekyc_enabled": "",
+       "otpNotRequiredSumNeft": "",
+       "next_allowed_limit": 5287.0,
+       "account": "",
+       "kyc_state": 0,
+       "otpOptionalSumNeft": ""
+   },
+   "response_type_id": 309,
+   "message": "Success!",
+   "status": 0
+}
+
+```
+
+#### Sample Response (200 OK For New Sender)
+```json
+{
+   "response_status_id": 1,
+   "response_type_id": 2136,
+   "message": "Aadhar Validation Pending",
+   "status": 2136
+}
+```
+
+#### Sample Response (200 OK For Aadhar Validation)
+```json
+{
+   "response_status_id": 0,
+   "data": {
+       "application_id": ""
+   },
+   "response_type_id": 2147,
+   "message": "Pan Number Required",
+   "status": 0
+}
+```
+
+### 1.4 Validate Aadhar API
+Use this API to verify a sender's Aadhar.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/account/{customer_id}/dmt/aadhaar
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+    - **aadhar** (string / required) - Aadhar number of the sender.
+    
+
+#### Sample Response (200 OK)
+```json
+  {
+   "response_status_id": 1,
+   "data": {
+       "intent_id": 20,
+       "kyc_request_id": "",
+       "otp_ref_id": "IXrygqm0vTNmD1aucSPi8JayYekXie2mrFj4xwBVsy4MktiT93Xvx5FmOZ1RhtA+kDB9OVMQj4UZ9cXHw6O6mvI6G5FLqmbANUTDNmvU7qOZ/ZydQSITfnOzO5beH8yJd3jWIGLO8gmthdYq8fgEoYzEOCdGD/M="
+   },
+   "response_type_id": 2129,
+   "message": "Validate the OTP",
+   "status": 2129
+}
+```
+  
+### 1.5 Validate PAN API
+Use this API to verify a sender's PAN.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/account/{customer_id}/dmt/pan
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+    - **pan_number** (string / required) - Pan Number of the Sender.
+    
+
+#### Sample Response (200 OK)
+```json
+{
+   "response_status_id": -1,
+   "data": {
+       "customer_profile": {
+           "total_monthly_limit": "50000.0",
+           "mobile": "9444444444",
+           "kyc_id": "",
+           "ekyc_enabled": 0,
+           "kyc_validity": "",
+           "kyc_remark": "",
+           "kyc_type": "",
+           "balance": "0.00",
+           "next_allowed_limit": "5287.0",
+           "name": "Karan Garg",
+           "digital_ekyc": 0,
+           "chart": [
+               {
+                   "data_type_id": 10,
+                   "data": {
+                       "unavailable": 0,
+                       "used": 44713,
+                       "remaining": 5287
+                   },
+                   "label": ""
+               }
+           ],
+           "email": "",
+           "kyc_state": 0
+       },
+       "id_proof_type_id": "",
+       "is_registered": 0,
+       "id_proof": "",
+       "otpOptionalSum": "",
+       "sender_name": "Karan Garg",
+       "otpNotRequiredSum": "",
+       "ekyc_enabled": "",
+       "otpNotRequiredSumNeft": "",
+       "next_allowed_limit": 5287.0,
+       "account": "",
+       "kyc_state": 0,
+       "otpOptionalSumNeft": ""
+   },
+   "response_type_id": 309,
+   "message": "Success!",
+   "status": 0
+}
+
+```
+
+## 2. Recipient APIs
+
+### 2.1 Get List of Recipients API
+Use this API to Get list of recipients for a sender.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/dmt/sender/{customer_id}/recipients
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+    
+
+#### Sample Response (200 OK)
+```json
+{
+   "response_status_id": 0,
+   "data": {
+       "pan_required": 2,
+       "recipient_list": [
+           {
+               "channel_absolute": 0,
+               "available_channel": 0,
+               "account_type": "Bank Account",
+               "ifsc_status": 1,
+               "is_self_account": "0",
+               "channel": 0,
+               "is_imps_scheduled": 0,
+               "recipient_id_type": "acc_ifsc",
+               "imps_inactive_reason": "",
+               "allowed_channel": 0,
+               "is_verified": 0,
+               "beneficiary_id": 40378,
+               "bank": "Kotak Mahindra Bank",
+               "is_otp_required": "0",
+               "recipient_mobile": "9999999990",
+               "recipient_name": "Aditya",
+               "ifsc": "KKBK0000878",
+               "account": "1XXXXXX90657",
+               "pipes": {
+                   "3": {
+                       "pipe": 3,
+                       "status": 1
+                   }
+               },
+               "recipient_id": 10018839,
+               "is_rblbc_recipient": 1
+           },
+          
+      
+      {
+               "channel_absolute": 2,
+               "available_channel": 2,
+               "account_type": "Bank Account",
+               "ifsc_status": 1,
+               "is_self_account": "0",
+               "channel": 2,
+               "is_imps_scheduled": 0,
+               "recipient_id_type": "acc_ifsc",
+               "imps_inactive_reason": "",
+               "allowed_channel": 2,
+               "is_verified": 0,
+               "beneficiary_id": null,
+               "bank": "State Bank of India",
+               "is_otp_required": "0",
+               "recipient_mobile": "6888888886",
+               "recipient_name": "Madness",
+               "ifsc": "SBIN00005656",
+               "account": "43XXXXXXXXX45",
+               "pipes": {
+                   "3": {
+                       "pipe": 3,
+                       "status": 1
+                   }
+               },
+               "recipient_id": 10065177,
+               "is_rblbc_recipient": 1
+           }
+       ],
+       "remaining_limit_before_pan_required": 50000.0,
+       "is_insured": ""
+   },
+   "response_type_id": 23,
+   "message": "Success",
+   "status": 0
+}
+
+```
+
+### 2.2 Add Recipient API
+Use this API to add a new recipient.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/dmt/sender/{customer_id}/recipient
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+    - **bank_code** (string / required) - IFSC code of the bank.
+    - **account** (string / required) - Account Number of the recipient.
+    - **bank_id** (string / required) - A unique id for each bank has been allocated and that has to passed here.
+    - **recipient_name** (string / required) - Name of the recipient.
+    - **recipient_mobile** (string / required) - Valid mobile number of the recipient.
+    - **recipient_type** (string / required) - value will be 3.
+
+
+#### Sample Response (200 OK)
+```json
+{
+   "response_status_id": 0,
+   "data": {
+       "initiator_id": "6000000094",
+       "recipient_mobile": "9775597777",
+       "recipient_id_type": "",
+       "customer_id": "9444444444",
+       "pipes": {},
+       "recipient_id": 10017740
+   },
+   "response_type_id": 43,
+   "message": "Success!Please transact using Recipientid",
+   "status": 0
+}
+```
+
+
+### 2.3 Add Recipient Bank API
+Use this API to add a recipient's bank.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/dmt/sender/{customer_id}/bank/recipient
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+    - **recipient_id** (string / required) - Recipient id of the recipient
+    
+
+#### Sample Response (200 OK)
+```json
+{
+   "response_status_id": 0,
+   "data": {
+       "beneficiary_id": "40367",
+       "recipient_name": "",
+       "ifsc": "",
+       "account": "",
+       "recipient_id": ""
+   },
+   "response_type_id": 1741,
+   "message": "Beneficiary added",
+   "status": 0
+}
+```
+
+## 3. DMT-PayPoint Transaction APIs
+
+### 3.1 Send Transaction OTP API
+The system will generate a One-Time Password (OTP) and deliver it to the sender's registered mobile number as part of a security or verification process.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/dmt/otp
+- **Request Structure:**
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+    - **recipient_id** (string / required) - Recipient id of the recipient.
+    - **amount** (string / required) - Amount value that needs to be transferred.
+    - **beneficiary_id** (string / required) - Amount value that needs to be transferred.
+    - **customer_id** (string / required) - Mobile number of the Sender.
+
+
+  #### Sample Response (200 OK)
+
+```json
+{
+    "response_status_id": 1,
+    "data": {
+        "otp_ref_id": "zCISyglexo0Pjqp4YrS2ssweuD9v1c3aLKGxjTW8wU7An8Wem1UyNws5830yh7q/sf5J4R3BY="
+    },
+    "response_type_id": 2133,
+    "message": "Send OTP",
+    "status": 2133
+}
+```  
+
+### 3.2 Initiate Transaction API
+Initiate a Money Transfer transaction to a bank account via NEFT/IMPS.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/dmt
+- **Request Structure:**
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+    - **recipient_id** (string / required) - Recipient id of the recipient.
+    - **amount** (string / required) - Amount value that needs to be transferred.
+    - **beneficiary_id** (string / required) - Amount value that needs to be transferred.
+    - **customer_id** (string / required) - Mobile number of the sender.
+    - **timestamp** (timestamp / required) - A timestamp represents a specific date and time.
+    - **currency** (string / required) - currency=INR.
+    - **client_ref_id** (string / required) - Unique reference number of your system, please make this ID as unique as possible so that it does not match with any other partner unique reference id.
+    - **channel** (int / required) - 1 - NEFT , 2 - IMPS
+    - **latlong** (string / required) - latlong of the user from whom the request is coming. 
+    - **state** (int / required) - state=1
+    - **otp** (string / required) - The otp received from the 'SEND TRANSACTION OTP' API on customer's number.
+    - **otp_ref_id** (string / required) - This is the value received from the 'SEND TRANSACTION OTP' API.
+
+
+  #### Sample Response (200 OK)
+  
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "tx_status": "0",
+        "debit_user_id": "6000000094",
+        "tds": "0.0",
+        "txstatus_desc": "Success",
+        "fee": "4.0",
+        "total_sent": "",
+        "channel": "2",
+        "collectable_amount": "114.0",
+        "txn_wallet": "0",
+        "utility_acc_no": "8999999992",
+        "sender_name": "8999999992",
+        "ekyc_enabled": "0",
+        "remaining_limit_before_pan_required": 49678.0,
+        "tid": "2886522975",
+        "bank": "UCO Bank",
+        "utrnumber": "",
+        "insurance_acquired": "",
+        "balance": "814.0",
+        "totalfee": "",
+        "next_allowed_limit": "",
+        "is_otp_required": "0",
+        "aadhar": "",
+        "currency": "INR",
+        "commission": "0.0",
+        "pipe": 13,
+        "state": "1",
+        "bank_ref_num": "250121123714472002",
+        "recipient_id": 10017680,
+        "timestamp": "2025-01-21T07:07:20.562Z",
+        "amount": "110.00",
+        "pan_required": 2,
+        "pinNo": "",
+        "gst_benefit": "0",
+        "payment_mode_desc": "",
+        "channel_desc": "IMPS",
+        "last_used_okekey": "0",
+        "npr": "",
+        "insurance_amount": "",
+        "service_tax": "0.61",
+        "paymentid": "",
+        "mdr": "",
+        "recipient_name": "Krishna",
+        "customer_id": "8999999992",
+        "account": "67544100008454",
+        "kyc_state": ""
+    },
+    "response_type_id": 325,
+    "message": "Transaction successful",
+    "status": 0
+}
+
+```  
+
+
+### 3.3 Get Refund OTP API
+Get Refund OTP API is used to send a One-Time Password (OTP) for the purpose of verifying refund requests.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/refund/{tid}/otp
+- **Request Structure:**
+  - **Path Parameters:**
+    - **tid** (string / required) - Transaction ID is generated while calling the Initiate Transaction API
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+   
+
+
+  #### Sample Response (200 OK)
+
+```json
+{
+    "response_status_id": 1,
+    "data": {
+        "otp_ref_id": "zCISyglexo0Pjqp4YrS2ssweuD9v1c3aLKGxjTW8wU7An8Wem1UyNws5830yh7q/sf5J4R3BY="
+    },
+    "response_type_id": 2133,
+    "message": "Send OTP",
+    "status": 2133
+}
+```  
+
+### 3.4 Initiate Refund API
+Initiate refund to the sender for a failed cash to digital transaction.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/refund/{tid} 
+- **Request Structure:**
+  - **Path Parameters:**
+    - **tid** (string / required) - Transaction ID is generated while calling the Initiate Transaction API
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+    - **state** (string / required) - By Default pass the value as 1.
+    - **otp** (string / required) - otp will be send on sender's mobile number.
+    - **otp_ref_id** (string / required) - otp_ref_id will be received while calling Get Refund OTP.
+
+
+
+  #### Sample Response (200 OK)
+
+```json
+{
+  "response_status_id": 0,
+  "data": {
+    "refund_tid": "2147591637",
+    "amount": "5000.00",
+    "tds": "7.1",
+    "balance": "2.22263731286E9",
+    "fee": "50.0",
+    "currency": "INR",
+    "commission_reverse": "28.38",
+    "tid": "13192443",
+    "timestamp": "2018-10-30T12:00:14.058Z",
+    "refunded_amount": "5050.00"
+  },
+  "response_type_id": 74,
+  "message": "Refund done",
+  "status": 0
+}
+```  
+
