@@ -698,7 +698,7 @@ Use this API to verify the sender's mobile number using an OTP.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/account/{customer_id}/dmt/otp/verify
+- **URL Endpoint:** /customer/account/{customer_id}/ppi/otp/verify
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -790,7 +790,7 @@ Use this API to verify the sender's Aadhar.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/account/{customer_id}/dmt/aadhaar
+- **URL Endpoint:** /customer/account/{customer_id}/ppi/aadhaar
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -821,7 +821,7 @@ This API is used to verify the sender's PAN (Permanent Account Number).
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/account/{customer_id}/dmt/pan
+- **URL Endpoint:** /customer/account/{customer_id}/ppi/pan
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -1022,7 +1022,7 @@ Use this API to add a recipient's bank.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/payment/dmt/sender/{customer_id}/bank/recipient
+- **URL Endpoint:** /customer/payment/ppi/sender/{customer_id}/bank/recipient
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -1057,7 +1057,7 @@ The system will generate a One-Time Password (OTP) and deliver it to the sender'
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/payment/dmt/otp
+- **URL Endpoint:** /customer/payment/ppi/otp
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
