@@ -890,7 +890,7 @@ Use this API to retrieve a list of recipients associated with a sender. The resp
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/payment/dmt/sender/{customer_id}/recipients
+- **URL Endpoint:** /customer/payment/ppi/sender/{customer_id}/recipients
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -981,7 +981,7 @@ Use this API to add a new recipient or update an existing recipient for a sender
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/payment/dmt/sender/{customer_id}/recipient
+- **URL Endpoint:** /customer/payment/ppi/sender/{customer_id}/recipient
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -1088,7 +1088,7 @@ Initiate a Money Transfer transaction to a bank account via PPI.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/payment/dmt
+- **URL Endpoint:** /customer/payment/ppi
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
