@@ -1084,7 +1084,7 @@ The system will generate a One-Time Password (OTP) and deliver it to the sender'
 ```  
 
 ### 3.2 Initiate Transaction API
-Initiate a Money Transfer transaction to a bank account via PPI.
+Initiate a PPI transaction to a bank account.
 
 #### Details
 - **Method:** POST
@@ -1107,7 +1107,12 @@ Initiate a Money Transfer transaction to a bank account via PPI.
     - **otp_ref_id** (string / required) - This is the value received from the 'SEND TRANSACTION OTP' API.
     - **beneficiary_id** (string / required) - A unique ID generated when adding the recipient's bank details.
    
-   
+**Note:**
+ - **For Refund:**
+   - When the transaction fails, we automatically send an OTP to the customer. Ask for that OTP from the customer and call the `Get Refund OTP API`.
+     This will act as a consent that you have actually refunded back the cash to the customer. After this API call, we will refund the eValue into your account.
+
+
    
   #### Sample Response (200 OK)
   
