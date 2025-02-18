@@ -606,9 +606,9 @@ Use this API to resend the OTP to the customer for verification.
     - customer_id (string / required) - Customer's mobile number
 
 
-----
+---
 
-# Prepaid Instrument License - DigiKhata
+# PPI (Prepaid Instrument License) - DigiKhata
 
 ## 1. Sender APIs
 
