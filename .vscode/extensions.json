@@ -1,5 +1,9 @@
 {
 	"recommendations": [
-		"redocly.openapi-vs-code"
+		"redocly.openapi-vs-code",
+		"github.copilot",
+		"github.copilot-chat",
+		"streetsidesoftware.code-spell-checker",
+		"redhat.vscode-yaml"
 	]
 }
