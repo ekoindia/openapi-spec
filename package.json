@@ -10,6 +10,6 @@
     "check-updates": "echo 'TO UPDATE, RUN: npm install package-name' && npm outdated --depth=0"
   },
   "dependencies": {
-    "@redocly/cli": "^1.26.0"
+    "@redocly/cli": "^1.34.1"
   }
 }
