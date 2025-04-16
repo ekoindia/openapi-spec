@@ -698,7 +698,7 @@ Use this API to verify the sender's mobile number using an OTP.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/account/{customer_id}/ppi/otp/verify
+- **URL Endpoint:** /customer/account/{customer_id}/ppi-digikhata/otp/verify
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -790,7 +790,7 @@ Use this API to verify the sender's Aadhaar.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/account/{customer_id}/ppi/aadhaar
+- **URL Endpoint:** /customer/account/{customer_id}/ppi-digikhata/aadhaar
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -821,7 +821,7 @@ This API is used to verify the sender's PAN (Permanent Account Number).
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/account/{customer_id}/ppi/pan
+- **URL Endpoint:** /customer/account/{customer_id}/ppi-digikhata/pan
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -890,7 +890,7 @@ Use this API to retrieve a list of recipients associated with a sender. The resp
 
 #### Details
 - **Method:** GET
-- **URL Endpoint:** /customer/payment/ppi/sender/{customer_id}/recipients
+- **URL Endpoint:** /customer/payment/ppi-digikhata/sender/{customer_id}/recipients
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -981,7 +981,7 @@ Use this API to add a new recipient or update an existing recipient for a sender
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/payment/ppi/sender/{customer_id}/recipient
+- **URL Endpoint:** /customer/payment/ppi-digikhata/sender/{customer_id}/recipient
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -995,6 +995,8 @@ Use this API to add a new recipient or update an existing recipient for a sender
     - **account** (string / required) - The recipient's bank account number used for receiving funds.
     - **bank_code** (string / required) - The IFSC code of the recipient's bank branch.
     - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
+    - **account_type** (int / required) - For PayPoint,send a fixed value of 1.
+    - **type** (int / required) - Send a fixed value of acc_ifsc.
   
 
 
@@ -1022,7 +1024,7 @@ Use this API to add a recipient's bank.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/payment/ppi/sender/{customer_id}/bank/recipient
+- **URL Endpoint:** /customer/payment/ppi-digikhata/sender/{customer_id}/recipient/bank
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -1057,7 +1059,7 @@ The system will generate a One-Time Password (OTP) and deliver it to the sender'
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/payment/ppi/otp
+- **URL Endpoint:** /customer/payment/ppi-digikhata/otp
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
@@ -1088,7 +1090,7 @@ Initiate a PPI transaction to a bank account.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/payment/ppi
+- **URL Endpoint:** /customer/payment/ppi-digikhata
 - **Request Structure:**
   - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
@@ -1106,6 +1108,7 @@ Initiate a PPI transaction to a bank account.
     - **otp** (string / required) - The otp received from the 'SEND TRANSACTION OTP' API on customer's number.
     - **otp_ref_id** (string / required) - This is the value received from the 'SEND TRANSACTION OTP' API.
     - **beneficiary_id** (string / required) - A unique ID generated when adding the recipient's bank details.
+
    
 **Note:**
  - **For Refund:**
@@ -3788,8 +3791,72 @@ Verify a bank account number without transferring ₹1 to retrieve the name of t
 }
 ```
 
+### 1.2. Bank Account Verification API
+Verify a bank account number by transferring ₹1 to retrieve the name of the account holder.
 
-### 1.3. Bulk Bank Account Verification (Async) API
+**Note:** Not applicable for all banks. Only applicable for banks for whom account verification feature is available. This can be checked by hitting the Get Bank Details API.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/bank-account/sync
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / required) - User code value of the retailer from whom the request is coming
+    - source (string / required) - Enter the value of source=API
+    - client_ref_id (string / required) -  A unique ID for every API call generated at your end
+    - ifsc (string / required) - need to pass the complete value of IFSC code
+    - bank_account (string) - pass complete account number which needs to be verified
+
+
+#### Sample Response (200 OK)
+```json
+{
+  "response_status_id": 0,
+  "data": {
+    "reference_id": 1299636178,
+    "city": "GURGAON",
+    "bank_name": "KOTAK MAHINDRA BANK LIMITED",
+    "micr": 119898047,
+    "account_status_code": "ACCOUNT_IS_VALID",
+    "account_status": "VALID",
+    "name_at_bank": "EKO INDIA FINANCIAL SERVICES PVT LTD",
+    "branch": "DELHI BRANCH"
+  },
+  "response_type_id": 0,
+  "status": 0
+}
+```
+
+#### Sample Response (200 Invalid IFSC Code)
+```json
+{
+  "response_status_id": 0,
+  "data": {
+    "reference_id": 4224995,
+    "account_status_code": "INVALID_IFSC_FAIL",
+    "account_status": "INVALID"
+  },
+  "response_type_id": 0,
+  "status": 0
+}
+```
+
+#### Sample Response (200 Invalid Account)
+```json
+{
+  "response_status_id": 0,
+  "data": {
+    "reference_id": 4224997,
+    "account_status_code": "INVALID_ACCOUNT_FAIL",
+    "account_status": "INVALID"
+  },
+  "response_type_id": 0,
+  "status": 0
+}
+```
+
+### 1.4. Bulk Bank Account Verification (Async) API
 Use this API to verify bank account information in bulk.
 
 **Note:** This is an asynchronous API, so you must use the Bulk Bank Account Verification Status API to get the status of each bank account. We do not currently support Deutsche Bank and Fincare Small Finance Bank because they are not live on IMPS.
@@ -3814,7 +3881,7 @@ You get the following information in the response within `data` object:
 | 1                  | 1796             | Recipient name not found and verification not available for this bank |
 
 
-### 1.4. Bulk Bank Account Verification Status API
+### 1.5. Bulk Bank Account Verification Status API
 Use this API to get the details of the bulk bank account verification request. You need to enter either the `bulk_reference_id` or `client_ref_id`. If you want to get the status of a single entry, enter the particular reference ID in the request.
 
 #### Details
@@ -3874,7 +3941,7 @@ You get an array of objects in the `entries` parameter inside `data` with the fo
 ```
 
 
-### 1.5. IFSC Verification API
+### 1.6. IFSC Verification API
 Use this API to verify IFSC codes. You will receive the bank name, the branch that it belongs to, the supported transfer modes, and the respective MICR code.
 
 #### Details
