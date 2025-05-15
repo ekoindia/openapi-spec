@@ -1450,7 +1450,7 @@ Pay money from your Eko wallet to a VPA ID.
     - recipient_name (string / required) - Name of the receiver who is associated with the vpa
     - amount (string / required) - Amount that you want to settle
     - client_ref_id (string / required) - Unique transaction ID which you will generate from your end for every transaction
-    - latlong (string / required) – User's geolocation coordinates in "latitude,longitude" format (Example: 26.8863786,75.7393589).
+    - latlong (string / required) – User's geolocation coordinates in "latitude,longitude" format (Example: 26.8863786,75.7393589)
 
 #### Sample Response (200 OK)
 ```json
@@ -1489,7 +1489,7 @@ Pay money from your Eko wallet to a Mobile Number which has an associated VPA.
     - recipient_name (string / required) - Name of the receiver who is associated with the vpa
     - amount (string / required) - Amount that you want to settle
     - client_ref_id (string / required) - Unique transaction ID which you will generate from your end for every transaction
-    - latlong (string / required) – User's geolocation coordinates in "latitude,longitude" format (Example: 26.8863786,75.7393589).
+    - latlong (string / required) – User's geolocation coordinates in "latitude,longitude" format (Example: 26.8863786,75.7393589)
 
 #### Sample Response (200 OK)
 ```json
