@@ -1516,12 +1516,12 @@ Pay money from your Eko wallet to a VPA ID.
 
 # UPI Collection APIs
 
-### 1. Generate Static QR (UPI) API
+### 1. Generate Static QR (UPI) API - Razorpay Bank
 Generate a static QR code for any agent to receive payments via UPI into their E-value wallet.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /user/collection/upi/generate-static-qr
+- **URL Endpoint:** /users/collection/upi-razorpay/generate-static-qr
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1570,12 +1570,12 @@ Eko’s QR Payment API provides an end-to-end solution from QR code generation t
 - For each `sender_id`, only one QR string can be generated.
 
 
-### 2. Generate Dynamic QR (UPI) API
+### 2. Generate Dynamic QR (UPI) API - Razorpay Bank
 Generate a Dynamic QR code for any agent to receive payments via UPI into their E-value wallet.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /user/collection/upi/generate-static-qr
+- **URL Endpoint:** /users/collection/upi-razorpay/generate-static-qr
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1607,6 +1607,60 @@ Generate a Dynamic QR code for any agent to receive payments via UPI into their 
 **Note:**
 - For this API, almost all process is same as Generate Static QR API, only the difference is that the QR code generated is dynamic in nature and thus an extra parameter 'amount' is added in the request'.
 - The api url/endpoint is also same as static QR code generation API.
+
+### 3. Generate Static QR (UPI) API - AU Bank
+Generate a static QR code for any agent to receive payments via UPI into their E-value wallet.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /users/collection/upi-au/generate-static-qr
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - sender_id (string / required) - Registered mobile number of the agent for which the QR code is generated
+    - name (string / required) - Name of the agent for which QR code is generated
+    - email (string) - Email address of the agent whose QR code is being generated
+    - service_code (int / required) - 85 (Service Activation Code for AU)
+
+#### Response Values
+| Values | Status         |
+|--------|----------------|
+| 0      | INACTIVE       |
+| 1      | ACTIVE         |
+| 2      | QR_ACTIVE      |
+| 3      | QR_INACTIVE    |
+
+
+#### Sample Response (200 OK)
+```json
+{
+  "response_status_id": -1,
+  "data": {
+    "client_ref_id": "13068602",
+    "name": "xyz",
+    "graph_data": "",
+    "utility_acc_no": "43088422",
+    "sender_id": "9876543208",
+    "qr_string": "https://portal.getepay.in:8443/getepayPortal/merchantInvoice/showQr?qrPath=/media/shared//home/bahetymradul/donotdelete/projectData/VPA/QRIMAGE/DynamicQRCode/1747061313972/merchant1738910.augp@aubank.png",
+    "status": 2
+  },
+  "response_type_id": 1888,
+  "message": "successfully generated QR code",
+  "status": 0
+}
+```
+
+#### Description
+Eko’s QR Payment API provides an end-to-end solution from QR code generation to payment collection. The transaction flow is as follows:
+
+1. Activate your service for QR using Activate Service for Agent API and passing `service_code = 85`.
+2. The user provides their mobile number that is the `sender_id` against which their QR code is generated.
+3. If any payment is made against the QR code, the amount is reflected in the partner's wallet.
+4. After the transaction, the callback request with the transaction details is sent to the partner. The transaction status of a particular transaction can be checked using the Transaction Inquiry API.
+
+**Note:**
+- To cross-check the QR code that was used for a transaction, check if the `client_ref_id` in the callback matches the `utility_acc_no` in the generated QR. If they are the same, you've identified the QR code used for the transaction.
+- For each `sender_id`, only one QR string can be generated.
 
 
 ---
