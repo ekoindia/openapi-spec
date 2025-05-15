@@ -1435,44 +1435,7 @@ Ensure that the `client_ref_id` entered is a unique combination of characters an
 
 # UPI Payment APIs
 
-
-### 1. Validate UPI VPA API
-Validate the VPA (Virtual Payment Address) for a UPI Recipient.
-
-#### Details
-- **Method:** POST
-- **URL Endpoint:** /customer/payment/upi/validate-vpa
-- **Request Structure:**
-  - **Body Parameters:**
-    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - user_code (string / required) - User code value of the retailer from whom the request is coming
-    - customer_vpa (string / required) - VPA which you want to validate
-    - client_ref_id (string / required) - Unique transaction ID which you will generate from your end for every transaction, it will help you identify your specific transaction
-
-#### Sample Response (200 OK)
-```json
-{
-  "response_status_id": 0,
-  "data": {
-    "client_ref_id": "62421321704479941883",
-    "user_code": "1000834",
-    "bank_id": 687,
-    "fee": "0.0",
-    "customer_vpa": "9999999999@upi",
-    "recipient_mobile": "9999999999",
-    "recipient_name": "Aastha Malik",
-    "valid_vpa": 1,
-    "tid": "2886242155",
-    "timestamp": "Sat Jan 06 00:09:02 IST 2024"
-  },
-  "response_type_id": 1976,
-  "message": "VPA is Valid",
-  "status": 0
-}
-```
-
-
-### 2. UPI Payment to VPA API
+### 1. UPI Payment to VPA API
 
 Pay money from your Eko wallet to a VPA ID.
 
@@ -1482,11 +1445,12 @@ Pay money from your Eko wallet to a VPA ID.
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - customer_id (string / required) - Mobile number of retailer
+    - user_code (string / required) - User Code of retailer
     - customer_vpa (string / required) - Vpa in which you want the amount to be settled
     - recipient_name (string / required) - Name of the receiver who is associated with the vpa
     - amount (string / required) - Amount that you want to settle
     - client_ref_id (string / required) - Unique transaction ID which you will generate from your end for every transaction
+    - latlong (string / required) – User's geolocation coordinates in "latitude,longitude" format (Example: 26.8863786,75.7393589).
 
 #### Sample Response (200 OK)
 ```json
@@ -1510,7 +1474,45 @@ Pay money from your Eko wallet to a VPA ID.
   "status": 0
 }
 ```
+### 2. UPI Payment to VPA Mobile API
 
+Pay money from your Eko wallet to a Mobile Number which has an associated VPA.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/upi-mobile
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / required) - User Code of retailer
+    - customer_vpa (string / required) - Mobile Number which has an associated VPA in which you want the amount to be settled
+    - recipient_name (string / required) - Name of the receiver who is associated with the vpa
+    - amount (string / required) - Amount that you want to settle
+    - client_ref_id (string / required) - Unique transaction ID which you will generate from your end for every transaction
+    - latlong (string / required) – User's geolocation coordinates in "latitude,longitude" format (Example: 26.8863786,75.7393589).
+
+#### Sample Response (200 OK)
+```json
+{
+  "response_status_id": 2,
+  "data": {
+    "client_ref_id": "RIM10011909045679290",
+    "amount": "205.0",
+    "tds": "",
+    "balance": "46547.99",
+    "fee": "5.9",
+    "customer_vpa": "999999999",
+    "recipient_mobile": "",
+    "commission": "",
+    "recipient_name": "Kapil Jain",
+    "tid": "2886428136",
+    "timestamp": "Tue Jan 09 14:09:02 IST 2024"
+  },
+  "response_type_id": 1982,
+  "message": "VPA Payment Initiated",
+  "status": 0
+}
+```
 
 ---
 
