@@ -1341,8 +1341,8 @@ This API is used to validate the sender's Aadhar number. It generates an OTP whi
 ```
 
 
-### 1.4 Validate Sender Aadhaar OTP API
-This API is used to verify a sender's mobile number by sending an OTP (One-Time Password) to the provided number.
+### 1.4 Validate Sender OTP API
+This API is used to validate the sender's Aadhar number.
 
 #### Details
 - **Method:** POST
