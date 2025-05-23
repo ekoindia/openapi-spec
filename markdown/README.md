@@ -1261,7 +1261,7 @@ The API sends an OTP to the existing sender.
 ```
 
 ### 1.2 Onboard Sender API
-Use this API to onboard a new sender and enable them for services such as PPI.
+Use this API to onboard a new sender and enable them for services such as DMT-Levin.
 
 #### Details
 - **Method:** POST
