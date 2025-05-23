@@ -705,10 +705,10 @@ Use this API to verify the sender's mobile number using an OTP.
   - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **otp** (int32 / required) - Enter the OTP received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhar API.
-    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhar API.
+    - **otp** (int32 / required) - Enter the OTP received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
+    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
     - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
-    - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhar validation, set intent_id=20.
+    - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhaar validation, set intent_id=20.
     
 
 #### Sample Response (200 OK For Existing Sender)
@@ -772,7 +772,7 @@ Use this API to verify the sender's mobile number using an OTP.
 }
 ```
 
-#### Sample Response (200 OK For Aadhar Validation)
+#### Sample Response (200 OK For Aadhaar Validation)
 ```json
 {
    "response_status_id": 0,
@@ -785,8 +785,8 @@ Use this API to verify the sender's mobile number using an OTP.
 }
 ```
 
-### 1.4 Validate Aadhar API
-Use this API to verify the sender's Aadhar.
+### 1.4 Validate Aadhaar API
+Use this API to verify the sender's Aadhaar.
 
 #### Details
 - **Method:** POST
@@ -798,7 +798,7 @@ Use this API to verify the sender's Aadhar.
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming
     - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
-    - **aadhar** (string / required) - The sender's Aadhar number.
+    - **aadhar** (string / required) - The sender's Aadhaar number.
     
 
 #### Sample Response (200 OK)
@@ -1178,7 +1178,7 @@ Initiate a PPI transaction to a bank account.
 
 ## 1. Sender APIs
 
-### 1.1 Get Sender Information API
+### 1.1 Get Sender Profile API
 Use this API to check if the sender has been created on the platform. If the sender exists, use the Get Sender Information and Verify OTP API to retrieve details such as the sender's monthly limit, used balance, and remaining balance. If the sender does not exist, create the sender before using other services.
 
 #### Details
@@ -1260,8 +1260,8 @@ The API sends an OTP to the existing sender.
 }
 ```
 
-### 1.2 Onboard Sender API
-Use this API to onboard a new sender and enable them for services such as DMT-Levin.
+### 1.2 Onbaord Customer API
+Use this API to onboard a new sender and enable them for the DMT-Levin service.
 
 #### Details
 - **Method:** POST
@@ -1294,24 +1294,24 @@ The API triggers an OTP to be delivered to the sender.
 }
 ```
 
-### 1.3 Validate Aadhar API
-This API is used to validate the sender's Aadhar number.
+### 1.3 Generate Sender Aadhaar OTP API
+This API is used to validate the sender's Aadhar number. It generates an OTP which has to be verified using the "Verify Sender OTP" API.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/account/{customer_id}/dmt-levin/otp/verify
+- **URL Endpoint:** /customer/account/{customer_id}/dmt-levin/aadhaar
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
   - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhar API.
-    - **aadhar** (string / required) - The sender's Aadhar number.
-    - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhar validation, set intent_id=20.
+    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
+    - **aadhar** (string / required) - The sender's Aadhaar number.
+    - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhaar validation, set intent_id=20.
     
 
-#### Sample Response (200 OK Adhar Validation Success)
+#### Sample Response (200 OK Adhaar Validation Success)
 ```json
 {
  "response_status_id": 1,
@@ -1326,7 +1326,7 @@ This API is used to validate the sender's Aadhar number.
 }
 ```
 
-#### Sample Response (200 OK Aadhar Validation Failed)
+#### Sample Response (200 OK Aadhaar Validation Failed)
 ```json
 {
    "response_status_id": 1,
@@ -1341,7 +1341,7 @@ This API is used to validate the sender's Aadhar number.
 ```
 
 
-### 1.4 Verify Sender OTP API
+### 1.4 Validate Sender Aadhaar OTP API
 This API is used to verify a sender's mobile number by sending an OTP (One-Time Password) to the provided number.
 
 #### Details
@@ -1353,9 +1353,9 @@ This API is used to verify a sender's mobile number by sending an OTP (One-Time 
   - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **otp** (int32 / required) - Enter the OTP received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhar API.
-    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhar API.
-    - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhar validation, set intent_id=20.
+    - **otp** (int32 / required) - Enter the OTP received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
+    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
+    - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhaar validation, set intent_id=20.
     
 
 #### Sample Response (200 OK For Existing Sender)
@@ -1382,7 +1382,7 @@ This API is used to verify a sender's mobile number by sending an OTP (One-Time 
 }
 ```
 
-### 1.5 E-KYC API
+### 1.5 DMT Customer KYC API
 One-time e-KYC of the agent using the biometric device
 
 #### Details
@@ -2026,7 +2026,7 @@ Generate a static QR code for any agent to receive payments via UPI into their E
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /users/collection/upi-razorpay/generate-static-qr
+- **URL Endpoint:** /user/collection/upi-razorpay/generate-static-qr
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2080,7 +2080,7 @@ Generate a Dynamic QR code for any agent to receive payments via UPI into their 
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /users/collection/upi-razorpay/generate-static-qr
+- **URL Endpoint:** /user/collection/upi-razorpay/generate-static-qr
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2118,7 +2118,7 @@ Generate a static QR code for any agent to receive payments via UPI into their E
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /users/collection/upi-au/generate-static-qr
+- **URL Endpoint:** /user/collection/upi-au/generate-static-qr
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2701,7 +2701,7 @@ You get the following key information in the `data` object of the response:
 |--------------------|-----------|----------------------------------------------------------|
 | access_key_validity| string    | The validity of the access key, expressed in epoch time |
 | access_key         | string    | The access key to be used in the next API for Aadhaar OTP |
-| aadhar             | string    | The Aadhaar number that was verified                    |
+| aadhaar             | string    | The Aadhaar number that was verified                    |
 | message            | string    | Message indicating the result of consent                |
 
 #### Sample Response (200 OK)
