@@ -1586,7 +1586,7 @@ The system will generate a One-Time Password (OTP) and deliver it to the sender'
 ```  
 
 ### 3.2 Initiate Transaction API
-Initiate a PPI transaction to a bank account.
+Initiate a DMT transaction to a bank account.
 
 #### Details
 - **Method:** POST
