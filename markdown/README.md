@@ -1299,7 +1299,7 @@ This API is used to validate the sender's Aadhar number.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /customer/account/{customer_id}/ppi/otp/verify
+- **URL Endpoint:** /customer/account/{customer_id}/dmt-levin/otp/verify
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
