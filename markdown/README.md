@@ -1295,7 +1295,7 @@ The API triggers an OTP to be delivered to the sender.
 ```
 
 ### 1.3 Generate Sender Aadhaar OTP API
-This API is used to validate the sender's Aadhar number. It generates an OTP which has to be verified using the "Verify Sender OTP" API.
+This API is used to validate the sender's Aadhaar number. It generates an OTP which has to be verified using the "Verify Sender OTP" API.
 
 #### Details
 - **Method:** POST
@@ -1342,7 +1342,7 @@ This API is used to validate the sender's Aadhar number. It generates an OTP whi
 
 
 ### 1.4 Validate Sender OTP API
-This API is used to validate the sender's Aadhar number.
+This API is used to validate the sender's Aadhaar number.
 
 #### Details
 - **Method:** POST
@@ -1425,7 +1425,7 @@ One-time e-KYC of the agent using the biometric device
 Use this API to retrieve a list of recipients associated with a sender. The response will include details such as the recipient's name, IFSC code, beneficiary ID, and recipient ID.
 
 #### Details
-- **Method:** POST
+- **Method:** GET
 - **URL Endpoint:** /customer/payment/dmt-levin/sender/{customer_id}/recipients
 - **Request Structure:**
   - **Path Parameters:**
@@ -1604,7 +1604,6 @@ Initiate a DMT transaction to a bank account.
     - **channel** (int / required) - Send the fixed value 2.
     - **latlong** (string / required) - latlong of the user from whom the request is coming. 
     - **state** (int / required) - state=1
-    - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
     - **otp** (string / required) - The otp received from the 'SEND TRANSACTION OTP' API on customer's number.
     - **otp_ref_id** (string / required) - This is the value received from the 'SEND TRANSACTION OTP' API.
     - **recipient_id_type** (string / required) - A unique ID generated when adding the recipient's bank details.
