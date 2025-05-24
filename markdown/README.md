@@ -2772,7 +2772,7 @@ This API retrieves the Aadhaar details of a user in XML format.
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
     - user_code (string) - User code value of the retailer from whom the request is coming
-    - aadhar (string / required) - Aadhar number you are verifiying
+    - aadhar (string / required) - Aadhaar number you are verifiying
     - is_consent (string / required) - Y = Yes, N = No
     - otp (string / required) - OTP received on the mobile number linked with aadhaar
     - share_code (string) - Random 4 digit code generated on partner's end
