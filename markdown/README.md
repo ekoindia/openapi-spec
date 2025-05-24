@@ -1342,7 +1342,7 @@ This API is used to validate the sender's Aadhaar number. It generates an OTP wh
 
 
 ### 1.4 Validate Sender OTP API
-This API is used to validate the sender's Aadhaar number.
+This API is used to validate the sender's Aadhaar number by using the otp received on the sender's aadhaar associated mobile number.
 
 #### Details
 - **Method:** POST
@@ -1531,7 +1531,7 @@ Use this API to add a new recipient or update an existing recipient for a sender
     - **account_type** (string / required) - Send a fixed value of 1.
     - **bank_code** (string / required) - The IFSC code of the recipient's bank branch.
     - **type** (string / required) - Send a fixed value of 1.
-    - **account** (string / required) - The recipient's bank account number used for receiving funds..
+    - **account** (string / required) - The recipient's bank account number used for receiving funds.
 
   
 
