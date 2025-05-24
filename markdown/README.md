@@ -1421,7 +1421,7 @@ One-time e-KYC of the agent using the biometric device
 
 ## 2. Recipient APIs
 
-### 2.1 Get List of Recipients API
+### 2.1 Get Recipients API
 Use this API to retrieve a list of recipients associated with a sender. The response will include details such as the recipient's name, IFSC code, beneficiary ID, and recipient ID.
 
 #### Details
