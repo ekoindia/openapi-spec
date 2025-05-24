@@ -889,7 +889,7 @@ This API is used to verify the sender's PAN (Permanent Account Number).
 Use this API to retrieve a list of recipients associated with a sender. The response will include details such as the recipient's name, IFSC code, beneficiary ID, and recipient ID.
 
 #### Details
-- **Method:** POST
+- **Method:** GET
 - **URL Endpoint:** /customer/payment/ppi/sender/{customer_id}/recipients
 - **Request Structure:**
   - **Path Parameters:**
