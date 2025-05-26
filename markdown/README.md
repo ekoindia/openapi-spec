@@ -1260,7 +1260,7 @@ The API sends an OTP to the existing sender.
 }
 ```
 
-### 1.2 Onbaord Customer API
+### 1.2 Onboard Customer API
 Use this API to onboard a new sender and enable them for the DMT-Levin service.
 
 #### Details
@@ -1356,6 +1356,8 @@ This API is used to validate the sender's Aadhaar number by using the otp receiv
     - **otp** (int32 / required) - Enter the OTP received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
     - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
     - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhaar validation, set intent_id=20.
+    - **additional_info** (int / required) - Send a fixed value of 1.
+
     
 
 #### Sample Response (200 OK For Existing Sender)
