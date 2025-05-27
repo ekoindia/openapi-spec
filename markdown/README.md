@@ -4350,4 +4350,3 @@ This API retrieves a list of scheduled transactions for an agent.
   - **Query Params:**
     - initiator_id (string, required): Your registered mobile number (See Platform Credentials for UAT).
     - user_code (string, required): Unique code of your registered agent/retailer.
-
