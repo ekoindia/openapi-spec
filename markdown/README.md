@@ -1297,7 +1297,7 @@ The API onboards the sender directly, without triggering any otp to sender's mob
 ```
 
 ### 1.3 Generate Sender Aadhaar OTP API
-This API is used to validate the sender's Aadhaar number. It generates an OTP which has to be verified using the "Verify Sender OTP" API.
+This API is used to validate the sender's Aadhaar number. It generates an OTP which has to be verified using the "Validate Sender Aadhaar OTP" API.
 
 #### Details
 - **Method:** POST
