@@ -1278,20 +1278,25 @@ Use this API to onboard a new sender and enable them for the DMT-Levin service.
 
 
 #### Description
-The API triggers an OTP to be delivered to the sender.
+The API onboards the sender directly, without triggering any otp to sender's mobile.
 
 
 #### Sample Response (200 OK For New Sender)
 ```json
 {
-  "response_status_id": 1,
+  "response_status_id": 0,
   "data": {
-    "otp_ref_id": "MjQzMjYxMjQzMTMyMjQ2YTJlNWEzOTc5MzU1MTRiNDg1OTc0MzU1NjYxNDE3NzQ3NTgzNjZlNzg3NTUxNjk2ODQ2NzE0ZTQ5NzE0NzcyNTg2MjZkNTc3MTY2NGI3NjRiMzA2NzM4NTk0MzUwNTg3NjRlNTQ1MjY5"
-    },
-  "response_type_id": 2136,
-  "message": "Aadhar Validation Pending",
-  "status": 2136
+    "customer_id_type": "mobile_number",
+    "user_code": "321115001",
+    "state_desc": "",
+    "state": "",
+    "customer_id": "9310231242"
+  },
+  "response_type_id": 300,
+  "message": "Wallet opened successfully.",
+  "status": 0
 }
+
 ```
 
 ### 1.3 Generate Sender Aadhaar OTP API
@@ -1306,10 +1311,10 @@ This API is used to validate the sender's Aadhaar number. It generates an OTP wh
   - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
+    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from Get Sender Profile API .
     - **aadhar** (string / required) - The sender's Aadhaar number.
-    - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhaar validation, set intent_id=20.
-    
+    - **additional_info** (int / required) - Send a fixed value of 1.
+
 
 #### Sample Response (200 OK Adhaar Validation Success)
 ```json
@@ -1329,20 +1334,16 @@ This API is used to validate the sender's Aadhaar number. It generates an OTP wh
 #### Sample Response (200 OK Aadhaar Validation Failed)
 ```json
 {
-   "response_status_id": 1,
-    "data": {
-        "description": "",
-        "otp_ref_id": ""
-    },
-    "response_type_id": ,
-    "message": "Aadhar Validation Failed",
-    "status": 
+  "response_status_id": 1,
+  "response_type_id": 2138,
+  "message": "Adhar Validation Failed",
+  "status": 2138
 }
 ```
 
 
-### 1.4 Validate Sender OTP API
-This API is used to validate the sender's Aadhaar number by using the otp received on the sender's aadhaar associated mobile number.
+### 1.4 Validate Sender Aadhaar OTP API
+This API is used to validate the sender's Aadhaar number by using the otp received on the sender's aadhaar associated mobile number and the otp_ref_id received in response of 'Generate Sender Aadhaar OTP API'.
 
 #### Details
 - **Method:** POST
@@ -1365,6 +1366,7 @@ This API is used to validate the sender's Aadhaar number by using the otp receiv
 {
   "response_status_id": 1,
   "data": {
+    "user_code" : "32450001",
     "otp_ref_id": "MjQzMjYxMjQzMTMyMjQ2NzU1NjYyZTc2NDc2NTRlNmQ1NTQ2NTE2NTUyMzE0Njc4NjE1NTM5NzMyZTU4MzY2YTMxNDUzNTMxMzM3NDQyNjg0NDUyNTY1YTJmMmYyZjMzN2E1MzU0Njk3NjMzNmM0ZTZjNmMzMjY5"
   },
   "response_type_id": 2134,
@@ -1396,7 +1398,7 @@ One-time e-KYC of the agent using the biometric device
   - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **otp_ref_id** (int32 / required) - Received in response of Validate OTP
+    - **otp_ref_id** (int32 / required) - Received in response of Validate Sender Aadhaar OTP API.
     - **piddata** (string / required) - PID data returned in XML format of the biometric device needs to passed as string.
     
 
@@ -1587,7 +1589,7 @@ The system will generate a One-Time Password (OTP) and deliver it to the sender'
 }
 ```  
 
-### 3.2 Initiate Transaction API
+### 3.2 Initiate DMT-Levin Transaction API
 Initiate a DMT transaction to a bank account.
 
 #### Details
