@@ -2081,7 +2081,7 @@ Generate a Dynamic QR code for any agent to receive payments via UPI into their 
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /user/collection/upi-razorpay/generate-static-qr
+- **URL Endpoint:** /user/collection/upi-razorpay/generate-dynamic-qr
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -2142,7 +2142,7 @@ Generate a static QR code for any agent to receive payments via UPI into their E
 {
   "response_status_id": -1,
   "data": {
-    "client_ref_id": "13068602",
+    "client_ref_id": "9876543208",
     "name": "xyz",
     "graph_data": "",
     "utility_acc_no": "43088422",
