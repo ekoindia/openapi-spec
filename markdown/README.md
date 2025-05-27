@@ -1354,8 +1354,8 @@ This API is used to validate the sender's Aadhaar number by using the otp receiv
   - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **otp** (int32 / required) - Enter the OTP received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
-    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
+    - **otp** (int32 / required) - Enter the otp received on the sender's aadhaar associated mobile number.
+    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received in response of 'Generate Sender Aadhaar OTP API'
     - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhaar validation, set intent_id=20.
     - **additional_info** (int / required) - Send a fixed value of 1.
 
