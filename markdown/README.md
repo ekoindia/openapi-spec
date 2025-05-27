@@ -1297,7 +1297,7 @@ The API onboards the sender directly, without triggering any otp to sender's mob
 ```
 
 ### 1.3 Generate Sender Aadhaar OTP API
-This API is used to validate the sender's Aadhaar number. It generates an OTP which has to be verified using the "Validate Sender Aadhaar OTP" API.
+This API is used to validate the sender's Aadhaar number. It sends an OTP to the Aadhaar-registered mobile number which has to be verified using the "Validate Sender Aadhaar OTP" API.
 
 #### Details
 - **Method:** POST
@@ -1340,7 +1340,7 @@ This API is used to validate the sender's Aadhaar number. It generates an OTP wh
 
 
 ### 1.4 Validate Sender Aadhaar OTP API
-This API is used to validate the sender's Aadhaar number by using the otp received on the sender's mobile number and the otp_ref_id received in response of 'Generate Sender Aadhaar OTP API'.
+This API is used to validate the sender's Aadhaar number by using the OTP received on the Aadhaar-registered mobile of the customer and the otp_ref_id received in response of 'Generate Sender Aadhaar OTP API'.
 
 #### Details
 - **Method:** POST
@@ -1940,7 +1940,7 @@ Ensure that the `client_ref_id` entered is a unique combination of characters an
 
 ### 1. UPI Payment to VPA API
 
-Pay money from your Eko wallet to a VPA ID.
+Pay money from your Eko wallet to any bank account using UPI VPA (UPI ID).
 
 #### Details
 - **Method:** POST
@@ -1979,7 +1979,7 @@ Pay money from your Eko wallet to a VPA ID.
 ```
 ### 2. UPI Payment to VPA Mobile API
 
-Pay money from your Eko wallet to a Mobile Number which has an associated VPA.
+Pay money from your Eko wallet to any bank account using UPI-registered Mobile Number.
 
 #### Details
 - **Method:** POST
