@@ -705,10 +705,10 @@ Use this API to verify the sender's mobile number using an OTP.
   - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming
-    - **otp** (int32 / required) - Enter the OTP received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhar API.
-    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhar API.
+    - **otp** (int32 / required) - Enter the OTP received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
+    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from the Create Sender, Get Sender Info (for existing senders), or Validate Aadhaar API.
     - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
-    - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhar validation, set intent_id=20.
+    - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhaar validation, set intent_id=20.
     
 
 #### Sample Response (200 OK For Existing Sender)
@@ -772,7 +772,7 @@ Use this API to verify the sender's mobile number using an OTP.
 }
 ```
 
-#### Sample Response (200 OK For Aadhar Validation)
+#### Sample Response (200 OK For Aadhaar Validation)
 ```json
 {
    "response_status_id": 0,
@@ -785,8 +785,8 @@ Use this API to verify the sender's mobile number using an OTP.
 }
 ```
 
-### 1.4 Validate Aadhar API
-Use this API to verify the sender's Aadhar.
+### 1.4 Validate Aadhaar API
+Use this API to verify the sender's Aadhaar.
 
 #### Details
 - **Method:** POST
@@ -798,7 +798,7 @@ Use this API to verify the sender's Aadhar.
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming
     - **service_code** (int / required) - For PayPoint,send a fixed value of 80.
-    - **aadhar** (string / required) - The sender's Aadhar number.
+    - **aadhar** (string / required) - The sender's Aadhaar number.
     
 
 #### Sample Response (200 OK)
@@ -889,7 +889,7 @@ This API is used to verify the sender's PAN (Permanent Account Number).
 Use this API to retrieve a list of recipients associated with a sender. The response will include details such as the recipient's name, IFSC code, beneficiary ID, and recipient ID.
 
 #### Details
-- **Method:** POST
+- **Method:** GET
 - **URL Endpoint:** /customer/payment/ppi/sender/{customer_id}/recipients
 - **Request Structure:**
   - **Path Parameters:**
@@ -1115,6 +1115,509 @@ Initiate a PPI transaction to a bank account.
 
    
   #### Sample Response (200 OK)
+  
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "tx_status": "0",
+        "debit_user_id": "6000000094",
+        "tds": "0.0",
+        "txstatus_desc": "Success",
+        "fee": "4.0",
+        "total_sent": "",
+        "channel": "2",
+        "collectable_amount": "114.0",
+        "txn_wallet": "0",
+        "utility_acc_no": "8999999992",
+        "sender_name": "8999999992",
+        "ekyc_enabled": "0",
+        "remaining_limit_before_pan_required": 49678.0,
+        "tid": "2886522975",
+        "bank": "UCO Bank",
+        "utrnumber": "",
+        "insurance_acquired": "",
+        "balance": "814.0",
+        "totalfee": "",
+        "next_allowed_limit": "",
+        "is_otp_required": "0",
+        "aadhar": "",
+        "currency": "INR",
+        "commission": "0.0",
+        "pipe": 13,
+        "state": "1",
+        "bank_ref_num": "250121123714472002",
+        "recipient_id": 10017680,
+        "timestamp": "2025-01-21T07:07:20.562Z",
+        "amount": "110.00",
+        "pan_required": 2,
+        "pinNo": "",
+        "gst_benefit": "0",
+        "payment_mode_desc": "",
+        "channel_desc": "IMPS",
+        "last_used_okekey": "0",
+        "npr": "",
+        "insurance_amount": "",
+        "service_tax": "0.61",
+        "paymentid": "",
+        "mdr": "",
+        "recipient_name": "Krishna",
+        "customer_id": "8999999992",
+        "account": "67544100008454",
+        "kyc_state": ""
+    },
+    "response_type_id": 325,
+    "message": "Transaction successful",
+    "status": 0
+}
+
+```  
+---
+
+# DMT (Domestic Money Transfer) - LEVIN
+
+## 1. Sender APIs
+
+### 1.1 Get Sender Profile API
+Use this API to check if the sender has been created on the platform. If the sender exists, use this API to retrieve details such as the sender's monthly limit, used balance, and remaining balance. If the sender does not exist, create the sender before using other services.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** /customer/profile/{customer_id}/dmt-levin
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Query Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming.
+
+
+#### Sample Response (200 OK For Existing Sender)
+```json
+{
+    "response_status_id": -1,
+    "data": {
+        "customer_profile": {
+            "total_monthly_limit": "25000",
+            "mobile": "9999999999",
+            "kyc_id": "",
+            "ekyc_enabled": 0,
+            "kyc_validity": "",
+            "kyc_remark": "",
+            "kyc_type": "",
+            "balance": "0.00",
+            "next_allowed_limit": "24900.0",
+            "name": null,
+            "digital_ekyc": 0,
+            "chart": [
+                {
+                    "data_type_id": 10,
+                    "data": {
+                        "unavailable": 0,
+                        "used": 100,
+                        "remaining": 24900
+                    },
+                    "label": ""
+                }
+            ],
+            "email": "",
+            "kyc_state": 0
+        },
+        "wallet_token": "",
+        "id_proof_type_id": "",
+        "is_registered": 0,
+        "id_proof": "",
+        "otpOptionalSum": "",
+        "sender_name": "",
+        "otpNotRequiredSum": "",
+        "ekyc_enabled": "",
+        "wallet_id": "",
+        "otpNotRequiredSumNeft": "",
+        "next_allowed_limit": 24900.0,
+        "kyc_state": 0,
+        "otpOptionalSumNeft": ""
+    },
+    "response_type_id": 309,
+    "message": "Success!",
+    "status": 0
+}
+```
+
+#### Sample Response (200 OK For New Sender)
+```json
+{
+    "response_status_id": 1,
+    "data": {
+        "description": "",
+        "otp_ref_id": "MjQzMjYxMjQzMTMyMjQ1ODY1NzUzNTRhNjkzMDU0NGUzNjU4NjIzMjQxNDk3OTY1NGQ2ZjZkNWE3NTZlNzE2ODZkNzg0MjU3NmU0MjQ4MzA0NzQ4NTgzMzY3NzgzMzQ0NTc0YjU0NTY0ZTUxMzI2ZDM0MzM0MjRi"
+    },
+    "response_type_id": 2136,
+    "message": "Aadhar Validation Pending",
+    "status": 2136
+}
+```
+
+### 1.2 Onboard Customer API
+Use this API to onboard a new sender and enable them for the DMT-Levin service.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/account/{customer_id}/dmt-levin
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number  
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **name** (string / required) - Name of the sender as per ID
+    - **dob** (date / required) - Date of birth of the sender in YYYY-MM-DD format
+    - **residence_address** (array of strings / required) - Address of the sender in JSON format
+
+
+#### Description
+The API onboards the sender directly, without triggering any otp to sender's mobile.
+
+
+#### Sample Response (200 OK For New Sender)
+```json
+{
+  "response_status_id": 0,
+  "data": {
+    "customer_id_type": "mobile_number",
+    "user_code": "321115001",
+    "state_desc": "",
+    "state": "",
+    "customer_id": "9310231242"
+  },
+  "response_type_id": 300,
+  "message": "Wallet opened successfully.",
+  "status": 0
+}
+
+```
+
+### 1.3 Generate Sender Aadhaar OTP API
+This API is used to validate the sender's Aadhaar number. It sends an OTP to the Aadhaar-registered mobile number which has to be verified using the "Validate Sender Aadhaar OTP" API.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/account/{customer_id}/dmt-levin/aadhaar
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received from Get Sender Profile API .
+    - **aadhar** (string / required) - The sender's Aadhaar number.
+    - **additional_info** (int / required) - Send a fixed value of 1.
+
+
+#### Sample Response (200 OK Adhaar Validation Success)
+```json
+{
+ "response_status_id": 1,
+  "data": {
+    "intent_id": "",
+    "kyc_request_id": "",
+    "otp_ref_id": "af39bb86-6e3d-49e7-bfc1-b7c0cc5ef817"
+  },
+  "response_type_id": 2129,
+  "message": "Validate the OTP",
+  "status": 2129
+}
+```
+
+#### Sample Response (200 OK Aadhaar Validation Failed)
+```json
+{
+  "response_status_id": 1,
+  "response_type_id": 2138,
+  "message": "Adhar Validation Failed",
+  "status": 2138
+}
+```
+
+
+### 1.4 Validate Sender Aadhaar OTP API
+This API is used to validate the sender's Aadhaar number by using the OTP received on the Aadhaar-registered mobile of the customer and the otp_ref_id received in response of 'Generate Sender Aadhaar OTP API'.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/account/{customer_id}/dmt-levin/otp/verify
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **otp** (int32 / required) - Enter the otp received on the sender's mobile number.
+    - **otp_ref_id** (int32 / required) - Enter the otp_ref_id received in response of 'Generate Sender Aadhaar OTP API'
+    - **intent_id** (string / required) - For sender onboarding, set intent_id=19. For Aadhaar validation, set intent_id=20.
+    - **additional_info** (int / required) - Send a fixed value of 1.
+
+    
+
+#### Sample Response (200 OK For Existing Sender)
+```json
+{
+  "response_status_id": 1,
+  "data": {
+    "user_code" : "32450001",
+    "otp_ref_id": "MjQzMjYxMjQzMTMyMjQ2NzU1NjYyZTc2NDc2NTRlNmQ1NTQ2NTE2NTUyMzE0Njc4NjE1NTM5NzMyZTU4MzY2YTMxNDUzNTMxMzM3NDQyNjg0NDUyNTY1YTJmMmYyZjMzN2E1MzU0Njk3NjMzNmM0ZTZjNmMzMjY5"
+  },
+  "response_type_id": 2134,
+  "message": "Customer KYC Pending",
+  "status": 2134
+}
+
+```
+
+#### Sample Response (200 OK For New Sender)
+```json
+{
+   "response_status_id": 1,
+   "response_type_id": 2136,
+   "message": "Aadhar Validation Pending",
+   "status": 2136
+}
+```
+
+### 1.5 DMT Customer KYC API
+One-time e-KYC of the agent using the biometric device
+
+#### Details
+- **Method:** PUT
+- **URL Endpoint:** /customer/account/{customer_id}/dmt-levin/ekyc
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **otp_ref_id** (int32 / required) - Received in response of Validate Sender Aadhaar OTP API.
+    - **piddata** (string / required) - PID data returned in XML format of the biometric device needs to passed as string.
+    
+
+#### Sample Response (200 OK For Existing Sender)
+```json
+{
+   "response_status_id": 0,
+    "response_type_id": 2132,
+    "message": "Customer Registration Completed",
+    "status": 0
+}
+
+```
+
+#### Sample Response (200 OK For New Sender)
+```json
+{
+   "response_status_id": 1,
+   "response_type_id": 2136,
+   "message": "Aadhar Validation Pending",
+   "status": 2136
+}
+```
+
+## 2. Recipient APIs
+
+### 2.1 Get Recipients API
+Use this API to retrieve a list of recipients associated with a sender. The response will include details such as the recipient's name, IFSC code, beneficiary ID, and recipient ID.
+
+#### Details
+- **Method:** GET
+- **URL Endpoint:** /customer/payment/dmt-levin/sender/{customer_id}/recipients
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **additional_info** (int / required) - Send a fixed value of 1.
+    
+
+#### Sample Response (200 OK)
+```json
+{
+   "response_status_id": 0,
+   "data": {
+       "pan_required": 2,
+       "recipient_list": [
+           {
+               "channel_absolute": 0,
+               "available_channel": 0,
+               "account_type": "Bank Account",
+               "ifsc_status": 1,
+               "is_self_account": "0",
+               "channel": 0,
+               "is_imps_scheduled": 0,
+               "recipient_id_type": "acc_ifsc",
+               "imps_inactive_reason": "",
+               "allowed_channel": 0,
+               "is_verified": 0,
+               "beneficiary_id": 40378,
+               "bank": "Kotak Mahindra Bank",
+               "is_otp_required": "0",
+               "recipient_mobile": "9999999990",
+               "recipient_name": "Aditya",
+               "ifsc": "KKBK0000878",
+               "account": "1XXXXXX90657",
+               "pipes": {
+                   "3": {
+                       "pipe": 3,
+                       "status": 1
+                   }
+               },
+               "recipient_id": 10018839,
+               "is_rblbc_recipient": 1
+           },
+          
+      
+      {
+               "channel_absolute": 2,
+               "available_channel": 2,
+               "account_type": "Bank Account",
+               "ifsc_status": 1,
+               "is_self_account": "0",
+               "channel": 2,
+               "is_imps_scheduled": 0,
+               "recipient_id_type": "acc_ifsc",
+               "imps_inactive_reason": "",
+               "allowed_channel": 2,
+               "is_verified": 0,
+               "beneficiary_id": null,
+               "bank": "State Bank of India",
+               "is_otp_required": "0",
+               "recipient_mobile": "6888888886",
+               "recipient_name": "Madness",
+               "ifsc": "SBIN00005656",
+               "account": "43XXXXXXXXX45",
+               "pipes": {
+                   "3": {
+                       "pipe": 3,
+                       "status": 1
+                   }
+               },
+               "recipient_id": 10065177,
+               "is_rblbc_recipient": 1
+           }
+       ],
+       "remaining_limit_before_pan_required": 50000.0,
+       "is_insured": ""
+   },
+   "response_type_id": 23,
+   "message": "Success",
+   "status": 0
+}
+
+```
+
+### 2.2 Add Recipient API
+Use this API to add a new recipient or update an existing recipient for a sender. 
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/dmt-levin/sender/{customer_id}/recipient
+- **Request Structure:**
+  - **Path Parameters:**
+    - **customer_id** (string / required) - Sender's mobile number
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **bank_id** (string / required) - A unique ID is assigned to each bank, which must be provided here.
+    - **recipient_name** (string / required) - The full name of the recipient.
+    - **recipient_mobile** (string / required) - A valid 10-digit mobile number of the recipient.
+    - **recipient_type** (string / required) - value will be 3.
+    - **account_type** (string / required) - Send a fixed value of 1.
+    - **bank_code** (string / required) - The IFSC code of the recipient's bank branch.
+    - **type** (string / required) - Send a fixed value of 1.
+    - **account** (string / required) - The recipient's bank account number used for receiving funds.
+
+  
+
+
+#### Sample Response (200 OK)
+```json
+{
+   "response_status_id": 0,
+   "data": {
+       "initiator_id": "6000000094",
+       "recipient_mobile": "9775597777",
+       "recipient_id_type": "",
+       "customer_id": "9444444444",
+       "pipes": {},
+       "recipient_id": 10017740
+   },
+   "response_type_id": 43,
+   "message": "Success!Please transact using Recipientid",
+   "status": 0
+}
+```
+
+## 3. DMT Transaction APIs
+
+### 3.1 Send Transaction OTP API
+The system will generate a One-Time Password (OTP) and deliver it to the sender's registered mobile number as part of a security or verification process.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/dmt-levin/otp
+- **Request Structure:**
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **recipient_id** (string / required) - Recipient id of the recipient.
+    - **amount** (string / required) - The amount that needs to be transferred.
+    - **beneficiary_id** (string / required) - A unique ID generated when adding the recipient's bank details.
+    - **customer_id** (string / required) - Mobile number of the Sender.
+
+#### Sample Response (200 OK)
+
+```json
+{
+    "response_status_id": 1,
+    "data": {
+        "otp_ref_id": "zCISyglexo0Pjqp4YrS2ssweuD9v1c3aLKGxjTW8wU7An8Wem1UyNws5830yh7q/sf5J4R3BY="
+    },
+    "response_type_id": 2133,
+    "message": "Send OTP",
+    "status": 2133
+}
+```  
+
+### 3.2 Initiate DMT-Levin Transaction API
+Initiate a DMT transaction to a bank account.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/dmt-levin
+- **Request Structure:**
+  - **Body Parameters:**
+    - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
+    - **user_code** (string / required) - User code value of the retailer from whom the request is coming
+    - **recipient_id** (string / required) - Recipient id of the recipient.
+    - **amount** (string / required) - The amount that needs to be transferred.
+    - **timestamp** (timestamp / required) - A timestamp represents a specific date and time.
+    - **currency** (string / required) - currency=INR.
+    - **customer_id** (string / required) - Mobile number of the sender.
+    - **client_ref_id** (string / required) - Unique reference number of your system, please make this ID as unique as possible so that it does not match with any other partner unique reference id.
+    - **channel** (int / required) - Send the fixed value 2.
+    - **latlong** (string / required) - latlong of the user from whom the request is coming. 
+    - **state** (int / required) - state=1
+    - **otp** (string / required) - The otp received from the 'SEND TRANSACTION OTP' API on customer's number.
+    - **otp_ref_id** (string / required) - This is the value received from the 'SEND TRANSACTION OTP' API.
+    - **recipient_id_type** (string / required) - A unique ID generated when adding the recipient's bank details.
+    
+   
+**Note:**
+ - **For Refund:**
+   - When the transaction fails, we automatically send an OTP to the customer. Ask for that OTP from the customer and call the `Get Refund OTP API`.
+     This will act as a consent that you have actually refunded back the cash to the customer. After this API call, we will refund the eValue into your account.
+
+
+   
+ #### Sample Response (200 OK)
   
 ```json
 {
@@ -1435,46 +1938,9 @@ Ensure that the `client_ref_id` entered is a unique combination of characters an
 
 # UPI Payment APIs
 
+### 1. UPI Payment to VPA API
 
-### 1. Validate UPI VPA API
-Validate the VPA (Virtual Payment Address) for a UPI Recipient.
-
-#### Details
-- **Method:** POST
-- **URL Endpoint:** /customer/payment/upi/validate-vpa
-- **Request Structure:**
-  - **Body Parameters:**
-    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - user_code (string / required) - User code value of the retailer from whom the request is coming
-    - customer_vpa (string / required) - VPA which you want to validate
-    - client_ref_id (string / required) - Unique transaction ID which you will generate from your end for every transaction, it will help you identify your specific transaction
-
-#### Sample Response (200 OK)
-```json
-{
-  "response_status_id": 0,
-  "data": {
-    "client_ref_id": "62421321704479941883",
-    "user_code": "1000834",
-    "bank_id": 687,
-    "fee": "0.0",
-    "customer_vpa": "9999999999@upi",
-    "recipient_mobile": "9999999999",
-    "recipient_name": "Aastha Malik",
-    "valid_vpa": 1,
-    "tid": "2886242155",
-    "timestamp": "Sat Jan 06 00:09:02 IST 2024"
-  },
-  "response_type_id": 1976,
-  "message": "VPA is Valid",
-  "status": 0
-}
-```
-
-
-### 2. UPI Payment to VPA API
-
-Pay money from your Eko wallet to a VPA ID.
+Pay money from your Eko wallet to any bank account using UPI VPA (UPI ID).
 
 #### Details
 - **Method:** POST
@@ -1482,11 +1948,12 @@ Pay money from your Eko wallet to a VPA ID.
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
-    - customer_id (string / required) - Mobile number of retailer
+    - user_code (string / required) - User Code of retailer
     - customer_vpa (string / required) - Vpa in which you want the amount to be settled
     - recipient_name (string / required) - Name of the receiver who is associated with the vpa
     - amount (string / required) - Amount that you want to settle
     - client_ref_id (string / required) - Unique transaction ID which you will generate from your end for every transaction
+    - latlong (string / required) – User's geolocation coordinates in "latitude,longitude" format (Example: 26.8863786,75.7393589)
 
 #### Sample Response (200 OK)
 ```json
@@ -1510,18 +1977,56 @@ Pay money from your Eko wallet to a VPA ID.
   "status": 0
 }
 ```
+### 2. UPI Payment to VPA Mobile API
 
+Pay money from your Eko wallet to any bank account using UPI-registered Mobile Number.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /customer/payment/upi-mobile
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - user_code (string / required) - User Code of retailer
+    - customer_vpa (string / required) - Mobile Number which has an associated VPA in which you want the amount to be settled
+    - recipient_name (string / required) - Name of the receiver who is associated with the vpa
+    - amount (string / required) - Amount that you want to settle
+    - client_ref_id (string / required) - Unique transaction ID which you will generate from your end for every transaction
+    - latlong (string / required) – User's geolocation coordinates in "latitude,longitude" format (Example: 26.8863786,75.7393589)
+
+#### Sample Response (200 OK)
+```json
+{
+  "response_status_id": 2,
+  "data": {
+    "client_ref_id": "RIM10011909045679290",
+    "amount": "205.0",
+    "tds": "",
+    "balance": "46547.99",
+    "fee": "5.9",
+    "customer_vpa": "999999999",
+    "recipient_mobile": "",
+    "commission": "",
+    "recipient_name": "Kapil Jain",
+    "tid": "2886428136",
+    "timestamp": "Tue Jan 09 14:09:02 IST 2024"
+  },
+  "response_type_id": 1982,
+  "message": "VPA Payment Initiated",
+  "status": 0
+}
+```
 
 ---
 
 # UPI Collection APIs
 
-### 1. Generate Static QR (UPI) API
+### 1. Generate Static QR (UPI) API - Razorpay Bank
 Generate a static QR code for any agent to receive payments via UPI into their E-value wallet.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /user/collection/upi/generate-static-qr
+- **URL Endpoint:** /user/collection/upi-razorpay/generate-static-qr
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1570,12 +2075,12 @@ Eko’s QR Payment API provides an end-to-end solution from QR code generation t
 - For each `sender_id`, only one QR string can be generated.
 
 
-### 2. Generate Dynamic QR (UPI) API
+### 2. Generate Dynamic QR (UPI) API - Razorpay Bank
 Generate a Dynamic QR code for any agent to receive payments via UPI into their E-value wallet.
 
 #### Details
 - **Method:** POST
-- **URL Endpoint:** /user/collection/upi/generate-static-qr
+- **URL Endpoint:** /user/collection/upi-razorpay/generate-dynamic-qr
 - **Request Structure:**
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
@@ -1607,6 +2112,60 @@ Generate a Dynamic QR code for any agent to receive payments via UPI into their 
 **Note:**
 - For this API, almost all process is same as Generate Static QR API, only the difference is that the QR code generated is dynamic in nature and thus an extra parameter 'amount' is added in the request'.
 - The api url/endpoint is also same as static QR code generation API.
+
+### 3. Generate Static QR (UPI) API - AU Bank
+Generate a static QR code for any agent to receive payments via UPI into their E-value wallet.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /user/collection/upi-au/generate-static-qr
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
+    - sender_id (string / required) - Registered mobile number of the agent for which the QR code is generated
+    - name (string / required) - Name of the agent for which QR code is generated
+    - email (string) - Email address of the agent whose QR code is being generated
+    - service_code (int / required) - 85 (Service Activation Code for AU)
+
+#### Response Values
+| Values | Status         |
+|--------|----------------|
+| 0      | INACTIVE       |
+| 1      | ACTIVE         |
+| 2      | QR_ACTIVE      |
+| 3      | QR_INACTIVE    |
+
+
+#### Sample Response (200 OK)
+```json
+{
+  "response_status_id": -1,
+  "data": {
+    "client_ref_id": "9876543208",
+    "name": "xyz",
+    "graph_data": "",
+    "utility_acc_no": "43088422",
+    "sender_id": "9876543208",
+    "qr_string": "https://portal.getepay.in:8443/getepayPortal/merchantInvoice/showQr?qrPath=/media/shared//home/bahetymradul/donotdelete/projectData/VPA/QRIMAGE/DynamicQRCode/1747061313972/merchant1738910.augp@aubank.png",
+    "status": 2
+  },
+  "response_type_id": 1888,
+  "message": "successfully generated QR code",
+  "status": 0
+}
+```
+
+#### Description
+Eko’s QR Payment API provides an end-to-end solution from QR code generation to payment collection. The transaction flow is as follows:
+
+1. Activate your service for QR using Activate Service for Agent API and passing `service_code = 85`.
+2. The user provides their mobile number that is the `sender_id` against which their QR code is generated.
+3. If any payment is made against the QR code, the amount is reflected in the partner's wallet.
+4. After the transaction, the callback request with the transaction details is sent to the partner. The transaction status of a particular transaction can be checked using the Transaction Inquiry API.
+
+**Note:**
+- To cross-check the QR code that was used for a transaction, check if the `client_ref_id` in the callback matches the `utility_acc_no` in the generated QR. If they are the same, you've identified the QR code used for the transaction.
+- For each `sender_id`, only one QR string can be generated.
 
 
 ---
@@ -2142,7 +2701,7 @@ You get the following key information in the `data` object of the response:
 |--------------------|-----------|----------------------------------------------------------|
 | access_key_validity| string    | The validity of the access key, expressed in epoch time |
 | access_key         | string    | The access key to be used in the next API for Aadhaar OTP |
-| aadhar             | string    | The Aadhaar number that was verified                    |
+| aadhaar             | string    | The Aadhaar number that was verified                    |
 | message            | string    | Message indicating the result of consent                |
 
 #### Sample Response (200 OK)
@@ -2214,7 +2773,7 @@ This API retrieves the Aadhaar details of a user in XML format.
   - **Body Parameters:**
     - initiator_id (string / required) - Your registered mobile number (See Platform Credentials for UAT)
     - user_code (string) - User code value of the retailer from whom the request is coming
-    - aadhar (string / required) - Aadhar number you are verifiying
+    - aadhar (string / required) - Aadhaar number you are verifiying
     - is_consent (string / required) - Y = Yes, N = No
     - otp (string / required) - OTP received on the mobile number linked with aadhaar
     - share_code (string) - Random 4 digit code generated on partner's end
@@ -3791,4 +4350,3 @@ This API retrieves a list of scheduled transactions for an agent.
   - **Query Params:**
     - initiator_id (string, required): Your registered mobile number (See Platform Credentials for UAT).
     - user_code (string, required): Unique code of your registered agent/retailer.
-
