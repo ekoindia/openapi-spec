@@ -1179,7 +1179,7 @@ Initiate a PPI transaction to a bank account.
 ## 1. Sender APIs
 
 ### 1.1 Send Sender Verification OTP
-Use this API to check if the sender has been created on the platform. If the sender exists, use this API to retrieve details such as the sender's monthly limit, used balance, and remaining balance. If the sender does not exist, create the sender before using other services.
+Use this API to verify the sender by generating and sending an OTP to the sender's mobile number. After this API, use the `Verify Sender OTP` API to verify the sender and get the sender's profile details.
 
 #### Details
 - **Method:** POST
@@ -1187,7 +1187,7 @@ Use this API to check if the sender has been created on the platform. If the sen
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
-  - **Query Parameters:**
+  - **Body Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming.
 
