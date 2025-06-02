@@ -1178,12 +1178,12 @@ Initiate a PPI transaction to a bank account.
 
 ## 1. Sender APIs
 
-### 1.1 Get Sender Profile API
+### 1.1 Send Sender Verification OTP
 Use this API to check if the sender has been created on the platform. If the sender exists, use this API to retrieve details such as the sender's monthly limit, used balance, and remaining balance. If the sender does not exist, create the sender before using other services.
 
 #### Details
-- **Method:** GET
-- **URL Endpoint:** /customer/profile/{customer_id}/ppi-levin
+- **Method:** POST
+- **URL Endpoint:** /customer/profile/{customer_id}/ppi-levin/otp
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Sender's mobile number
@@ -1352,7 +1352,7 @@ This API is used to validate the sender's Aadhaar number by using the OTP receiv
 
 
     
-#### Sample Response (200 OK For Existing Sender)
+#### Sample Response (200 OK)
 ```json
 {
     "response_status_id": 1,
@@ -1432,7 +1432,7 @@ Use this API to retrieve a list of recipients associated with a sender. The resp
 - **Request Structure:**
   - **Path Parameters:**
     - **customer_id** (string / required) - Registered mobile number of the sender.
-  - **Qeury Parameters:**
+  - **Query Parameters:**
     - **initiator_id** (string / required) - The unique cell number with which you are onboarded on Eko's platform. For UAT, refer to [Platform Credentials](https://developers.eko.in/docs/platform-credentials)
     - **user_code** (string / required) - User code value of the retailer from whom the request is coming
     
@@ -2452,7 +2452,7 @@ This API is used to validate the sender's Aadhaar number by using the OTP receiv
 }
 ```
 
-### 1.5 DMT Customer KYC API
+### 1.5 Customer eKYC
 One-time e-KYC of the agent using the biometric device
 
 #### Details
@@ -2864,7 +2864,7 @@ The API onboards the sender directly, without triggering any otp to sender's mob
 }
 
 ```
-### 1.3 DMT Customer KYC API
+### 1.3 Customer eKYC
 One-time e-KYC of the agent using the biometric device.
 
 #### Details
@@ -2907,7 +2907,7 @@ One-time e-KYC of the agent using the biometric device.
 
 ```
 
-### 1.4  Verify OTP API
+### 1.4  Validate Customer eKYC OTP
 Use this API to verify the OTP sent to your user/agent.
 
 #### Details
