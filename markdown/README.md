@@ -1020,7 +1020,8 @@ Use this API to add a new recipient or update an existing recipient for a sender
 
 
 ### 2.3 Add Recipient Bank API
-Use this API to add a recipient's bank.
+Use this API to registered a recipient with the bank, before they are allowed to receive payments via PPI.
+
 
 #### Details
 - **Method:** POST
