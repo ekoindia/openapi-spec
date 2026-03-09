@@ -5536,8 +5536,6 @@ The response will contain the following information in the `data` object:
   "status": "success"
 }
 ```
-
-
 ---
 
 # Marketing & Communication APIs
@@ -5867,3 +5865,599 @@ This API retrieves a list of scheduled transactions for an agent.
   - **Query Params:**
     - initiator_id (string, required): Your registered mobile number (See Platform Credentials for UAT).
     - user_code (string, required): Unique code of your registered agent/retailer.
+
+---
+
+# KYC & Verification APIs - TOURAS
+
+## 1. PAN APIs
+
+### 1.1. PAN Verification API
+Verify PAN details including holder name and status.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/pan-verification
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - pan_number (string / required) - The PAN number you want to verify.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "upstream_rrn": "pan_abc123xyz",
+        "pan_no": "ABCDE1234F",
+        "fullname": "JOHN DOE",
+        "category": "person",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+### 1.2. PAN Comprehensive API
+Perform comprehensive PAN verification with detailed insights.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/pan-comprehensive
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - pan_number (string / required) - The PAN number for which comprehensive details are needed.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "firstname": "JOHN",
+        "dob": "1990-01-01",
+        "middlename": "",
+        "pan_status": "valid",
+        "masked_aadhaar": "",
+        "message": "pan verification successful",
+        "lastname": "DOE",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+## 2. Bank Account APIs
+
+### 2.1. Account Verify Pennyless
+Verify bank account details instantly without monetary debit.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/bank-acc-verify-pennyless
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - ifsc (string / required) - The IFSC code of the bank.
+    - account (string / required) - The bank account number.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "bank_ifsc": "ICIC0000480",
+        "bank_account_no": "048001503882",
+        "verified_beneficiary_name": "JOHN DOE",
+        "message": "Bank account verification successful",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+### 2.2. Account Verify Pennydrop
+Verify bank account ownership via small credit transaction (penny drop).
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/bank-acc-verify-pennydrop
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - ifsc (string / required) - The IFSC code of the bank.
+    - account (string / required) - The bank account number.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "bank_ifsc": "ICIC0006954",
+        "bank_account_no": "695401505231",
+        "verified_beneficiary_name": "JOHN DOE",
+        "message": "Bank account verification successful",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+## 3. GST APIs
+
+### 3.1. GST Basic
+Fetch basic GST registration and business information.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/gst-basic
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - gst (string / required) - The GST number for which details are needed.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "nature_of_business_activities": "Export|Import|Wholesale Business|Retail Business",
+        "legal_name_of_business": "XYZ PRIVATE LIMITED",
+        "registration_date": "2025-11-03",
+        "centre_jurisdiction": "State - CBIC,Zone - DELHI,Commissionerate - DELHI WEST,Division - ROHINI,Range - RANGE - 106",
+        "state_jurisdiction": "State - Delhi,Zone - Zone 6,Ward - Ward 63 (Jurisdictional Office)",
+        "e_invoicing_status": "NO",
+        "gstin_status": "valid",
+        "constitution_of_business": "Private Limited Company",
+        "registration_name": "XYZ PRIVATE LIMITED",
+        "gstin": "07XXXXX0000X0XX",
+        "registration_type": "Private Limited Company",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+### 3.2. GST By PAN
+Fetch GST registration details linked to a PAN number.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/gst-by-pan
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - pan_number (string / required) - The PAN number to fetch associated GST registrations.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "upstream_rrn": "gstin_pan_sQtosPaUkibJuFihwoTu",
+        "gstin_status": "valid",
+        "pan_no": "XXXXX0000X",
+        "state": "Gujarat",
+        "message": "GST by pan verification successful",
+        "gstin": "24XXXXX0000X1ZW",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+### 3.3. Advance GST
+Retrieve advance GST payment and filing details.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/advance-gst
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - gst (string / required) - The GST number for which details are needed.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "gstn_details": {
+            "nature_of_business_activities": [
+                "EXPORT",
+                "IMPORT",
+                "WHOLESALE BUSINESS",
+                "RETAIL BUSINESS"
+            ],
+            "legal_name_of_business": "XYZ PRIVATE LIMITED",
+            "annual_turnover": "NA",
+            "additional_contacts": [],
+            "annual_turnover_fy": "",
+            "constitution_of_business": "PRIVATE LIMITED COMPANY",
+            "gstin_status": "ACTIVE",
+            "registration_name": "XYZ PRIVATE LIMITED",
+            "gstin": "07XXXXX0000X0XX",
+            "promoters": [
+                "JOHN DOE",
+                "JANE DOE"
+            ]
+        },
+        "gstin": "07XXXXX0000X0XX",
+        "message": "GST advance verification successful",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+## 4. Income Tax APIs
+
+### 4.1. ITR Compliance
+Check Income Tax Return filing and compliance status.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/itr-compliance
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - pan_number (string / required) - The PAN number you want to check for ITR compliance.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "pan_number": "XXXXX0000X",
+        "upstream_rrn": "itr_compliance_msyclBcoOLzliwAbknsE",
+        "masked_name": "JXXXXXXN DXXXXXE",
+        "pan_aadhaar_linked": "linked",
+        "message": "ITR compliance fetched successfully",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+## 5. UPI APIs
+
+### 5.1. Mobile to VPA
+Fetch or validate UPI VPA linked to a mobile number.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/mobile-to-vpa
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - customer_id (string / required) - The mobile number for the VPA validation.
+    - name (string / required) - Name of the customer.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+## 6. Corporate Identity APIs
+
+### 6.1. CIN Verification
+Verify company details using CIN number.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/cin-verification
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - cin_number (string / required) - The Corporate Identification Number (CIN).
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "number": "UXXXXXX0000XXXX000000",
+        "data": {
+            "company_type": "company",
+            "company_id": "UXXXXXX0000XXXX000000",
+            "company_name": "XYZ PRIVATE LIMITED",
+            "details": {
+                "charges": [
+                    {
+                        "assets_under_charge": "",
+                        "date_of_creation": "2016-09-16",
+                        "date_of_modification": "1800-01-01",
+                        "charge_amount": "100000000",
+                        "status": "closed"
+                    },
+                    {
+                        "assets_under_charge": "",
+                        "date_of_creation": "2012-06-05",
+                        "date_of_modification": "1800-01-01",
+                        "charge_amount": "95000000",
+                        "status": "closed"
+                    }
+                ],
+                "directors": [
+                    {
+                        "end_date": "1800-01-01",
+                        "din_number": "00000000",
+                        "surrendered_din": null,
+                        "director_name": "JOHN DOE",
+                        "start_date": "2023-12-06"
+                    },
+                    {
+                        "end_date": "1800-01-01",
+                        "din_number": "00000000",
+                        "surrendered_din": null,
+                        "director_name": "JANE DOE",
+                        "start_date": "2023-06-26"
+                    }
+                ],
+                "company_info": {
+                    "company_category": "Company limited by shares",
+                    "email_id": "*****@example.co.in",
+                    "class_of_company": "Private",
+                    "last_bs_date": null,
+                    "company_sub_category": null,
+                    "registered_address": "123 EXAMPLE STREET, NEW DELHI Delhi India 110019",
+                    "active_compliance": null,
+                    "registration_number": "xxxxxx",
+                    "number_of_members": "0",
+                    "suspended_at_stock_exchange": null,
+                    "cin": "UXXXXXX0000XXXX000000",
+                    "address_other_than_ro": null,
+                    "listed_status": "no",
+                    "paid_up_capital": "175000000",
+                    "last_agm_date": "2023-09-30",
+                    "roc_code": "ROC Delhi",
+                    "status_under_cirp": null,
+                    "authorized_capital": null,
+                    "date_of_incorporation": "2007-09-17",
+                    "company_status": "Active"
+                }
+            },
+            "client_id": "company_XXXXXXXXXXXXXXXXXXXX"
+        },
+        "message": "CIN verification successfully",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+## 7. Transport & Vehicle APIs
+
+### 7.1. Driving License Verification
+Verify driving license status and holder information.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/drivinglicense-verification
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - dl_number (string / required) - The Driving License number.
+    - dob (string / required) - Date of birth of the DL holder (format YYYY-MM-DD).
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "expiryDate": "2035-10-13",
+        "number": "XX-0000000000000",
+        "dob": "12/07/1997",
+        "vehicleClass": [
+            "MCWG",
+            "LMV"
+        ],
+        "issueDate": "2015-10-14",
+        "message": "Driving license verified successfully",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+### 7.2. RC Verification
+Verify vehicle Registration Certificate details.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/rc-verification
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - rc_number (string / required) - The Vehicle Registration number.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "regNo": "XX00XX0000",
+        "bodyType": "SOLO WITH PILLION",
+        "permitValidUpto": "NA",
+        "rcFinancer": "XXXXXXXXXXXX LTD",
+        "vehicleTaxUpto": "08/11/2040",
+        "mobileNumber": "",
+        "vehicleManufacturingMonthYear": "09/2025",
+        "grossVehicleWeight": "265",
+        "puccNumber": "XXXXX",
+        "vehicleCategory": "2WN",
+        "vehicleStandingCapacity": "0",
+        "number": "XX00XX0000",
+        "permitType": "",
+        "engine": "XXXXXXXXXXXX",
+        "vehicleInsurancePolicyNumber": "XXXXXXXXXX",
+        "vehicleSleeperCapacity": "0",
+        "model": "EXAMPLE MODEL",
+        "permanentAddress": "EXAMPLE ADDRESS, 000000",
+        "normsType": "BHARAT STAGE VI",
+        "puccUpto": "08/11/2026",
+        "vehicleInsuranceUpto": "08/11/2030",
+        "owner": "JOHN DOE",
+        "permitValidFrom": "NA",
+        "vehicleSeatCapacity": "2",
+        "vehicleColour": "RED",
+        "chassis": "XXXXXXXXXXXXXXXXX",
+        "unladenWeight": "115",
+        "message": "RC verification successful",
+        "vehicleInsuranceCompanyName": "EXAMPLE INSURANCE LTD.",
+        "nationalPermitNumber": "",
+        "blacklistCheck": "ACTIVE",
+        "permitNumber": "",
+        "permitIssueDate": "NA",
+        "wheelbase": "1285",
+        "vehicleCylindersNo": "1",
+        "nationalPermitIssuedBy": "",
+        "challanDetails": "",
+        "nationalPermitUpto": "",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+### 7.3. E-Challan
+Retrieve pending traffic e-challan details.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/e-challan
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - registration_number (string / required) - The vehicle Registration Number for fetching the challans.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "result": {
+            "regNo": "XX00XX0000",
+            "MhChallanPhoneNumbers": null,
+            "status_code": 200,
+            "message": "Challan Details Found",
+            "failedSources": [],
+            "challanDetails": [
+                {
+                    "challanStatus": "Paid",
+                    "number": 1,
+                    "accusedName": "X******X X******X",
+                    "amount": 500,
+                    "challanNumber": "XX0000000000000000",
+                    "challanPlace": "",
+                    "challanSource": "ECHALLAN",
+                    "state": "XX",
+                    "rto": "",
+                    "court_challan": "1",
+                    "offenseDetails": "",
+                    "challanDate": "11/08/2025"
+                },
+                {
+                    "challanStatus": "Paid",
+                    "number": 2,
+                    "accusedName": "X******X X******X",
+                    "amount": 500,
+                    "challanNumber": "XX0000000000000000",
+                    "challanPlace": "",
+                    "challanSource": "ECHALLAN",
+                    "state": "XX",
+                    "rto": "",
+                    "court_challan": "1",
+                    "offenseDetails": "",
+                    "challanDate": "15/09/2023"
+                }
+            ],
+            "successfulSources": [
+                "ECHALLAN"
+            ]
+        },
+        "message": "Echallan fetch successfully",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
+
+
+## 8. Communication APIs
+
+### 8.1. Email Check
+Validate email address authenticity and deliverability.
+
+#### Details
+- **Method:** POST
+- **URL Endpoint:** /tools/kyc/touras/check-email
+- **Request Structure:**
+  - **Body Parameters:**
+    - initiator_id (string / required) - Your registered mobile number.
+    - user_code (string / required) - User code value of the retailer from whom the request is coming.
+    - email (string / required) - The email address to check.
+
+#### Sample Response (200 OK)
+```json
+{
+    "response_status_id": 0,
+    "data": {
+        "mx_records": [
+            "alt3.aspmx.l.google.com.",
+            "alt4.aspmx.l.google.com.",
+            "aspmx.l.google.com.",
+            "alt1.aspmx.l.google.com.",
+            "alt2.aspmx.l.google.com."
+        ],
+        "domain_age_days": 6970,
+        "domain": "example.com",
+        "message": "Email verification successful",
+        "status": "success"
+    },
+    "response_type_id": 0,
+    "status": 0
+}
+```
